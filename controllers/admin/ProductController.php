@@ -5,11 +5,10 @@ $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 
 switch ($registry->requestAction) {
 	default:
+	// this will list all products
 	case 'list':
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
-
 		$list = $productModel->getProductList($page);
-		
 		$product = $productView->showProductList('product_list', $list, $page);
 		break;
 
@@ -27,9 +26,9 @@ switch ($registry->requestAction) {
 	case 'edit':
 		# code...
 		break;
-
+	// this will show a product
 	case 'show':
 		$certainProduct = $productModel->getProductById($registry->request['id']);
-		$productView->showCertainProduct('product_show',$certainProduct);
+		$product = $productView->showCertainProduct('product_show', $certainProduct);
 		break;
 }

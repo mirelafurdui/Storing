@@ -9,6 +9,7 @@
 				<th>CategoryId</th>
 				<th>BrandId</th>
 				<th>Date</th>
+				<th>Price</th>
 				<th>IsActive</th>
 				<th>Actions</th>
 			</tr>
@@ -19,9 +20,10 @@
 				<td>{ID}</td>
 				<td><a href="{SITE_URL}/admin/product/show/id/{ID}" >{NAME}</a></td>
 				<td>{STOC}</td>
-				<td>{IDCATEGORY}</td>
-				<td>{IDBRAND}</td>
+				<td>{CATEGORYNAME}</td>
+				<td>{BRANDNAME}</td>
 				<td>{DATA}</td>
+				<td>{PRICE}</td>
 				<td>{ISACTIVE}</td>
 				<td>
 					<table  class="action_table">

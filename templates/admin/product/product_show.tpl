@@ -1,17 +1,20 @@
 <div id="adminList" class="box-shadow">
-<table>
+<table class="big_table" frame="box" rules="all">
+<thead>
+	<tr>
+		<th>Id</th>
+		<th>Name</th>
+		<th>Stoc</th>
+		<th>Category</th>
+		<th>Brand</th>
+		<th>Date</th>
+	</tr>
+</thead>
 		<td>{ID}</td>
 		<td>{NAME}</td>
 		<td>{STOC}</td>
-		<td>{IDCATEGORY}</td>
-		<td>{IDBRAND}</td>
+		<td>{CATEGORYNAME}</td>
+		<td>{BRANDNAME}</td>
 		<td>{DATA}</td>	
 </table>
-		<table  class="action_table">
-			<tr>
-				<td width="25%"><a href="{SITE_URL}/admin/product/edit/id/{ID}/" title="Edit/Update" class="edit_state">Edit</a></td>
-				<td width="25%"><a href="{SITE_URL}/admin/product/delete/id/{ID}/"" title="Delete" class="delete_state">Delete</a></td>
-			</tr>
-		</table>
-	</td>
 </div>
