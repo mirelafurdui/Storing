@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<dots>
+		<variable option="global">
+		</variable>
+		<variable option="admin">
+			<pageTitle>
+				<action>
+					<add>Add Product</add>
+					<add_brand>Add Brand</add_brand>
+					<add_category>Add Category</add_category>
+					<list>List All Products</list>
+					<show>List Product</show>
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="frontend">
+			<pageTitle>
+				<action>
+					<add>Add Product</add>
+					<list>List All Products</list>
+					<show>List Product</show>
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="mobile">
+
+		</variable>			
+	</dots>
+</config>
