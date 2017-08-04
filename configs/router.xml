@@ -9,7 +9,7 @@
 		<admin>Admin</admin>
 		<admin>System</admin>
 		<admin>User</admin>
-		<admin>Article</admin> 
+		<admin>Product</admin> 
 		<rss>Sample</rss>
 		<mobile>Page</mobile>
 	</controllers>
