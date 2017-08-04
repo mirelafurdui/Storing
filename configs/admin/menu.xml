@@ -88,19 +88,29 @@
 			</subItems>
 		</item>
 		<item>
-			<title>Article</title>
-			<link>article/list</link>
-			<description>List all articles</description>
+			<title>Product</title>
+			<link>product/list</link>
+			<description>List all Products</description>
 			<subItems>
 				<subItem>
-					<title>Delete</title>
+					<title>Add</title>
 					<link></link>
-					<description>Delete all</description>
+					<description>Add product</description>
+				</subItem>
+				<subItem>
+					<title>Add Brand</title>
+					<link></link>
+					<description>Add Brand</description>
+				</subItem>
+				<subItem>
+					<title>Add Category</title>
+					<link></link>
+					<description>Add Category</description>
 				</subItem>
 				<subItem>
 					<title>List</title>
-					<link>article/list</link>
-					<description>List Article</description>
+					<link>product/list</link>
+					<description>List Product</description>
 				</subItem>
 			</subItems>
 		</item>
