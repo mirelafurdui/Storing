@@ -14,6 +14,7 @@ class Product extends Dot_Model
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage);
 		return $dotPaginator->getData();
 	}
+
 	public function getProductById($id)
 	{
 		$select=$this->db->select()
@@ -24,6 +25,23 @@ class Product extends Dot_Model
 	}
 	public function addProduct($data)
 	{
+		//var_dump($data); exit;
 		$this->db->insert('product',$data);
+	}
+
+	public function selectCategory()
+	{	
+		$select=$this->db->select()
+						 ->from('category');
+		$result=$this->db->fetchAll($select);
+		return $result;
+	}
+
+	public function selectBrand()
+	{
+		$select=$this->db->select()
+						 ->from('brand');
+		$result=$this->db->fetchAll($select);
+		return $result;
 	}
 }
