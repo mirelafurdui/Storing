@@ -31,6 +31,7 @@
 				<Admin>account</Admin>
 				<System>dashboard</System>
 				<User>list</User>
+
 			</admin>
 			<mobile>
 				<Page>home</Page>
