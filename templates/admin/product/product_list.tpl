@@ -3,28 +3,28 @@
 		<thead>
 			<tr>
 	
-				<th>Id</th>
-				<th>Name</th>
-				<th>Stoc</th>
-				<th>CategoryId</th>
-				<th>BrandId</th>
-				<th>Date</th>
-				<th>Price</th>
-				<th>IsActive</th>
-				<th>Actions</th>
+				<th style="text-align: center;">Id</th>
+				<th style="text-align: center;">Name</th>
+				<th style="text-align: center;">Stoc</th>
+				<th style="text-align: center;">CategoryId</th>
+				<th style="text-align: center;">BrandId</th>
+				<th style="text-align: center;">Date</th>
+				<th style="text-align: center;">Price</th>
+				<th style="text-align: center;">IsActive</th>
+				<th style="text-align: center;">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 		<!-- BEGIN product_list -->
 			<tr>
-				<td>{ID}</td>
-				<td><a href="{SITE_URL}/admin/product/show/id/{ID}" >{NAME}</a></td>
-				<td>{STOC}</td>
-				<td>{CATEGORYNAME}</td>
-				<td>{BRANDNAME}</td>
-				<td>{DATA}</td>
-				<td>{PRICE}</td>
-				<td>{ISACTIVE}</td>
+				<td style="text-align: center;">{ID}</td>
+				<td style="text-align: center;"><a href="{SITE_URL}/admin/product/show/id/{ID}" >{NAME}</a></td>
+				<td style="text-align: center;">{STOC}</td>
+				<td style="text-align: center;">{CATEGORYNAME}</td>
+				<td style="text-align: center;">{BRANDNAME}</td>
+				<td style="text-align: center;">{DATA}</td>
+				<td style="text-align: center;">{PRICE}</td>
+				<td style="text-align: center;">{ISACTIVE}</td>
 				<td>
 					<table  class="action_table">
 						<tr>

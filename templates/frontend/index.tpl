@@ -41,9 +41,6 @@
 		<div id="push"></div>
 	</div>
 	<footer>
-		<div id="footer-content">
-			{MENU_FOOTER}
-		</div>
 		<div class="debugger">
 			{DEBUGGER}
 		</div>

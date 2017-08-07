@@ -23,7 +23,7 @@
 		</style>
 	<div class="info">
 		<div id="documentation">
-			<h2>Documentation</h2>
+			<h2>documentationtation</h2>
 			<a href="http://www.dotkernel.com/docs/">www.dotkernel.com/docs</a>
 			<br/>
 			<a href="http://www.dotkernel.com/phpdoc/">www.dotkernel.com/phpdoc</a>
@@ -53,7 +53,7 @@
 	</p> 
 	
 
-	<h2>2. URL Pattern</h2>
+	<!-- <h2>2. URL Pattern</h2>
 	<ul class="url_pattern">
 		<li>
 			<strong>The default module is frontend, so the URL's will be in the form:</strong><br/> 
@@ -75,7 +75,7 @@
 			<em> /admin/controller/action/var1/value-of-var1/var2/value-of-var2/</em>
 		</li>
 		
-	</ul> 
+	</ul>  -->
  
 	<h2>3. Adding a new Controller</h2>
 	<p>
