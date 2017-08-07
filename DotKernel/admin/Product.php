@@ -23,8 +23,8 @@ class Product extends Dot_Model
 		$select=$this->db->select()
 						 ->from('product')
 						 ->where('product.id= ?',$id)
-						 ->join('category', 'category.id = product.idCategory',['categoryName'=>'name'])
-						 ->join('brand', 'brand.id = product.idBrand',['brandName'=>'name']);
+						 ->joinLeft('category', 'category.id = product.idCategory',['categoryName'=>'name'])
+						 ->joinLeft('brand', 'brand.id = product.idBrand',['brandName'=>'name']);
 		$result=$this->db->fetchRow($select);
 		return $result;
 	}

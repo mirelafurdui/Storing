@@ -18,3 +18,14 @@
 		<td>{DATA}</td>	
 </table>
 </div>
+
+<div style="text-align: center;">
+	<table class="big_table" frame="box" rules="all">
+		<thead>
+			<tr>
+				<span style="text-align: center;"><th>Description</th></span>
+			</tr>
+		</thead>
+			<td>{DESCRIPTION}</td>
+	</table>
+</div>
