@@ -2,6 +2,10 @@
 <input type="hidden" name="userToken" value="{USERTOKEN}">
 	<ul class="form">
 		<li class="clearfix">
+			<label>Image:</label>
+			<img src="{SITE_URL}/images/users/{IMAGE}" width="200" height="200">
+		</li>
+		<li class="clearfix">
 			<label>Username:</label>
 			<strong>{USERNAME}</strong>
 		</li>
