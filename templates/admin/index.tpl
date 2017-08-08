@@ -21,6 +21,7 @@
 		<script src="{SITE_URL}/externals/jquery/ui/jquery-ui.min.js"></script>
 		<script src="{SITE_URL}/externals/highcharts/highcharts.js"></script>
 		<script src="{TEMPLATES_URL}/js/admin/main.js"></script>
+		
 	</head>
 	<body> 
 		<div class="wrapper {LOGIN_CLASS}">

@@ -1,3 +1,4 @@
+{PAGINATION}
 <div id="adminList" class="box-shadow">
 	<table class="big_table" frame="box" rules="all">
 		<thead>

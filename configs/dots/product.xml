@@ -13,6 +13,12 @@
 					<show>Product</show>
 				</action>
 			</pageTitle>
+			<infoMessage>
+				<allowed></allowed>
+				<delete>Delete product</delete>
+				<deleteError>Error delete product</deleteError>
+				<edit>Product edited</edit>
+			</infoMessage>
 		</variable>
 		<variable option="frontend">
 			<pageTitle>
