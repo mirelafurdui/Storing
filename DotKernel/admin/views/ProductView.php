@@ -28,7 +28,7 @@ class Product_View extends View
 	}
 	// this function sets the tpl and shows the table based for one id
 	public function showCertainProduct($template='', $productData)
-	{
+	{	
 		if ($template != '') {
 			$this->template = $template;
 		}
@@ -36,5 +36,56 @@ class Product_View extends View
 		foreach ($productData as $productKey => $productValue) {
 			$this->tpl->setVar(strtoupper($productKey), $productValue);
 		}
+	}
+
+	public function setTplFile($template = '')
+	{
+		if ($template != '') {
+			$this->template = $template;
+		}	
+		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+	}
+
+	public function setTplFileDelete($template = '',$id)
+	{
+		if ($template != '') {
+			$this->template = $template;
+		}	
+		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+		$this->tpl->setVar('ID', $id);
+	}
+
+	public function showDataCategory($template = '', $data)
+	{
+		if ($template != '') {
+			$this->template = $template;
+		}
+		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+		$this->tpl->setBlock('tpl_main', 'category', 'product_add_block');
+
+			foreach ($data as $value) {
+				foreach ($value as $key => $productValue) {
+					
+					$this->tpl->setVar('CATEGORY_'.strtoupper($key), $productValue);
+				}
+				$this->tpl->parse('product_add_block','category',true);
+			}
+	}
+
+	public function showDataBrand($template = '', $data)
+	{
+		if ($template != '') {
+			$this->template = $template;
+		}
+		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+		$this->tpl->setBlock('tpl_main', 'brand', 'product_add_block1');
+
+			foreach ($data as $value) {
+				foreach ($value as $key => $productValue) {
+					
+					$this->tpl->setVar('BRAND_'.strtoupper($key), $productValue);
+				}
+				$this->tpl->parse('product_add_block1','brand',true);
+			}
 	}
 }

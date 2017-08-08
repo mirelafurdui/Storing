@@ -94,17 +94,17 @@
 			<subItems>
 				<subItem>
 					<title>Add</title>
-					<link></link>
+					<link>product/add</link>
 					<description>Add product</description>
 				</subItem>
 				<subItem>
 					<title>Add Brand</title>
-					<link></link>
+					<link>product/brand</link>
 					<description>Add Brand</description>
 				</subItem>
 				<subItem>
 					<title>Add Category</title>
-					<link></link>
+					<link>product/category</link>
 					<description>Add Category</description>
 				</subItem>
 				<subItem>

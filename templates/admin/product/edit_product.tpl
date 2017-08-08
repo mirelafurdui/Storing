@@ -2,44 +2,33 @@
 <form method="POST" enctype="multipart/form-data">
 	<div class="form-group">
 		<label>Product Name</label>
-		<input type="text" name="name" class="form-control" id = "name" required="">
+		<input type="text" name="name" class="form-control" value="{NAME}" id = "name" required="">
 	</div>
 	<label>Stoc</label>
 	<div class="input-group">
-		<input type="text" class="form-control" name="stoc" value="0" aria-describedby="sizing-addon2" id="plusminus" required="">
+		<input type="text" class="form-control" name="stoc"  value="{STOC}" value="0" aria-describedby="sizing-addon2" id="plusminus" required="">
 		<span style="cursor: pointer; cursor: hand;" class="input-group-addon" id="plus_one">+</span>
 		<span style="cursor: pointer; cursor: hand;" class="input-group-addon" id="minus_one">-</span>
 	</div>
 	<div class="form-group">
-		<label>Select Brand</label>
-		<select name="idBrand"  class="form-control" id="exampleSelect1" required="">
-		<!-- BEGIN brand -->
-			<option  value="{BRAND_ID}">{BRAND_NAME}</option>
-		<!-- END brand -->
-		</select>
-	</div>
-	<div class="form-group">
-		<label>Select Category</label>
-		<select name="idCategory" class="form-control" id="exampleSelect1" required="">
-		<!-- BEGIN category -->
-			<option  value="{CATEGORY_ID}">{CATEGORY_NAME}</option>
-		<!-- END category -->
-		</select>
-	</div>
-	<div class="form-group">
 		<label>Pret</label>
-		<input type="text" name="pret" class="form-control" id = "name">
+		<input type="text" name="pret" class="form-control" id = "name" value="{PRET}">
 	</div>
 	<div class="form-group">
 		<label>Description</label>
-		<textarea type="text" name="description" class="form-control" required=""></textarea>
+		<textarea type="text" name="description" class="form-control" value = "{DESCRIPTION}" required="">{DESCRIPTION}</textarea>
 	</div>
 	<div class="form-group">
+	<img style=" display: block; margin: 0 auto;" src="{SITE_URL}/images/uploads/{IMAGE}" height="200" width="300" >
 		<label>Select image to upload:</label>
     	<input type="file" name="image" id="fileToUpload">
     </div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<p>{NAME}</p>
+<p>{STOC}</p>
+<p>{DESCRIPTION}</p>
 <script>
 $( document ).ready(function() {
     $("#plus_one").click(function () {
