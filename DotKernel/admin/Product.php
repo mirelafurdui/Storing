@@ -6,6 +6,7 @@ class Product extends Dot_Model
 	{
 		parent::__construct();
 	}
+
 	// function that joins 2 tables with the origin table "product" and lists them all with some rows changed
 	public function getProductList($page=1)
 	{
@@ -17,6 +18,7 @@ class Product extends Dot_Model
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage);
 		return $dotPaginator->getData();
 	}
+
 	// function that shows product by id and joins with db category and brand
 	public function getProductById($id)
 	{
@@ -28,29 +30,14 @@ class Product extends Dot_Model
 		$result=$this->db->fetchRow($select);
 		return $result;
 	}
-	// function that adds a product in the table
-	// public function getProductList($page=1)
-	// {
-	// 	$select=$this->db->select()
-	// 					 ->from('product');
-	// 	$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage);
-	// 	return $dotPaginator->getData();
-	// }
 
-	// public function getProductById($id)
-	// {
-	// 	$select=$this->db->select()
-	// 					 ->from('product')
-	// 					 ->where('id= ?',$id);
-	// 	$result=$this->db->fetchRow($select);
-	// 	return $result;
-	// }
+	// function that add a product with the established data from POST
 	public function addProduct($data)
 	{
-		//var_dump($data); exit;
 		$this->db->insert('product',$data);
 	}
 
+	// function that selects from category
 	public function selectCategory()
 	{	
 		$select=$this->db->select()
@@ -59,6 +46,7 @@ class Product extends Dot_Model
 		return $result;
 	}
 
+	// function that selects from brand
 	public function selectBrand()
 	{
 		$select=$this->db->select()
@@ -67,16 +55,21 @@ class Product extends Dot_Model
 		return $result;
 	}
 
+	// function that adds data from $data to the certain tabel that's selected in $database
 	public function addData($data,$database)
 	{
 		$this->db->insert($database,$data);
 	}
-	public function updateProductDb($data,$id){
-		//var_dump($data);exit;
+
+	// Function that edits a certain product based on $id and inserts data to be edited based on $data
+	public function updateProductDb($data,$id)
+	{
 		$this->db->update('product',$data, 'id = '.$id);		
 	}
-	public function deleteProduct($id){
-		//var_dump($id);exit;
+
+	// Function that deletes a product based on his $id
+	public function deleteProduct($id)
+	{
 		$this->db->delete('product','id = '.$id);		
 	}
 }
