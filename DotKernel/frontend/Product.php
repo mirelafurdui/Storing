@@ -15,7 +15,7 @@ class Product extends Dot_Model
 						 ->join('category', 'category.id = product.idCategory',['categoryName'=>'name'])
 						 ->join('brand', 'brand.id = product.idBrand',['brandName'=>'name']);
 
-		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=20);
+		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=10);
 		return $dotPaginator->getData();
 	}
 

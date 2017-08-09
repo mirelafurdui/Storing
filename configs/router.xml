@@ -3,10 +3,9 @@
  	<!-- all controllers listed here-->
 	<!-- 1. for whitelist approach & a secure autoload of all controllers-->
 	<controllers>
-		<frontend>Page</frontend>
-		<frontend>User</frontend>
-		<frontend>Article</frontend>
 		<frontend>Product</frontend>
+		<!-- <frontend>Page</frontend> -->
+		<frontend>User</frontend>
 		<admin>Admin</admin>
 		<admin>System</admin>
 		<admin>User</admin>
@@ -17,7 +16,8 @@
  	<routes>
  		<!-- default controllers for modules -->
 		<controller>
-			<frontend>Page</frontend>
+			<!-- <frontend>Page</frontend> -->
+			<frontend>Product</frontend>
 			<admin>System</admin>
 			<rss>Sample</rss>
 			<mobile>Page</mobile>
@@ -25,7 +25,8 @@
 		<action>
 			<!-- default action for controllers ... -->
 			<frontend>
-				<Page>home</Page>
+				<Product>home</Product>
+				<!-- <Page>home</Page> -->
 				<User>login</User>
 			</frontend>
 			<admin>

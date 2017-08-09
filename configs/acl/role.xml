@@ -10,7 +10,7 @@
 		<frontend>
 			<allow>
 				<guest>
-					<Page>all</Page><!-- allow 'guest' to access 'Page' controller -->
+					<!-- <Page>all</Page> --><!-- allow 'guest' to access 'Page' controller -->
 					<User>all</User><!-- allow 'guest' to access 'User' controller -->
 					<Product>all</Product><!-- allow 'guest' to access 'Product' controller -->
 				</guest> 				

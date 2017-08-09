@@ -23,7 +23,7 @@ class Product_View extends View
 		// sets block that will later be repeated
 		$this->tpl->setBlock('tpl_main', 'product_list', 'product_list_block');
 		// sets the pagination that will be shown later on in the tpl file
-		// $this->tpl->paginator($productData['pages']);
+		$this->tpl->paginator($productData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
 			// this foreach travels the established table by his keys and values
