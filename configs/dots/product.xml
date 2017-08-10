@@ -16,13 +16,19 @@
 			<infoMessage>
 				<allowed></allowed>
 				<delete>Delete product</delete>
-				<deleteError>You don't confirm deletion!</deleteError>
 				<addProduct>Your product was add to DB!</addProduct>
-				<addProductError>You don't add product to DB!</addProductError>
 				<addBrand>Your Brand was add to DB!</addBrand>
 				<addCategory>Your Category was add to DB!</addCategory>
 				<edit>Product edited</edit>
 			</infoMessage>
+			<errorMessage>
+				<deleteError>You don't confirm deletion!</deleteError>
+				<addBrandError>You have this brand in DB!</addBrandError>		
+				<addBrandError>File already exists!!!</addBrandError>
+				<addBrandError1>Your input is empty!!!</addBrandError1>
+				<addCategoryError>File already exists!!!</addCategoryError>
+				<addCategoryError1>Your input is empty!!!</addCategoryError1>
+			</errorMessage>
 		</variable>
 		<variable option="frontend">
 			<pageTitle>

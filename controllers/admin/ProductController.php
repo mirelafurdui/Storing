@@ -42,18 +42,71 @@ switch ($registry->requestAction) {
 		break;
 			//add category in DB
 	case 'category':
-			$category = $productView->setTplFile('add_category');
+		$category = $productModel->selectCategory();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$productModel->addData($_POST,'category');
+			$ok = false;
+			$ok1 = false;
+			foreach ($category as $key) {
+				foreach ($key as $brandKey => $value) {
+					if ($value == $_POST['name']) {
+						$ok = true;
+					}
+					if ($_POST['name'] =="") {
+						$ok1 = true;
+					}
+					
+				}
+			}
+			if (!$ok && !$ok1) {
+				$productModel->addData($_POST,'category');
+			//view confirmation message
+				$registry->session->message['txt'] = $registry->option->infoMessage->addCategory;
+				$registry->session->message['type'] = 'info';
+			}elseif($ok) {
+				$registry->session->message['txt'] = $registry->option->errorMessage->addCategoryError;
+				$registry->session->message['type'] = 'error';
+			}elseif($ok1) {
+				$registry->session->message['txt'] = $registry->option->errorMessage->addCategoryError1;
+				$registry->session->message['type'] = 'error';
+			}
 		}
+		$productView->showDataCategory('add_category', $category);
 		break;
 			//add brand in DB
 	case 'brand':
-		$category = $productView->setTplFile('add_brand');
+		$brand = $productModel->selectBrand();
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$productModel->addData($_POST,'brand');
+			$ok = false;
+			$ok1 = false;
+			foreach ($brand as $key) {
+				foreach ($key as $brandKey => $value) {
+					if ($value == $_POST['name']) {
+						$ok = true;
+					}
+					if ($_POST['name'] =="") {
+						$ok1 = true;
+					}
+					
+				}
+			}
+			if (!$ok && !$ok1) {
+				$productModel->addData($_POST,'brand');
+			//view confirmation message
+				$registry->session->message['txt'] = $registry->option->infoMessage->addBrand;
+				$registry->session->message['type'] = 'info';
+			}elseif($ok) {
+				$registry->session->message['txt'] = $registry->option->errorMessage->addBrandError;
+				$registry->session->message['type'] = 'error';
+			}elseif($ok1) {
+				$registry->session->message['txt'] = $registry->option->errorMessage->addBrandError1;
+				$registry->session->message['type'] = 'error';
+			}
 		}
+		$productView->showDataBrand('add_brand', $brand);
+		header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController . $registry->requestAction);
+				exit;
 			break;
+		
 
 	case 'delete':
 		$id = $registry->request['id'];
@@ -71,6 +124,26 @@ switch ($registry->requestAction) {
 			}
 				header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController);
 				exit;
+		}
+
+		break;
+	case 'deleteCategory':
+		$id = $registry->request['id'];
+		var_dump($id);exit;
+		$productView->setTplFileDelete('delete_category',$id);
+		if($_SERVER['REQUEST_METHOD'] === "POST")
+		{	
+			if ("on" == $_POST['confirm'])
+			{
+				$productModel->deleteData("category",$id);
+				$registry->session->message['txt'] = $registry->option->infoMessage->delete;
+				$registry->session->message['type'] = 'info';
+			}else {
+				$registry->session->message['txt'] = $registry->option->infoMessage->deleteError;
+				$registry->session->message['type'] = 'error';
+			}
+				// header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController);
+				// exit;
 		}
 
 		break;

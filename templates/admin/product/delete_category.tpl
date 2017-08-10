@@ -1,12 +1,10 @@
-
-
-<form action="{SITE_URL}/admin/product/delete/id/{ID}" method="post">
+<form action="{SITE_URL}/admin/product/deleteCategory/id/{ID}" method="post">
 	<div class="box-shadow" style="width: 600px">
 		<div class="box_header">
 		</div>
 		<ul class="form delete">
 			<li class="clearfix">
-				<p>Are you sure you want to delete product ?</p>
+				<p>Are you sure you want to delete this category?</p>
 			</li>
 			<li class="clearfix">
 				<input type="checkbox" name="confirm"><label>Confirm deletion</label>
