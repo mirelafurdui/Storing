@@ -14,10 +14,12 @@ switch ($registry->requestAction) {
 		break;
 
 	case 'add':
+
 		$category = $productModel->selectCategory(); 
 		$product = $productView->showDataCategory('product_add', $category);
 		$brand = $productModel->selectBrand(); 
 		$product1 = $productView->showDataBrand('product_add', $brand);
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$data['name'] = (isset($_POST['name'])) ? $_POST['name']:'';
 			$data['idCategory'] = (isset($_POST['idCategory'])) ? $_POST['idCategory']:'';
@@ -31,21 +33,21 @@ switch ($registry->requestAction) {
 
 			$imageFileType = pathinfo($_FILES["image"]['name'],PATHINFO_EXTENSION);	
 			
-			if($imageFileType == 'jpeg' || $imageFileType == 'jpg'){
+			if($imageFileType == 'jpeg' || $imageFileType == 'jpg' || $imageFileType == 'JPG' || $imageFileType == 'JPEG'){
 				$data['image'] = $filename . '.' . $imageFileType;
 				move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $filename . '.' . $imageFileType);
 				$productModel->addProduct($data);
 			}
 		}
 		break;
-
+			//add category in DB
 	case 'category':
 			$category = $productView->setTplFile('add_category');
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$productModel->addData($_POST,'category');
 		}
 		break;
-
+			//add brand in DB
 	case 'brand':
 		$category = $productView->setTplFile('add_brand');
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -60,11 +62,12 @@ switch ($registry->requestAction) {
 		{	
 			if ("on" == $_POST['confirm'])
 			{
-
-				
 				$productModel->deleteProduct($id);
 				$registry->session->message['txt'] = $registry->option->infoMessage->delete;
 				$registry->session->message['type'] = 'info';
+			}else {
+				$registry->session->message['txt'] = $registry->option->infoMessage->deleteError;
+				$registry->session->message['type'] = 'error';
 			}
 				header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController);
 				exit;
@@ -106,5 +109,17 @@ switch ($registry->requestAction) {
 	case 'show':
 		$certainProduct = $productModel->getProductById($registry->request['id']);
 		$productView->showCertainProduct('product_show',$certainProduct);
+		break;
+	case 'activate':
+			$id = $_POST['id'];
+			$isActive = $_POST['isActive'];
+			$productModel->activateProduct($id, $isActive);
+			$result = array(
+				"success" => true,
+				"id" => $id,
+				"isActive" => intval($isActive)
+			);
+			echo Zend_Json::encode($result);
+		exit;
 		break;
 }

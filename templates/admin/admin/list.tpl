@@ -1,7 +1,7 @@
 <script>
 	var userToken = "{USERTOKEN}",
 		SITE_URL = "{SITE_URL}",
-		FLAG_TOGGLE_URL = SITE_URL + "/admin/admin/activate/";
+		FLAG_TOGGLE_URL = SITE_URL + "/admin/product/activate/";
 
 	$(document).ready(function(){
 		$(".activeButton").activeFlags({

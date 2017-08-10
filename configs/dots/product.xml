@@ -16,7 +16,11 @@
 			<infoMessage>
 				<allowed></allowed>
 				<delete>Delete product</delete>
-				<deleteError>Error delete product</deleteError>
+				<deleteError>You don't confirm deletion!</deleteError>
+				<addProduct>Your product was add to DB!</addProduct>
+				<addProductError>You don't add product to DB!</addProductError>
+				<addBrand>Your Brand was add to DB!</addBrand>
+				<addCategory>Your Category was add to DB!</addCategory>
 				<edit>Product edited</edit>
 			</infoMessage>
 		</variable>

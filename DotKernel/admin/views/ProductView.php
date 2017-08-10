@@ -26,11 +26,14 @@ class Product_View extends View
 		$this->tpl->paginator($productData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
-			// this foreach travels the established table by his keys and values
+
 			foreach ($productData['data'] as $key => $value) {
 				foreach ($value as $productK => $productValue) {
 					// this will set all the productKeys given to be upper case for it to work with the tpl file
 					$this->tpl->setVar(strtoupper($productK), $productValue);
+					if (strtoupper($productK) =="ISACTIVE") {
+						$this->tpl->setVar('ACTIVE_IMG', $value['isActive'] == 1 ? 'active' : 'inactive');
+					}
 				}
 				// this parse is related to the block and if it's true it will show all the keys and values for each block repeat
 				// block name "product_list_block"
@@ -124,5 +127,24 @@ class Product_View extends View
 			// block name "brand_block"
 			$this->tpl->parse('brand_block','brand',true);
 		}
+	}
+
+	public function details($templateFile, $data=array())
+	{
+		$this->tpl->setFile('tpl_main', 'product/' . $templateFile . '.tpl');
+		$this->tpl->setVar('ACTIVE_1', 'checked');
+		$this->tpl->addUserToken();
+		foreach ($data as $k=>$v)
+		{
+			$this->tpl->setVar(strtoupper($k), $v);
+			if('isActive' == $k)
+			{
+				$this->tpl->setVar('ACTIVE_'.$v, 'checked');
+				$this->tpl->setVar('ACTIVE_'.$v*(-1)+1, '');
+			}
+		}
+		
+		//empty because we don't want to show the password
+		$this->tpl->setVar('PASSWORD', '');
 	}
 }
