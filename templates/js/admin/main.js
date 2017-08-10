@@ -332,3 +332,53 @@ function ShowHideDiv (idv, classv)
 		$('#' + idv).show();
 	}
 }
+/**
+ * Active Products
+ */
+
+(function($){
+	$.fn.activeProduct = function( options ) {
+		var settings = {
+			targetUrl : null,
+			classActive : 'active_state',
+			classInactive : 'inactive_state',
+			onError : function(message){
+				$('<div title="Error"><br/><br/>' + message + '</div>').dialog({
+					modal: true
+				});
+			}
+		};
+		$.extend(settings, options);
+		if (settings.targetUrl === null){
+			return;
+		}
+
+		this.on("click", function(){
+			var $targetElement = $(this),
+				data = $targetElement.data();
+			$.post(
+				settings.targetUrl,
+				{
+					userToken: userToken,
+					id: data.id,
+					isActive: data.active*(-1) + 1	//toggle between 0 and 1
+				},
+				function(result){
+					if (result.success){
+						$targetElement.data('active', result.isActive);
+						if (result.isActive === 1){
+							$targetElement.removeClass(settings.classInactive).addClass(settings.classActive);
+						}else{
+							$targetElement.removeClass(settings.classActive).addClass(settings.classInactive);
+						}
+					}else{
+						settings.onError(result.message);
+					}
+				},
+				"json"
+			);
+		});
+
+		return this;
+	};
+}(jQuery));

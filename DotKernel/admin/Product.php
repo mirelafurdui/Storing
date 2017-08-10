@@ -79,4 +79,9 @@ class Product extends Dot_Model
 		//var_dump($id);exit;
 		$this->db->delete('product','id = '.$id);		
 	}
+
+	public function activateProduct($id, $isActive)
+	{	
+		$this->db->update('product', array('isActive' => $isActive), 'id = ' . $id);
+	}
 }

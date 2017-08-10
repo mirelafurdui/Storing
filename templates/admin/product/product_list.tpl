@@ -1,3 +1,24 @@
+<script>
+	var userToken = "{USERTOKEN}", 
+		SITE_URL = "{SITE_URL}",
+		FLAG_TOGGLE_URL = SITE_URL + "/admin/product/activate/";
+
+	$(document).ready(function(){
+		$(".activeButton").activeProduct({
+			targetUrl:FLAG_TOGGLE_URL,
+		});
+	})
+</script>
+	
+
+<style type="text/css"> 
+	/*a.active_state {
+	background: url('images/status_icon.png') no-repeat 0px 0px;
+}
+a.inactive_state {
+	background: url('images/status_icon.png') no-repeat 0px -50px;
+}*/
+</style>
 {PAGINATION}
 <div id="adminList" class="box-shadow">
 	<table class="big_table" frame="box" rules="all">
@@ -25,7 +46,9 @@
 				<td style="text-align: center;">{BRANDNAME}</td>
 				<td style="text-align: center;">{DATA}</td>
 				<td style="text-align: center;">{PRICE}</td>
-				<td style="text-align: center;">{ISACTIVE}</td>
+				<td>
+					 <a style="cursor: pointer;" title="Activate / Inactivate" class="{ACTIVE_IMG}_state activeButton"
+					 	id="row_{ID}" data-id="{ID}" data-active="{ISACTIVE}">&nbsp;</a> </td>
 				<td>
 					<table  class="action_table">
 						<tr>

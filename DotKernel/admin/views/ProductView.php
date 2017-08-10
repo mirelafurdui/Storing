@@ -19,9 +19,13 @@ class Product_View extends View
 		$this->tpl->paginator($productData['pages']);
 		$this->tpl->setVar('PAGE',$page);
 
+						
 			foreach ($productData['data'] as $key => $value) {
 				foreach ($value as $productK => $productValue) {
 					$this->tpl->setVar(strtoupper($productK), $productValue);
+					if (strtoupper($productK) =="ISACTIVE") {
+						$this->tpl->setVar('ACTIVE_IMG', $value['isActive'] == 1 ? 'active' : 'inactive');
+					}
 				}
 				$this->tpl->parse('product_list_block','product_list',true);
 			}
@@ -87,5 +91,24 @@ class Product_View extends View
 				}
 				$this->tpl->parse('product_add_block1','brand',true);
 			}
+	}
+
+	public function details($templateFile, $data=array())
+	{
+		$this->tpl->setFile('tpl_main', 'product/' . $templateFile . '.tpl');
+		$this->tpl->setVar('ACTIVE_1', 'checked');
+		$this->tpl->addUserToken();
+		foreach ($data as $k=>$v)
+		{
+			$this->tpl->setVar(strtoupper($k), $v);
+			if('isActive' == $k)
+			{
+				$this->tpl->setVar('ACTIVE_'.$v, 'checked');
+				$this->tpl->setVar('ACTIVE_'.$v*(-1)+1, '');
+			}
+		}
+		
+		//empty because we don't want to show the password
+		$this->tpl->setVar('PASSWORD', '');
 	}
 }

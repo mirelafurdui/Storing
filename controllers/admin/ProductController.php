@@ -110,4 +110,16 @@ switch ($registry->requestAction) {
 		$certainProduct = $productModel->getProductById($registry->request['id']);
 		$productView->showCertainProduct('product_show',$certainProduct);
 		break;
+	case 'activate':
+			$id = $_POST['id'];
+			$isActive = $_POST['isActive'];
+			$productModel->activateProduct($id, $isActive);
+			$result = array(
+				"success" => true,
+				"id" => $id,
+				"isActive" => intval($isActive)
+			);
+			echo Zend_Json::encode($result);
+		exit;
+		break;
 }
