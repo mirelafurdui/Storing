@@ -182,3 +182,41 @@ ul.url_pattern li { list-style: disc; padding: 10px 0px; }
 	ul.form li label.empty { line-height: 1px; margin-bottom: 0px; }
 	ul.form li input[type="text"], ul.form li input[type="password"] { float: none; width: 100%; }
 }
+
+/*** Pagination ***/
+.pagination {
+	background: #E2E6EF;
+	text-align: center;
+	padding: 2px;
+}
+.pagination span {
+	border-right: 1px solid #CBCFD8;
+	text-align: center;
+	padding: 2px;
+}
+.pagination li a {
+	color: #38425D;
+	border-color: #BDC6CF;
+	text-align: center;
+	padding: 2px;
+	padding-left:10px;
+	padding-right:10px;
+	border: 1px solid;
+}
+.pagination li a:hover {
+	background-color: #38425D;
+	color: #FFFFFF;
+	text-align: center;
+	padding: 2px;
+	border: 1px solid;
+	padding-left:10px;
+	padding-right:10px;
+}
+.pagination li p {
+	background-color: #D5DAE5;
+	color: #39526D;
+	text-align: center;
+	padding: 2px;
+	border: 1px solid;
+}
+/*** End Pagination ***/

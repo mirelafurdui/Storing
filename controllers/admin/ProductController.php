@@ -26,7 +26,7 @@ switch ($registry->requestAction) {
 			$data['idBrand'] = (isset($_POST['idBrand'])) ? $_POST['idBrand']:'';
 			$data['description'] = (isset($_POST['description'])) ? $_POST['description']:'';
 			$data['stoc'] = (isset($_POST['stoc'])) ? $_POST['stoc']:'';
-			$data['pret'] = (isset($_POST['pret'])) ? $_POST['pret']:'';
+			$data['price'] = (isset($_POST['price'])) ? $_POST['price']:'';
 			
 			$target_dir = "images/uploads/";
 			$filename = md5(microtime());
@@ -89,7 +89,7 @@ switch ($registry->requestAction) {
 			$data['name'] = (isset($_POST['name'])) ? $_POST['name']:'';
 			$data['description'] = (isset($_POST['description'])) ? $_POST['description']:'';
 			$data['stoc'] = (isset($_POST['stoc'])) ? $_POST['stoc']:'';
-			$data['pret'] = (isset($_POST['pret'])) ? $_POST['pret']:'';
+			$data['price'] = (isset($_POST['price'])) ? $_POST['price']:'';
 			
 			$target_dir = "images/uploads/";
 			$filename = md5(microtime());

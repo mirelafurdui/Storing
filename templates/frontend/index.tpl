@@ -28,14 +28,12 @@
 			</div>
 		</header>
 		<div id="body">
-			<nav id="sidebar">
+			<!-- <nav id="sidebar">
 				{MENU_SIDEBAR}
-			</nav>
-			<div id="content">
+			</nav> -->
 				<h1>{PAGE_CONTENT_TITLE}</h1>
 				{MESSAGE_BLOCK}
 				{MAIN_CONTENT}
-			</div>
 			<div class="clear"></div>
 		</div>
 		<div id="push"></div>
