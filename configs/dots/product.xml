@@ -23,8 +23,9 @@
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<list>List All Products</list>
 					<show>Product</show>
+					<home>Product List</home>
+					<about>About Us</about>
 				</action>
 			</pageTitle>
 		</variable>
