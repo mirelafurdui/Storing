@@ -72,7 +72,12 @@ class Product extends Dot_Model
 	{
 		$this->db->delete('product','id = '.$id);		
 	}
-
+	// Function that deletes a category or a brand from database
+	public function deleteData($database,$id)
+	{
+		$this->db->delete($database,'id = '.$id);		
+	}
+	// Function that activate the product
 	public function activateProduct($id, $isActive)
 	{	
 		$this->db->update('product', array('isActive' => $isActive), 'id = ' . $id);
