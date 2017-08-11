@@ -102,9 +102,7 @@ switch ($registry->requestAction) {
 				$registry->session->message['type'] = 'error';
 			}
 		}
-		$productView->showDataBrand('add_brand', $brand);
-		header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController . $registry->requestAction);
-				exit;
+			$productView->showDataBrand('add_brand', $brand);
 			break;
 		
 
@@ -127,23 +125,41 @@ switch ($registry->requestAction) {
 		}
 
 		break;
-	case 'deleteCategory':
+	case 'deletec':
 		$id = $registry->request['id'];
-		var_dump($id);exit;
 		$productView->setTplFileDelete('delete_category',$id);
 		if($_SERVER['REQUEST_METHOD'] === "POST")
 		{	
 			if ("on" == $_POST['confirm'])
 			{
-				$productModel->deleteData("category",$id);
+				$productModel->deleteData('category',$id);
 				$registry->session->message['txt'] = $registry->option->infoMessage->delete;
 				$registry->session->message['type'] = 'info';
 			}else {
 				$registry->session->message['txt'] = $registry->option->infoMessage->deleteError;
 				$registry->session->message['type'] = 'error';
 			}
-				// header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController);
-				// exit;
+				header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController);
+				exit;
+		}
+
+		break;
+		case 'deleteb':
+		$id = $registry->request['id'];
+		$productView->setTplFileDelete('delete_brand',$id);
+		if($_SERVER['REQUEST_METHOD'] === "POST")
+		{	
+			if ("on" == $_POST['confirm'])
+			{
+				$productModel->deleteData('brand',$id);
+				$registry->session->message['txt'] = $registry->option->infoMessage->delete;
+				$registry->session->message['type'] = 'info';
+			}else {
+				$registry->session->message['txt'] = $registry->option->infoMessage->deleteError;
+				$registry->session->message['type'] = 'error';
+			}
+				header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController);
+				exit;
 		}
 
 		break;

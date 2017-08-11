@@ -4,6 +4,7 @@
       <tr>
         <th>ID</th>
         <th>Brand Name</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -11,6 +12,7 @@
       <tr>
         <td>{BRAND_ID}</td>
         <td>{BRAND_NAME}</td>
+        <td><a href="{SITE_URL}/admin/product/deleteb/id/{BRAND_ID}/"" title="Delete" class="delete_state">Delete</a></td>
       </tr>
      <!-- END brand -->
     </tbody>

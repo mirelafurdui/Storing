@@ -82,6 +82,7 @@ class Product_View extends View
 		// sets the id value for $id
 		$this->tpl->setVar('ID', $id);
 	}
+
 	// this function will show the data from table category
 	public function showDataCategory($template = '', $data)
 	{
