@@ -13,7 +13,7 @@
       <tr>
         <td>{CATEGORY_ID}</td>
         <td>{CATEGORY_NAME}</td>
-        <td><a href="{SITE_URL}/admin/product/deleteCategory/id/{CATEGORY_ID}/"" title="Delete" class="delete_state">Delete</a></td>
+        <td><a href="{SITE_URL}/admin/product/deletec/id/{CATEGORY_ID}/"" title="Delete" class="delete_state">Delete</a></td>
       </tr>
      <!-- END category -->
     </tbody>
