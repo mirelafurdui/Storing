@@ -12,10 +12,10 @@ switch ($registry->requestAction) {
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
 		// this variable will use the function to get all the products using $page for pagination
 		$list = $productModel->getProductList($page);
-		
+
 		$product = $productView->showProductList('home', $list, $page);
 		break;
-
+		
 	//this case will take you to the category page
 	case 'show_category':
 		// this is the variable responsable with the page number

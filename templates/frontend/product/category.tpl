@@ -11,7 +11,7 @@
 			<td>
 				<a href="{SITE_URL}/product/category/id/{ID}" >
 				<img style=" display: block; margin: 0 auto;" 
-				src="{SITE_URL}/images/uploads/{IMAGE}" height="150" width="150" >
+				src="{SITE_URL}/images/category/{IMAGE}" height="150" width="150" >
 				</a>
 			</td>
 		</thead>

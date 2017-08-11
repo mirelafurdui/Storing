@@ -1,3 +1,4 @@
+
 {PAGINATION}
 <hr>
 <!-- BEGIN product_list -->
