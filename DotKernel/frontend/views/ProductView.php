@@ -164,4 +164,28 @@ class Product_View extends View
 		if ($templateFile != '') $this->templateFile = $templateFile;//in some cases we need to overwrite this variable
 		$this->tpl->setFile('tpl_main', 'product/' . $this->templateFile . '.tpl');
 	}
+
+	public function showCommentsByProduct($template='', $productData, $page)
+	{	
+		// tests if the template is not empty
+		if ($template != '') {
+			$this->template = $template;
+		}
+		// sets the tpl file
+		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+		// sets block that will later be repeated
+		$this->tpl->setBlock('tpl_main', 'user_comment', 'user_comment_block');
+		// sets the pagination that will be shown later on in the tpl file
+		$this->tpl->paginator($productData['pages']);
+		// sets the page variable to be shown later on in the tpl file
+		$this->tpl->setVar('PAGE',$page);
+		// this foreach travels the established table by his keys and values
+		foreach ($productData['data'] as $product) {
+			foreach ($product as $key => $value) {
+				// this will set all the productKeys given to be upper case for it to work with the tpl file
+				$this->tpl->setVar(strtoupper("USER_".$key), $value);
+			}
+		$this->tpl->parse('user_comment_block','user_comment',true);
+		}
+	}
 }

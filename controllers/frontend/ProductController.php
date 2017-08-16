@@ -38,10 +38,14 @@ switch ($registry->requestAction) {
 		$product = $productView->showBrandList('brand', $listBrand, $page);
 		break;
 
-	//this case will take you to the product page
+	//this case will take you to the product page & it will show comments based on product
 	case 'show':
+		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
 		$certainProduct = $productModel->getProductById($registry->request['id']);
 		$productView->showCertainProduct('home_product',$certainProduct);
+		$allCommentsForProduct = $productModel->getCommentByProduct($registry->request['id']);
+		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page);
+
 		break;
 
 	//this case will take you to a certain brand
