@@ -83,14 +83,35 @@
 <hr>
 <div>
 	<h2>Review</h2>
-	<div style="border: solid; 1px;">
+	<div>
 	<p style="font-size: 30px; color: red;">THIS IS WHERE THE RATING WILL BE</p>
-	<p style="font-size: 30px; color: red;">THIS IS WHERE THE REVIEWS WILL BE</p>
+	{PAGINATION}
+	<!-- BEGIN user_comment -->
+	<div style="margin: 10px;">
+	<h2 style="display: inline;">
+		User: 
+		<img src="{SITE_URL}/images/userImages/{USER_IMAGE}">
+		{USER_USERID} 
+	</h2>
+	<p style="display: inline;">{USER_TITLE}</p>
+	<p style="text-align: justify-all;">
+		{USER_COMMENT}
+	</p>
+		{USER_RATING}
+		{USER_LIKE}
+	<p style="text-align: justify;">
+		{USER_DATE}
+	</p>
 	</div>
-	<div style="border: solid; 1px;">
+	<!-- END user_comment -->
+	</div>
+	<hr>
+	<div>
 	<form method="POST" style="display: inline;">
-		<input style="display: inline;" type="text" value="THIS IS THE REVIEW">
-		<input style="display: inline;" type="submit" value="Add Review">
+		<input style="width: 50%; display: block; margin-left: auto; margin-right: auto;" 
+		type="text" value="THIS IS THE REVIEW">
+		<br>
+		<input style=" display: block; margin-left: auto; margin-right: auto;" type="submit" value="Add Review">
 	</form>
 	</div>
 </div>

@@ -79,4 +79,21 @@ class Product extends Dot_Model
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=10);
 		return $dotPaginator->getData();
 	}
+	// function that will get every comment that's linked to the certain product
+	public function getCommentByProduct($id,$page=1)
+	{
+		$select=$this->db->select()
+						 ->from('comment')
+						 ->where('comment.productId= ?',$id)
+						 ->where('comment.isActive= ?',1)
+						 ->join('user', 'user.id = comment.userId', ['userId'=>'username']);
+
+		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=10);
+		return $dotPaginator->getData();
+	}
+	// this function will add comments to a certain product
+	public function addCommentToCertainProduct($data)
+	{
+		$this->db->insert('comment',$data);
+	}
 }
