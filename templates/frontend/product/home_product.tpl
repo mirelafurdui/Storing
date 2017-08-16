@@ -83,35 +83,54 @@
 <hr>
 <div>
 	<h2>Review</h2>
+	<br>
 	<div>
-	<p style="font-size: 30px; color: red;">THIS IS WHERE THE RATING WILL BE</p>
+		<form method="POST"; style="display: inline;">
+			Rating:
+				<select name="rating" style="width: 50%; display: block; margin-left: auto; margin-right: auto;">
+				  <option value="5">♥ ♥ ♥ ♥ ♥</option>
+				  <option value="4">♥ ♥ ♥ ♥</option>
+				  <option value="3">♥ ♥ ♥</option>
+				  <option value="2">꒰ ꒡⌓꒡꒱</option>
+				  <option value="1">୧༼ಠ益ಠ༽୨</option>
+				</select>
+			Title:
+				<input name="title"; style="width: 50%; display: block; margin-left: auto; margin-right: auto;" min="1"; max="5"; type="text" value="Add text">
+			Comment:
+				<input name="comment"; style="width: 50%; display: block; margin-left: auto; margin-right: auto;"
+			type="text" value="Add Review">
+			<br>
+			<input style=" display: block; margin-left: auto; margin-right: auto;" type="submit" value="Add Review">
+		</form>
+	</div>
+	<hr>
+	<div>
 	{PAGINATION}
 	<!-- BEGIN user_comment -->
-	<div style="margin: 10px;">
-	<h2 style="display: inline;">
-		User: 
-		<img src="{SITE_URL}/images/userImages/{USER_IMAGE}">
-		{USER_USERID} 
-	</h2>
-	<p style="display: inline;">{USER_TITLE}</p>
-	<p style="text-align: justify-all;">
-		{USER_COMMENT}
-	</p>
-		{USER_RATING}
-		{USER_LIKE}
-	<p style="text-align: justify;">
-		{USER_DATE}
-	</p>
+	<div style="margin: 10px; margin-bottom: 50px;">
+		<h2 style="display: inline;">
+			<img src="{SITE_URL}/images/userImages/{USER_IMAGE}" style="width: 30px; height: 25px;">
+			{USER_USERID} 
+		</h2>
+			<p style="display: inline; font-size: 20px;">{USER_TITLE}</p>
+			<p style="display: inline; font-size: 20px;">Rated {USER_RATING}</p>
+				<div style="margin: 5px;">
+				<p style="text-align: justify-all;">
+					{USER_COMMENT}
+				</p>
+				</div>
+				{USER_LIKE}
+			<p style="text-align: justify;">
+				{USER_DATE}
+				<div style="display: inline; margin-left: auto; margin-right: auto;">
+					<button onclick="";>Edit</button>
+					<form method="POST">
+						<button type="button" name="delete">Delete</button>
+					</form>
+				</div>
+			</p>
 	</div>
 	<!-- END user_comment -->
 	</div>
 	<hr>
-	<div>
-	<form method="POST" style="display: inline;">
-		<input style="width: 50%; display: block; margin-left: auto; margin-right: auto;" 
-		type="text" value="THIS IS THE REVIEW">
-		<br>
-		<input style=" display: block; margin-left: auto; margin-right: auto;" type="submit" value="Add Review">
-	</form>
-	</div>
 </div>

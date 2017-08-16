@@ -40,12 +40,34 @@ switch ($registry->requestAction) {
 
 	//this case will take you to the product page & it will show comments based on product
 	case 'show':
+		// this is the variable responsable with the page number
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
 		$certainProduct = $productModel->getProductById($registry->request['id']);
 		$productView->showCertainProduct('home_product',$certainProduct);
-		$allCommentsForProduct = $productModel->getCommentByProduct($registry->request['id']);
+		// get's all comments based on the given id
+		$allCommentsForProduct = $productModel->getCommentByProduct($registry->request['id'],$page);
+		// shows comments on a product
 		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page);
-
+		// this transforms the object that is session into an array to use it for the if.
+		$userData = (array) $_SESSION['frontend']['user'];
+		// this is for adding comments using form
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$data['rating'] = (isset($_POST['rating'])) ? $_POST['rating']:'';
+			$data['title'] = (isset($_POST['title'])) ? $_POST['title']:'';
+			$data['comment'] = (isset($_POST['comment'])) ? $_POST['comment']:'';
+			$data['userId'] = (isset($userData['id'])) ? $userData['id']:'';
+			$data['isActive'] = 1;
+			$data['productId'] = (isset($registry->request['id'])) ? $registry->request['id']:'';
+			$productModel->addCommentToCertainProduct($data);
+			}
+		// this is for deleting certain comments
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$data['delete'] = (isset($_POST['delete'])) ? $_POST['delete']:'';
+			$productModel->deleteCommentToCertainProduct($id);
+		}
+		var_dump($_POST);
+		// $productModel->editCommentToCertainProduct($data,$id);
+		// 		header('Location: '.$registry->configuration->website->params->url.'/admin/'.x$registry->requestController. '/' . $registry->requestAction.'/id/'.$id); exit;
 		break;
 
 	//this case will take you to a certain brand

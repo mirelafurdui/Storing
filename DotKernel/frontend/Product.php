@@ -86,14 +86,25 @@ class Product extends Dot_Model
 						 ->from('comment')
 						 ->where('comment.productId= ?',$id)
 						 ->where('comment.isActive= ?',1)
-						 ->join('user', 'user.id = comment.userId', ['userId'=>'username']);
+						 ->join('user', 'user.id = comment.userId', ['userId'=>'username','image'=>'image']);
 
-		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=10);
+		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=5);
 		return $dotPaginator->getData();
 	}
 	// this function will add comments to a certain product
 	public function addCommentToCertainProduct($data)
 	{
 		$this->db->insert('comment',$data);
+	}
+	// this function will edit a certain comment
+	public function editCommentToCertainProduct($data,$id)
+	{
+		$this->db->update('comment',$data,"id= " . $id);
+	}
+	// this function will delete a certain comment
+	public function deleteCommentToCertainProduct($id)
+	{
+		$this->db->delete('comment');
+		// $this->db->delete('comment',"id= " . $id);
 	}
 }
