@@ -18,7 +18,6 @@
 				<delete>Delete product</delete>
 				<deleteError>You don't confirm deletion!</deleteError>
 				<addProduct>Your product was add to DB!</addProduct>
-				<addProductError>You don't add product to DB!</addProductError>
 				<addBrand>Your Brand was add to DB!</addBrand>
 				<addCategory>Your Category was add to DB!</addCategory>
 				<edit>Product edited</edit>
@@ -27,10 +26,9 @@
 				<allowed></allowed>
 				<delete>Delete product</delete>
 				<deleteError>You don't confirm deletion!</deleteError>
-				<addProduct>Your product was add to DB!</addProduct>
-				<addProductError>You don't add product to DB!</addProductError>
-				<addBrand>Your Brand was add to DB!</addBrand>
-				<addCategory>Your Category was add to DB!</addCategory>
+				<addProductError>You don't add product to DB! You don't have a image!</addProductError>
+				<addCategoryError>Your Category exist!</addCategoryError>
+				<addCategoryError1>Your Category input is empty!!</addCategoryError1>
 				<edit>Product edited</edit>
 			</errorMessage>
 		</variable>

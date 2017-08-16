@@ -36,13 +36,28 @@ switch ($registry->requestAction) {
 			if($imageFileType == 'jpeg' || $imageFileType == 'jpg' || $imageFileType == 'JPG' || $imageFileType == 'JPEG'){
 				$data['image'] = $filename . '.' . $imageFileType;
 				move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $filename . '.' . $imageFileType);
-				$productModel->addProduct($data);
 			}
+				$ok = false;
+				if (empty($_POST['image'])) {
+					$ok = true;
+				}
+
+				if (!$ok) {
+					$productModel->addProduct($data);
+					header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController.'/'.$registry->requestAction);
+					//view confirmation message
+					$registry->session->message['txt'] = $registry->option->infoMessage->addProduct;
+					$registry->session->message['type'] = 'info';
+				}else{
+					$registry->session->message['txt'] = $registry->option->errorMessage->addProductError;
+					$registry->session->message['type'] = 'error';
+				}
 		}
 		break;
 			//add category in DB
 	case 'category':
 		$category = $productModel->selectCategory();
+		//var_dump($category); exit;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$ok = false;
 			$ok1 = false;
@@ -57,18 +72,30 @@ switch ($registry->requestAction) {
 					
 				}
 			}
-			if (!$ok && !$ok1) {
-				$productModel->addData($_POST,'category');
-			//view confirmation message
-				$registry->session->message['txt'] = $registry->option->infoMessage->addCategory;
-				$registry->session->message['type'] = 'info';
-			}elseif($ok) {
-				$registry->session->message['txt'] = $registry->option->errorMessage->addCategoryError;
-				$registry->session->message['type'] = 'error';
-			}elseif($ok1) {
-				$registry->session->message['txt'] = $registry->option->errorMessage->addCategoryError1;
-				$registry->session->message['type'] = 'error';
-			}
+				$data['name'] = (isset($_POST['name'])) ? $_POST['name']:'';
+				
+				$target_dir = "images/category/";
+				$filename = md5(microtime());
+
+				$imageFileType = pathinfo($_FILES["image"]['name'],PATHINFO_EXTENSION);	
+				
+				if($imageFileType == 'jpeg' || $imageFileType == 'jpg' || $imageFileType == 'JPG' || $imageFileType == 'JPEG'){
+					$data['image'] = $filename . '.' . $imageFileType;
+					move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $filename . '.' . $imageFileType);
+				}
+				if (!$ok && !$ok1) {
+					$productModel->addData($data,'category');
+					header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController.'/'.$registry->requestAction);
+				//view confirmation message
+					$registry->session->message['txt'] = $registry->option->infoMessage->addCategory;
+					$registry->session->message['type'] = 'info';
+				}elseif($ok) {
+					$registry->session->message['txt'] = $registry->option->errorMessage->addCategoryError;
+					$registry->session->message['type'] = 'error';
+				}elseif($ok1) {
+					$registry->session->message['txt'] = $registry->option->errorMessage->addCategoryError1;
+					$registry->session->message['type'] = 'error';
+				}
 		}
 		$productView->showDataCategory('add_category', $category);
 		break;
@@ -89,16 +116,29 @@ switch ($registry->requestAction) {
 					
 				}
 			}
+				$data['name'] = (isset($_POST['name'])) ? $_POST['name']:'';
+				
+				$target_dir = "images/brands/";
+				$filename = md5(microtime());
+
+				$imageFileType = pathinfo($_FILES["image"]['name'],PATHINFO_EXTENSION);	
+				
+				if($imageFileType == 'jpeg' || $imageFileType == 'jpg' || $imageFileType == 'JPG' || $imageFileType == 'JPEG'){
+					$data['image'] = $filename . '.' . $imageFileType;
+					move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $filename . '.' . $imageFileType);
+				}
+
 			if (!$ok && !$ok1) {
-				$productModel->addData($_POST,'brand');
+				$productModel->addData($data,'brand');
+				header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController.'/'.$registry->requestAction);
 			//view confirmation message
 				$registry->session->message['txt'] = $registry->option->infoMessage->addBrand;
 				$registry->session->message['type'] = 'info';
 			}elseif($ok) {
-				$registry->session->message['txt'] = $registry->option->errorMessage->addBrandError;
+				$registry->session->message['txt'] = $registry->option->errorMessage->addProductError;
 				$registry->session->message['type'] = 'error';
 			}elseif($ok1) {
-				$registry->session->message['txt'] = $registry->option->errorMessage->addBrandError1;
+				$registry->session->message['txt'] = $registry->option->errorMessage->addProductError;
 				$registry->session->message['type'] = 'error';
 			}
 		}
