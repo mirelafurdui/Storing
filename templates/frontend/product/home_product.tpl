@@ -1,26 +1,4 @@
-<style>
-	.info{
-		margin:20px auto;
-		background-color:#EEF2F5;
-		padding:15px;
-		line-height:25px;
 
-		-moz-border-radius: 12px;
-		-webkit-border-radius: 12px;
-		border-radius: 12px;
-		-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
-	}
-	#documentation{
-		float:left;
-		width:47%;
-		word-wrap: break-word;
-	}
-	#download{
-		float:right;
-		width:47%;
-		word-wrap: break-word;
-	}
-</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- Script that changes the color of the number based on the if functions -->
 <script type="text/javascript">
@@ -35,7 +13,6 @@
   }
 });
 </script>
-
 <h2>
 	<a href="{SITE_URL}/product/list"> Products </a>/
 	<a href="{SITE_URL}/product/category/id/{IDCATEGORY}"> {CATEGORYNAME} </a>/
@@ -123,10 +100,9 @@
 			<p style="text-align: justify;">
 				{USER_DATE}
 				<div style="display: inline; margin-left: auto; margin-right: auto;">
-					<button onclick="";>Edit</button>
-					<form method="POST">
-						<button type="button" name="delete">Delete</button>
-					</form>
+					<input type="button" id="Edit" value="Edit"  onclick="edit_row('')">
+					<input type="button" id="Save" value="Save"  onclick="save_row('')">
+					<input type="button" id="Delete" value="Delete"  onclick="delete_row('')">
 				</div>
 			</p>
 	</div>

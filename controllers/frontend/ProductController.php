@@ -61,11 +61,10 @@ switch ($registry->requestAction) {
 			$productModel->addCommentToCertainProduct($data);
 			}
 		// this is for deleting certain comments
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$data['delete'] = (isset($_POST['delete'])) ? $_POST['delete']:'';
-			$productModel->deleteCommentToCertainProduct($id);
-		}
-		var_dump($_POST);
+		// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		// 	$data['delete'] = (isset($_POST['delete'])) ? $_POST['delete']:'';
+		// 	$productModel->deleteCommentToCertainProduct($id);
+		// }
 		// $productModel->editCommentToCertainProduct($data,$id);
 		// 		header('Location: '.$registry->configuration->website->params->url.'/admin/'.x$registry->requestController. '/' . $registry->requestAction.'/id/'.$id); exit;
 		break;

@@ -3,7 +3,7 @@
 	<ul class="form">
 		<li class="clearfix">
 			<label>Image:</label>
-			<img src="{SITE_URL}/images/user_image/{IMAGE}" width="200" height="200">
+			<img src="{SITE_URL}/{IMAGE}" width="200" height="200">
 		</li>
 		<li class="clearfix">
 			<label>Username:</label>
@@ -30,11 +30,11 @@
 			<input type="text" name="lastName" value="{LASTNAME}" id="lastName" />
 		</li>
 		<li class="clearfix">
-			<label for="lastName">City:</label>
+			<label for="city">City:</label>
 			<input type="text" name="city" value="{CITY}" id="city" />
 		</li>
 		<li class="clearfix">
-			<label for="lastName">Address:</label>
+			<label for="address">Address:</label>
 			<input type="text" name="address" value="{ADDRESS}" id="address" />
 		</li>
 		<li class="clearfix">
