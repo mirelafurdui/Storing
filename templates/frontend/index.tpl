@@ -4,7 +4,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9">
 	<title>{PAGE_TITLE}</title>
-	<link rel="apple-touch-icon" href="{SITE_URL}/images/apple-touch-icon.png">
+	<link rel="icon" href="{SITE_URL}/images/favicon.png">
+	<!-- <link rel="apple-touch-icon" href="{SITE_URL}/images/apple-touch-icon.png"> -->
 	<meta name="keywords" content="{PAGE_KEYWORDS}" >
 	<meta name="description" content="{PAGE_DESCRIPTION}" >
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -21,8 +22,11 @@
 	<div id="wrapper">
 		<header>
 			<div id="header-content" class="clearfix">
+			<a href="{SITE_URL}/"><img style="display: inline-block; margin-top: 20px" src="{SITE_URL}/images/favicon.png" width="80" height="70"></a>
 				<div id="logo">
-					<h1><a href="{SITE_URL}/">{SITE_NAME}</a></h1>
+					<h1>
+						<a style="display: inline-block;" href="{SITE_URL}/">{SITE_NAME}</a>
+					</h1>
 				</div>
 				{MENU_TOP}
 			</div>

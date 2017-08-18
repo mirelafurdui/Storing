@@ -6,6 +6,11 @@
 			<img src="{SITE_URL}/{IMAGE}" width="200" height="200">
 		</li>
 		<li class="clearfix">
+			<label>Change Image:</label>
+			 <input type="file" name="newImage" id="newImage">
+			 <input type="hidden" name="url" value="<?php echo htmlentities($_SERVER['REQUEST_URI'])>"/>
+		</li>
+		<li class="clearfix">
 			<label>Username:</label>
 			<strong>{USERNAME}</strong>
 		</li>
