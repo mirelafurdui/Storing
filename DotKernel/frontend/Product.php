@@ -104,7 +104,7 @@ class Product extends Dot_Model
 	// this function will delete a certain comment
 	public function deleteCommentToCertainProduct($id)
 	{
-		$this->db->delete('comment');
-		// $this->db->delete('comment',"id= " . $id);
+		// $this->db->delete('comment');
+		$this->db->delete('comment',"id= " . $id);
 	}
 }

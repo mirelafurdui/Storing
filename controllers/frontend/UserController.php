@@ -106,7 +106,6 @@ switch ($registry->requestAction)
 								'email' => array('email' => (isset($_POST['email']) ? $_POST['email'] : '')
 							)
 					);
-			
 			// Only if a new password is provided we will update the password field
 			if($_POST['password'] != '' || $_POST['password2'] !='' )
 			{
@@ -144,9 +143,20 @@ switch ($registry->requestAction)
 		// display signup form and allow user to register
 		$data = array();
 		$error = array();
+		$errorFile = [];
 		if ($_SERVER['REQUEST_METHOD'] === "POST")
 		{
-			// POST values that will be validated
+			if(file_exists($_FILES['image']['tmp_name']))
+			{
+				foreach ($_FILES['image'] as $key =>$value)
+				{
+					$validatedImage = validateImage($key,$value);
+					if($validatedImage !== true)
+					{
+						$errorFile[$type] = $validatedImage;
+					}
+				}
+			}
 			$values = array('details' => 
 								array('firstName'=>(isset($_POST['firstName']) ? $_POST['firstName'] : ''),
 									  'lastName'=>(isset($_POST['lastName'])? $_POST['lastName'] : ''),
@@ -155,20 +165,30 @@ switch ($registry->requestAction)
 							'email' => array('email' => (isset($_POST['email']) ? $_POST['email'] : '')),
 							'password' => array('password' => (isset($_POST['password']) ? $_POST['password'] : ''),
 												'password2' =>  (isset($_POST['password2']) ? $_POST['password2'] : '')
-											   ),
+											   )
 							// 'captcha' => array('recaptcha_challenge_field' => (isset($_POST['recaptcha_challenge_field']) ? $_POST['recaptcha_challenge_field'] : ''),
 							// 				   'recaptcha_response_field' => (isset($_POST['recaptcha_response_field']) ? $_POST['recaptcha_response_field'] : ''))
 						  );
 			$dotValidateUser = new Dot_Validate_User(array('who' => 'user', 'action' => 'add', 'values' => $values));
-			if($dotValidateUser->isValid())
+			if($dotValidateUser->isValid() && empty($errorFile))
 			{
+				//if there was a picture uploaded and it is not a corupted file then move it to uploads and create the user
+					$target_dir = 'images/uploads/user/';
+					$filename = $_POST['email'] . '.jpg';
+					$target_file = $target_dir . $filename;
+					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 				// no error - then add user
 				$data = $dotValidateUser->getData();
+				$data['city'] = $_POST['city'];
+				$data['address'] = $_POST['address'];
+				$data['image'] = $target_file;
 				$userModel->addUser($data);
 				$session->message['txt'] = $option->infoMessage->add;
 				$session->message['type'] = 'info';
 				//login user
 				$userModel->authorizeLogin($data);
+				header('Location: '.$registry->configuration->website->params->url . '/user/account/');
+				exit;
 			}
 			else
 			{
@@ -178,12 +198,14 @@ switch ($registry->requestAction)
 					$data = $dotValidateUser->getData();
 					unset($data['password']);
 				}
+				header('location: '.$registry->configuration->website->params->url . '/user/register/');
+				exit;
 			}
 			// add action and validation are made with ajax, so return json string
-			header('Content-type: application/json');  
-			echo Zend_Json::encode(array('data'=>$dotValidateUser->getData(), 'error'=>$dotValidateUser->getError()));
+			// header('Content-type: application/json');  
+			// echo Zend_Json::encode(array('data'=>$dotValidateUser->getData(), 'error'=>$dotValidateUser->getError()));
 			// return $data and $error as json
-			exit;
+		
 		}
 		$userView->details('add',$data);
 	break;
@@ -275,3 +297,31 @@ switch ($registry->requestAction)
 		exit;
 	break;
 }
+	function validateImage($type,$data)
+	{
+		$errors=[];
+		if ($type=="size")
+		{
+			$allowedSize= 2097152;
+			if ($data > $allowedSize)
+			{
+				$errors[]= "Your Image size $data is too big!";
+			}
+		}
+		if ($type=="type")
+		{
+			$imageTypes=['image/jpeg' => "image/jpeg"];
+			if (!array_key_exists($data, $imageTypes))
+			{
+				$errors[]= "Your image $type is not allowed!";
+			}
+		}
+		if (count($errors) === 0)
+		{
+			return true;
+		} else {
+			return $errors;
+		}
+	}
+
+	
