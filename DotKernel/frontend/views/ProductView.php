@@ -30,7 +30,7 @@ class Product_View extends View
 			foreach ($productData['data'] as $key => $value) {
 				foreach ($value as $productK => $productValue) {
 					// this will set all the productKeys given to be upper case for it to work with the tpl file
-					$this->tpl->setVar(strtoupper($productK), $productValue);
+					$this->tpl->setVar(strtoupper($productK), substr($productValue,0,150));
 				}
 				// this parse is related to the block and if it's true it will show all the keys and values for each block repeat
 				// block name "product_list"

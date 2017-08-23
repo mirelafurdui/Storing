@@ -93,10 +93,10 @@ $(document).ready(function(){
         <div class="item  col-xs-4 col-lg-4">
 
             <div class="thumbnail">
-                <img class="group list-group-image" src="{SITE_URL}/images/uploads/{IMAGE}" height="300" width="300" alt="" />
+               <a href="{SITE_URL}/product/show/id/{ID}"><img class="group list-group-image" src="{SITE_URL}/images/uploads/{IMAGE}" height="300" width="300" alt="" /></a>
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading" style="font-weight: bold;">
-                         {NAME}</h4>
+                        <a href="{SITE_URL}/product/show/id/{ID}" > {NAME}</a></h4>
                     <p class="group inner list-group-item-text" >
                         {DESCRIPTION}</p>
                     <div class="row">
