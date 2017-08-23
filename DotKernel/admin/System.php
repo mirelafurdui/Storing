@@ -66,7 +66,7 @@ class System extends Dot_Model
 	 * @return void
 	 */
 	public function updateSettings($data)
-	{
+	{var_dump($data);exit;
 		foreach ($data as $k => $v)
 		{
 			$this->db->update('setting', array('value' => $v), $this->db->quoteIdentifier('key').' = '.$this->db->quote($k));

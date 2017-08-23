@@ -9,8 +9,10 @@ switch ($registry->requestAction) {
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
 
 		$list = $productModel->getProductList($page);
-		
 		$product = $productView->showProductList('product_list', $list, $page);
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			var_dump($_POST);exit;
+		}
 		break;
 
 	case 'add':
@@ -73,16 +75,17 @@ switch ($registry->requestAction) {
 				}
 			}
 				$data['name'] = (isset($_POST['name'])) ? $_POST['name']:'';
-				
+				$defaultImage = "default.jpeg";
 				$target_dir = "images/category/";
 				$filename = md5(microtime());
-
+				
 				$imageFileType = pathinfo($_FILES["image"]['name'],PATHINFO_EXTENSION);	
 				
 				if($imageFileType == 'jpeg' || $imageFileType == 'jpg' || $imageFileType == 'JPG' || $imageFileType == 'JPEG'){
 					$data['image'] = $filename . '.' . $imageFileType;
 					move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $filename . '.' . $imageFileType);
 				}
+				
 				if (!$ok && !$ok1) {
 					$productModel->addData($data,'category');
 					header('Location: '.$registry->configuration->website->params->url. '/admin/'.$registry->requestController.'/'.$registry->requestAction);
@@ -250,5 +253,6 @@ switch ($registry->requestAction) {
 			);
 			echo Zend_Json::encode($result);
 		exit;
+	
 		break;
 }

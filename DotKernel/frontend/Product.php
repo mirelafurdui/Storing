@@ -8,7 +8,7 @@ class Product extends Dot_Model
 	}
 
 	// function that joins 2 tables with the origin table "product" and lists them all with some rows changed + shows only if isactive=1
-	public function getProductList($page=1)
+	public function getProductList($page=1,$number)
 	{
 		$select=$this->db->select()
 						 ->from('product')
@@ -16,7 +16,7 @@ class Product extends Dot_Model
 						 ->join('category', 'category.id = product.idCategory',['categoryName'=>'name'])
 						 ->join('brand', 'brand.id = product.idBrand',['brandName'=>'name']);
 
-		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage);
+		$dotPaginator = new Dot_Paginator($select,$page,$number);
 		return $dotPaginator->getData();
 	}
 
