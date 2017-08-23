@@ -1,3 +1,14 @@
+<!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="{SITE_URL}/templates/js/admin/main.js"></script>
+
 <script>
 	var userToken = "{USERTOKEN}", 
 		SITE_URL = "{SITE_URL}",
@@ -9,7 +20,7 @@
 		});
 	})
 </script>
-	
+
 
 <style type="text/css"> 
 	/*a.active_state {
@@ -18,8 +29,10 @@
 a.inactive_state {
 	background: url('images/status_icon.png') no-repeat 0px -50px;
 }*/
+
 </style>
 {PAGINATION}
+				
 <div id="adminList" class="box-shadow">
 	<table class="big_table" frame="box" rules="all">
 		<thead>

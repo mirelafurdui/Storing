@@ -82,4 +82,10 @@ class Product extends Dot_Model
 	{	
 		$this->db->update('product', array('isActive' => $isActive), 'id = ' . $id);
 	}
+
+	// Function update number of product per page
+	public function updateProductPerPage($number)
+	{
+		$this->db->update('setting',array('value'=>$number), 'key = resultsPerPage');		
+	}
 }

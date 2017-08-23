@@ -13,8 +13,52 @@ switch ($registry->requestAction) {
 		// this is the variable responsable with the page number
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
 		// this variable will use the function to get all the products using $page for pagination
-		$list = $productModel->getProductList($page);
+		
+		$action = $_POST['action'] ?? 'error';
+		$response = [
+			'success'=>false,
+			'message'=>'Invalid action provided',
+			'action'=>'error',
+			'data'=>[
+						'voteValue'=>''
+					]
+			];
+	if (!isset($_SESSION['value'])) {
+		$_SESSION['value'] = 5;
+	}
+	if (in_array($action, ['ten', 'fifteen','twenty','twentyfive'])) {
+		$response['action'] = $action;
+		switch ($action) {
+			case 'ten':
+				$response['data']['voteValue'] = 9;
+				$_SESSION['value'] = 9;
+				$response['success'] = true;
+				$response['message'] = 'up success';
+				break;
+			case 'fifteen':
+				$response['data']['voteValue'] = 15;
+				$_SESSION['value'] = 15;
+				$response['success'] = true;
+				$response['message'] = 'down success';
+				break;
+			case 'twenty':
+				$response['data']['voteValue'] = 21;
+				$_SESSION['value'] = 21;
+				$response['success'] = true;
+				$response['message'] = 'refresh success';
+			break;
+			case 'twentyfive':
+				$value = 0;
+				$response['data']['voteValue'] = 24;
+				$_SESSION['value'] = 24;
+				$response['success'] = true;
+				$response['message'] = 'reset success';
+			break;
 
+		}
+		echo json_encode($response);
+	} 
+		$list = $productModel->getProductList($page,$_SESSION['value']);
 		$product = $productView->showProductList('home', $list, $page);
 		break;
 		
@@ -101,8 +145,7 @@ switch ($registry->requestAction) {
 
 	//this case is meant to represent a upvote to a comment
 	case 'voting':
-		// var_dump($_POST);
-		// var_dump($_SESSION);
+	
 		// this is the action that's given from the script
 		$action = $_POST['action'] ?? 'error';
 		// this is the comment id that's given from the script
@@ -146,7 +189,6 @@ switch ($registry->requestAction) {
 
 	// this case is meant to delete the user's comment
 	case 'delete_user_comment':
-	// var_dump($_POST);
 		$loggedUserId = (array)$_SESSION['frontend']['user'];
 	// user id
 		$userId = $loggedUserId['id'];
@@ -154,7 +196,6 @@ switch ($registry->requestAction) {
 		$commentId = $_POST['id'];
 	// delete action
 		$action = $_POST['action'] ?? 'error';
-		var_dump(" User Id " . $userId . " User Comment " . $commentId . " Action used " . $action);
 		if ($action == 'delete' && $userId=$loggedUserId['id']) {
 			$response['action'] = $action;
 			$response['success'] = true;
