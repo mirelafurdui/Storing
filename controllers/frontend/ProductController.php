@@ -3,6 +3,8 @@ $productModel= new Product();
 $productView= new Product_View($tpl);
 $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 
+// variables needed by upvote and downvote in order to work
+
 switch ($registry->requestAction) {
 	default:
 
@@ -46,6 +48,11 @@ switch ($registry->requestAction) {
 		$productView->showCertainProduct('home_product',$certainProduct);
 		// get's all comments based on the given id
 		$allCommentsForProduct = $productModel->getCommentByProduct($registry->request['id'],$page);
+		// $a = $allCommentsForProduct['data'];
+		// $commentIds = [];
+		// foreach ($allCommentsForProduct['data'] as $key => $value) {
+		// 	$commentIds[$value['id']] = $value['id'];
+		// }
 		// shows comments on a product
 		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page);
 		// this transforms the object that is session into an array to use it for the if.
@@ -60,13 +67,6 @@ switch ($registry->requestAction) {
 			$data['productId'] = (isset($registry->request['id'])) ? $registry->request['id']:'';
 			$productModel->addCommentToCertainProduct($data);
 			}
-		// this is for deleting certain comments
-		// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		// 	$data['delete'] = (isset($_POST['delete'])) ? $_POST['delete']:'';
-		// 	$productModel->deleteCommentToCertainProduct($id);
-		// }
-		// $productModel->editCommentToCertainProduct($data,$id);
-		// 		header('Location: '.$registry->configuration->website->params->url.'/admin/'.x$registry->requestController. '/' . $registry->requestAction.'/id/'.$id); exit;
 		break;
 
 	//this case will take you to a certain brand
@@ -97,5 +97,71 @@ switch ($registry->requestAction) {
 	//this case will take you to the about page
 	case 'about':
 		$productView->showPage($registry->requestAction);
+		break;
+
+	//this case is meant to represent a upvote to a comment
+	case 'voting':
+		// var_dump($_POST);
+		// var_dump($_SESSION);
+		// this is the action that's given from the script
+		$action = $_POST['action'] ?? 'error';
+		// this is the comment id that's given from the script
+		$id = $_POST['id'];
+		
+		$response = [
+					'success' => false,
+					'message' => 'invalid action provided',
+					'action' => 'error',
+					'data' => [
+						'voteValue' => ''
+				 	],
+		];
+		// an if that checks for the action an value
+		if ($action == 'upVote' && $_SESSION['value'] == 0) {
+			$value=$_SESSION['value'];
+			$response['action'] = $action;
+			$response['data']['voteValue'] = ++$value;
+			$_SESSION['value'] = $value;
+			$response['success'] = true;
+			$response['message'] = "UP Successfull";
+			$update = $productModel->voteACertainComment($value,$id);
+			echo Zend_Json::encode($response);
+			exit();
+			// an else that checks for the action an value
+		}
+		if ($action == 'downVote' && $_SESSION['value'] == 1) {
+			$value=$_SESSION['value'];
+			$response['action'] = $action;
+			$response['data']['voteValue'] = --$value;
+			$_SESSION['value'] = $value;
+			$response['success'] = true;
+			$response['message'] = "DOWN Successfull";
+			$update = $productModel->voteACertainComment($value,$id);
+			echo Zend_Json::encode($response);
+			exit();
+		}
+		echo Zend_Json::encode($response);
+		exit();
+		break;
+
+	// this case is meant to delete the user's comment
+	case 'delete_user_comment':
+	// var_dump($_POST);
+		$loggedUserId = (array)$_SESSION['frontend']['user'];
+	// user id
+		$userId = $loggedUserId['id'];
+	// comment id
+		$commentId = $_POST['id'];
+	// delete action
+		$action = $_POST['action'] ?? 'error';
+		var_dump(" User Id " . $userId . " User Comment " . $commentId . " Action used " . $action);
+		if ($action == 'delete' && $userId=$loggedUserId['id']) {
+			$response['action'] = $action;
+			$response['success'] = true;
+			$response['message'] = "Delete Successfull";
+			$delete = $productModel->deleteCommentToCertainProduct($commentId, $userId);
+			echo Zend_Json::encode($response);
+			exit();
+		}
 		break;
 }

@@ -104,7 +104,7 @@ class Product_View extends View
 		// this foreach travels the established table by his keys and values
 		foreach ($productData as $productKey => $productValue) {
 			// this will set all the productKeys given to be upper case for it to work with the tpl file
-			$this->tpl->setVar(strtoupper($productKey), $productValue);
+			$this->tpl->setVar(strtoupper("PRODUCT_".$productKey), $productValue);
 		}
 	}
 
@@ -183,7 +183,7 @@ class Product_View extends View
 		foreach ($productData['data'] as $product) {
 			foreach ($product as $key => $value) {
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
-				$this->tpl->setVar(strtoupper("USER_".$key), $value);
+				$this->tpl->setVar(strtoupper("COMMENT_".$key), $value);
 			}
 		$this->tpl->parse('user_comment_block','user_comment',true);
 		}
