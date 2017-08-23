@@ -94,17 +94,22 @@ class Product extends Dot_Model
 	// this function will add comments to a certain product
 	public function addCommentToCertainProduct($data)
 	{
-		$this->db->insert('comment',$data);
+		$this->db->insert('comment', $data);
 	}
 	// this function will edit a certain comment
 	public function editCommentToCertainProduct($data,$id)
 	{
-		$this->db->update('comment',$data,"id= " . $id);
+		$this->db->update('comment', $data, "id= " . $id);
 	}
 	// this function will delete a certain comment
-	public function deleteCommentToCertainProduct($id)
+	public function deleteCommentToCertainProduct($commentId,$userId)
 	{
-		// $this->db->delete('comment');
-		$this->db->delete('comment',"id= " . $id);
+		$this->db->delete('comment', array("id = " . $commentId, 
+											"userId = " . $userId));
+	}
+	// update function for like and dislike
+	public function voteACertainComment($data,$id)
+	{
+		$this->db->update('comment',array('likeTotal'=>$data),"id= " . $id);
 	}
 }
