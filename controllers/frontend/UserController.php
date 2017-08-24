@@ -125,7 +125,16 @@ switch ($registry->requestAction)
 				// no error - then update user
 				$data = $dotValidateUser->getData();
 				$data['id'] = $registry->session->user->id;
+
+					$target_dir = 'images/uploads/user/';
+					$filename = $_POST['email'] . '.jpg';
+					$target_file = $target_dir . $filename;
+					// var_dump($_FILES["newImage"]);exit;
+					move_uploaded_file($_FILES["newImage"]["tmp_name"], $target_file);
+
+
 				$userModel->updateUser($data);
+				header('Location: '.$registry->configuration->website->params->url . '/user/account/');
 				$session->message['txt'] = $option->infoMessage->update;
 				$session->message['type'] = 'info';
 			}
@@ -176,6 +185,7 @@ switch ($registry->requestAction)
 					$target_dir = 'images/uploads/user/';
 					$filename = $_POST['email'] . '.jpg';
 					$target_file = $target_dir . $filename;
+					// var_dump($target_file);exit;
 					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 				// no error - then add user
 				$data = $dotValidateUser->getData();
