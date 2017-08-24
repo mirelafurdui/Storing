@@ -7,7 +7,6 @@ $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 
 switch ($registry->requestAction) {
 	default:
-
 	//this case will take you to the product list
 	case 'home':
 		// this is the variable responsable with the page number
@@ -23,34 +22,33 @@ switch ($registry->requestAction) {
 						'voteValue'=>''
 					]
 			];
-	if (!isset($_SESSION['value'])) {
-		$_SESSION['value'] = 5;
+	if (!isset($_SESSION['pageValue'])) {
+		$_SESSION['pageValue'] = 9;
 	}
-	if (in_array($action, ['ten', 'fifteen','twenty','twentyfive'])) {
+	if (in_array($action, ['9', '15','21','24'])) {
 		$response['action'] = $action;
 		switch ($action) {
-			case 'ten':
+			case '9':
 				$response['data']['voteValue'] = 9;
-				$_SESSION['value'] = 9;
+				$_SESSION['pageValue'] = 9;
 				$response['success'] = true;
 				$response['message'] = 'up success';
 				break;
-			case 'fifteen':
+			case '15':
 				$response['data']['voteValue'] = 15;
-				$_SESSION['value'] = 15;
+				$_SESSION['pageValue'] = 15;
 				$response['success'] = true;
 				$response['message'] = 'down success';
 				break;
-			case 'twenty':
+			case '21':
 				$response['data']['voteValue'] = 21;
-				$_SESSION['value'] = 21;
+				$_SESSION['pageValue'] = 21;
 				$response['success'] = true;
 				$response['message'] = 'refresh success';
 			break;
-			case 'twentyfive':
-				$value = 0;
+			case '24':
 				$response['data']['voteValue'] = 24;
-				$_SESSION['value'] = 24;
+				$_SESSION['pageValue'] = 24;
 				$response['success'] = true;
 				$response['message'] = 'reset success';
 			break;
@@ -58,7 +56,7 @@ switch ($registry->requestAction) {
 		}
 		echo json_encode($response);
 	} 
-		$list = $productModel->getProductList($page,$_SESSION['value']);
+		$list = $productModel->getProductList($page,$_SESSION['pageValue']);
 		$product = $productView->showProductList('home', $list, $page);
 		break;
 		
@@ -100,9 +98,9 @@ switch ($registry->requestAction) {
 		// shows comments on a product
 		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page);
 		// this transforms the object that is session into an array to use it for the if.
-		$userData = (array) $_SESSION['frontend']['user'];
 		// this is for adding comments using form
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$userData = (array) $_SESSION['frontend']['user'];
 			$data['rating'] = (isset($_POST['rating'])) ? $_POST['rating']:'';
 			$data['title'] = (isset($_POST['title'])) ? $_POST['title']:'';
 			$data['comment'] = (isset($_POST['comment'])) ? $_POST['comment']:'';
@@ -145,7 +143,9 @@ switch ($registry->requestAction) {
 
 	//this case is meant to represent a upvote to a comment
 	case 'voting':
-	
+		$userSession = (array) $_SESSION['frontend']['user'];
+		// this is the id of the logged user.
+		$userId = $userSession['id'];
 		// this is the action that's given from the script
 		$action = $_POST['action'] ?? 'error';
 		// this is the comment id that's given from the script
@@ -160,26 +160,26 @@ switch ($registry->requestAction) {
 				 	],
 		];
 		// an if that checks for the action an value
-		if ($action == 'upVote' && $_SESSION['value'] == 0) {
+		if ($action == 'upVote' && $userId != "" && $_SESSION['value'] == '0' || $_SESSION['value'] == '-1') {
 			$value=$_SESSION['value'];
 			$response['action'] = $action;
 			$response['data']['voteValue'] = ++$value;
 			$_SESSION['value'] = $value;
 			$response['success'] = true;
 			$response['message'] = "UP Successfull";
-			$update = $productModel->voteACertainComment($value,$id);
+			$update = $productModel->voteACertainComment($value, $id, $userId);
 			echo Zend_Json::encode($response);
 			exit();
-			// an else that checks for the action an value
+			// an if that checks for the action an value
 		}
-		if ($action == 'downVote' && $_SESSION['value'] == 1) {
+		if ($action == 'downVote' && $userId != "" && $_SESSION['value'] == '1' || $_SESSION['value'] == '0') {
 			$value=$_SESSION['value'];
 			$response['action'] = $action;
 			$response['data']['voteValue'] = --$value;
 			$_SESSION['value'] = $value;
 			$response['success'] = true;
 			$response['message'] = "DOWN Successfull";
-			$update = $productModel->voteACertainComment($value,$id);
+			$update = $productModel->voteACertainComment($value, $id, $userId);
 			echo Zend_Json::encode($response);
 			exit();
 		}

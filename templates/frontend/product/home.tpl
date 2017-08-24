@@ -7,7 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
 <script type="text/javascript">
-var voteRequestURL = "http://localhost/StoringC/product/home";
+var voteRequestURL = "http://localhost/Storing/product/home";
 	function voteRequest(action){
 
 		var requestSettings = {
@@ -16,7 +16,7 @@ var voteRequestURL = "http://localhost/StoringC/product/home";
 					},
 			'method': 'POST'
 		};
-			if (action == "ten" || action == "fifteen" || action == "twenty" || action == "twentyfive") {
+			if (action == "9" || action == "15" || action == "21" || action == "24") {
 			$.ajax(voteRequestURL, requestSettings).done(function(response){
 				var receiveData = $.parseJSON(response);
 				var voteSuccess = receiveData.success;
@@ -31,24 +31,24 @@ var voteRequestURL = "http://localhost/StoringC/product/home";
 </script>
 <script>
 $(document).ready(function(){
-    $("#ten").click(function(event){
+    $("#9").click(function(event){
         event.preventDefault();
-        voteRequest("ten");
+        voteRequest("9");
         location.reload();
     });
-    $("#fifteen").click(function(event){
+    $("#15").click(function(event){
         event.preventDefault();
-        voteRequest("fifteen");
+        voteRequest("15");
         location.reload();
     });
-    $("#twenty").click(function(event){
+    $("#21").click(function(event){
         event.preventDefault();
-        voteRequest("twenty");
+        voteRequest("21");
         location.reload();
     });
-    $("#twentyfive").click(function(event){
+    $("#24").click(function(event){
         event.preventDefault();
-        voteRequest("twentyfive");
+        voteRequest("24");
         location.reload();
     });
     
@@ -71,10 +71,10 @@ $(document).ready(function(){
  <div class="dropdown">
     <button id="btn" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Items Per Page</button>
     <ul class="dropdown-menu">
-      <li><a id="ten" href="#">9</a></li>
-      <li><a id="fifteen" href="#">15</a></li>
-      <li><a id="twenty" href="#">21</a></li>
-      <li><a id="twentyfive" href="#">24</a></li>
+      <li><a id="9" href="#">9</a></li>
+      <li><a id="15" href="#">15</a></li>
+      <li><a id="21" href="#">21</a></li>
+      <li><a id="24" href="#">24</a></li>
     </ul>
   </div>
 {PAGINATION}
