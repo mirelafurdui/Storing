@@ -12,7 +12,7 @@ class Product extends Dot_Model
 	{
 		$select=$this->db->select()
 						 ->from('product')
-						 ->where('product.isactive= ?',1)
+						 ->where('product.isactive= ?', 1)
 						 ->join('category', 'category.id = product.idCategory',['categoryName'=>'name'])
 						 ->join('brand', 'brand.id = product.idBrand',['brandName'=>'name']);
 
@@ -108,8 +108,8 @@ class Product extends Dot_Model
 											"userId = " . $userId));
 	}
 	// update function for like and dislike
-	public function voteACertainComment($data,$id)
+	public function voteACertainComment($data, $id, $userId)
 	{
-		$this->db->update('comment',array('likeTotal'=>$data),"id= " . $id);
+		$this->db->update('comment', array('like' => $data),"id= " . $id , "userId= " . $userId);
 	}
 }

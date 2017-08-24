@@ -28,7 +28,7 @@ function voteRequest(action, commentId) {
 	var requestSettings = {
 		"data" : { 
 			"action": action ,
-			"id": commentId
+			"id": commentId 
 				 },
 		"method" : "POST"
 	};
@@ -42,6 +42,7 @@ function voteRequest(action, commentId) {
 						console.debug(response); // enter console to see result 
 						var voteSuccess = recievedData.success;
 						var commentId = $(this).attr('commentId');
+						var session = $_SESSION['value'];
 						var voteValue = recievedData.data.voteValue;
 						$("#voteValue").text(voteValue);
 					});
@@ -61,7 +62,7 @@ function deleteComment(action,commentId) {
 		"method" : "POST"
 	};
 
-	if (action == 'delete' || action == 'edit') {
+	if (action == 'delete') {
 		$.ajax(deleteRequestUrl, requestSettings)
 			.done(
 				function(response)
@@ -86,7 +87,7 @@ $(document).ready(function() {
       		// alert(commentClass+commentId);
     		event.preventDefault();
     		voteRequest('upVote', commentId);
-    		// location.reload();
+    		location.reload();
     	});
 		$('.downvoteButton').click(function(event)
     	{
@@ -96,7 +97,7 @@ $(document).ready(function() {
       		// alert(commentClass+commentId);
     		event.preventDefault();
     		voteRequest('downVote', commentId);
-    		// location.reload();
+    		location.reload();
     	});
     	$('.deleteButton').click(function(event)
     	{
