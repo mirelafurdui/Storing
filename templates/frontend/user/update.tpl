@@ -1,5 +1,5 @@
-<form action="{SITE_URL}/user/account/" method="post">
-<input type="hidden" name="userToken" value="{USERTOKEN}">
+<form action="{SITE_URL}/user/account/" method="post" enctype="multipart/form-data">
+<input type="hidden" name="userToken" value="{USERTOKEN}" >
 	<ul class="form">
 		<li class="clearfix">
 			<label>Image:</label>
