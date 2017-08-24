@@ -189,6 +189,9 @@ switch ($registry->requestAction)
 					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 				// no error - then add user
 				$data = $dotValidateUser->getData();
+				$data['lastName'] = strip_tags($_POST['lastName']);
+				$data['firstName'] = strip_tags($_POST['firstName']);
+				$data['username'] = strip_tags($_POST['username']);
 				$data['city'] = $_POST['city'];
 				$data['address'] = $_POST['address'];
 				$data['image'] = $target_file;
