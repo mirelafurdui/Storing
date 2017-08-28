@@ -106,6 +106,7 @@ class Product_View extends View
 			// this will set all the productKeys given to be upper case for it to work with the tpl file
 			$this->tpl->setVar(strtoupper("PRODUCT_".$productKey), $productValue);
 		}
+
 	}
 
 	// this function sets the tpl and shows the table based on the brand id and adds paginator
@@ -165,7 +166,7 @@ class Product_View extends View
 		$this->tpl->setFile('tpl_main', 'product/' . $this->templateFile . '.tpl');
 	}
 
-	public function showCommentsByProduct($template='', $productData, $page)
+	public function showCommentsByProduct($template='', $productData, $page, $likes)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -179,11 +180,19 @@ class Product_View extends View
 		$this->tpl->paginator($productData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+
 		// this foreach travels the established table by his keys and values
 		foreach ($productData['data'] as $product) {
 			foreach ($product as $key => $value) {
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
 				$this->tpl->setVar(strtoupper("COMMENT_".$key), $value);
+			}
+				// this foreach will represent the total number of likes
+			foreach ($likes as $key => $value) {
+				if($key == $product['id'])
+				{
+					$this->tpl->setVar('LIKES', $value);
+				}
 			}
 		$this->tpl->parse('user_comment_block','user_comment',true);
 		}

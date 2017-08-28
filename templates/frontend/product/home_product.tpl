@@ -23,12 +23,12 @@
 var deleteRequestUrl = '{SITE_URL}/product/delete_user_comment';
 var voteRequestUrl = '{SITE_URL}/product/voting';
 
-function voteRequest(action, commentId) {
-	// This is where the comment id will go but it won't recognize it
+function voteRequest(action, commentId,info) {
 	var requestSettings = {
 		"data" : { 
 			"action": action ,
-			"id": commentId 
+			"id": commentId,
+			"info": info
 				 },
 		"method" : "POST"
 	};
@@ -52,12 +52,12 @@ function voteRequest(action, commentId) {
 	}
 }
 
-function deleteComment(action,commentId) {
-	// This is where the comment id will go but it won't recognize it
+function deleteComment(action,commentId,info) {
 	var requestSettings = {
 		"data" : { 
 			"action": action ,
-			"id": commentId
+			"id": commentId,
+			"info": info
 				 },
 		"method" : "POST"
 	};
@@ -86,7 +86,7 @@ $(document).ready(function() {
       		// uncomment this and it will give you an alert that shows the class and id of the comment
       		// alert(commentClass+commentId);
     		event.preventDefault();
-    		voteRequest('upVote', commentId);
+    		// voteRequest('upVote', commentId, 1);
     		location.reload();
     	});
 		$('.downvoteButton').click(function(event)
@@ -96,7 +96,7 @@ $(document).ready(function() {
       		// uncomment this and it will give you an alert that shows the class and id of the comment
       		// alert(commentClass+commentId);
     		event.preventDefault();
-    		voteRequest('downVote', commentId);
+    		// voteRequest('downVote', commentId, -1);
     		location.reload();
     	});
     	$('.deleteButton').click(function(event)
@@ -106,7 +106,7 @@ $(document).ready(function() {
       		// uncomment this and it will give you an alert that shows the class and id of the comment
       		// alert(commentClass+commentId);
     		event.preventDefault();
-    		// location.reload();
+    		location.reload();
     	});
 });
 </script>
@@ -184,7 +184,6 @@ $(document).ready(function() {
 	<div style="margin: 10px; margin-bottom: 50px;">
 		<h2 style="display: inline;">
 			<img src="{SITE_URL}/{COMMENT_IMAGE}" style="width: 30px; height: 25px;">
-			{COMMENT_ID}
 			{COMMENT_USERID} 
 		</h2>
 			<p style="display: inline; font-size: 20px;">{COMMENT_TITLE}</p>
@@ -196,10 +195,9 @@ $(document).ready(function() {
 				</div>
 				<div>
 					<form>
-						<span id="voteValue">{COMMENT_LIKE}</span>
-						<span>{COMMENT_LIKETOTAL}</span>
-						<button class="upvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('upVote'{COMMENT_ID})">Like</button>
-						<button class="downvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('downVote'{COMMENT_ID})"">Unlike</button>
+						<button class="upvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('upVote',{COMMENT_ID},1)">Like</button>
+						<button class="downvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('downVote',{COMMENT_ID},-1)">Unlike</button>
+						<p>{LIKES}</p>
 					</form>
 				</div>
 				<p style="text-align: justify;">

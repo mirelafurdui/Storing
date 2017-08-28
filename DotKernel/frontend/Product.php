@@ -107,9 +107,43 @@ class Product extends Dot_Model
 		$this->db->delete('comment', array("id = " . $commentId, 
 											"userId = " . $userId));
 	}
-	// update function for like and dislike
+	// update function for like and dislike if no like or dislike create
 	public function voteACertainComment($data, $id, $userId)
 	{
-		$this->db->update('comment', array('like' => $data),"id= " . $id , "userId= " . $userId);
+		$select=$this->db->select()
+						 ->from('likeElements')
+						 ->where('commentId= ?',$id)
+						 ->where('userId= ?',$userId);
+		$result=$this->db->fetchOne($select);
+		// insert function in case that the result doesn't exist
+		if($result == false) {
+			//insert
+			$details= array('userId' => $userId,
+							'ifLikeUnlike' => $data,
+							'commentId' => $id
+						   );
+			$this->db->insert('likeElements', $details);
+		} else {
+			// without the $where users would stack when they had the same like quantity
+			// this will update the likes if they exist
+			$where[]="commentId = $id";
+			$where[]="userId = $userId";
+			$update=$this->db->update('likeElements',array('ifLikeUnlike' => $data), $where);
+		}
+	}
+	// function that counts the likes
+	public function sumLikesForComment()
+	{
+		$select = $this->db->select()
+						   ->from('likeElements', new Zend_Db_Expr('SUM(ifLikeUnlike) as totalLike,commentId'))
+						   // this groups the id's so that it doesn't dillute the result
+						   ->group('commentId');
+		$sum=$this->db->fetchAll($select);
+		$finalData = [];
+		// foreach for a better representation of the result
+		foreach ($sum as $key => $value) {
+			$finalData[$value['commentId']] = $value['totalLike'];
+		}
+		return $finalData;
 	}
 }
