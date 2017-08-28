@@ -86,19 +86,13 @@ switch ($registry->requestAction) {
 	case 'show':
 		// this is the variable responsable with the page number
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
+		// this will get the information for a product
 		$certainProduct = $productModel->getProductById($registry->request['id']);
-		$productView->showCertainProduct('home_product',$certainProduct);
 		// get's all comments based on the given id
 		$allCommentsForProduct = $productModel->getCommentByProduct($registry->request['id'],$page);
-		// $a = $allCommentsForProduct['data'];
-		// $commentIds = [];
-		// foreach ($allCommentsForProduct['data'] as $key => $value) {
-		// 	$commentIds[$value['id']] = $value['id'];
-		// }
-		// shows comments on a product
-		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page);
-		// this transforms the object that is session into an array to use it for the if.
-		// this is for adding comments using form
+		// makes the total number of likes to all the comments separately
+		$totalLikes=$productModel->sumLikesForComment();
+		// this is for adding comments/reviews using form
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$userData = (array) $_SESSION['frontend']['user'];
 			$data['rating'] = (isset($_POST['rating'])) ? $_POST['rating']:'';
@@ -109,6 +103,10 @@ switch ($registry->requestAction) {
 			$data['productId'] = (isset($registry->request['id'])) ? $registry->request['id']:'';
 			$productModel->addCommentToCertainProduct($data);
 			}
+		// shows comments on a product
+		$productView->showCertainProduct('home_product',$certainProduct);
+		// this will show all the comments and total likes for a specific product
+		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page, $totalLikes);
 		break;
 
 	//this case will take you to a certain brand
@@ -143,6 +141,7 @@ switch ($registry->requestAction) {
 
 	//this case is meant to represent a upvote to a comment
 	case 'voting':
+		/*$_POST['info'] is the vote value*/
 		$userSession = (array) $_SESSION['frontend']['user'];
 		// this is the id of the logged user.
 		$userId = $userSession['id'];
@@ -150,7 +149,6 @@ switch ($registry->requestAction) {
 		$action = $_POST['action'] ?? 'error';
 		// this is the comment id that's given from the script
 		$id = $_POST['id'];
-		
 		$response = [
 					'success' => false,
 					'message' => 'invalid action provided',
@@ -159,24 +157,24 @@ switch ($registry->requestAction) {
 						'voteValue' => ''
 				 	],
 		];
+		
+
 		// an if that checks for the action an value
-		if ($action == 'upVote' && $userId != "" && $_SESSION['value'] == '0' || $_SESSION['value'] == '-1') {
-			$value=$_SESSION['value'];
+		if ($action == 'upVote' && $userId != "" && $_POST['info'] == '1') {
+			$value=0;
 			$response['action'] = $action;
 			$response['data']['voteValue'] = ++$value;
-			$_SESSION['value'] = $value;
 			$response['success'] = true;
 			$response['message'] = "UP Successfull";
 			$update = $productModel->voteACertainComment($value, $id, $userId);
 			echo Zend_Json::encode($response);
 			exit();
-			// an if that checks for the action an value
 		}
-		if ($action == 'downVote' && $userId != "" && $_SESSION['value'] == '1' || $_SESSION['value'] == '0') {
-			$value=$_SESSION['value'];
+		// an if that checks for the action an value
+		if ($action == 'downVote' && $userId != "" && $_POST['info'] == '-1') {
+			$value=0;
 			$response['action'] = $action;
 			$response['data']['voteValue'] = --$value;
-			$_SESSION['value'] = $value;
 			$response['success'] = true;
 			$response['message'] = "DOWN Successfull";
 			$update = $productModel->voteACertainComment($value, $id, $userId);
@@ -203,6 +201,9 @@ switch ($registry->requestAction) {
 			$delete = $productModel->deleteCommentToCertainProduct($commentId, $userId);
 			echo Zend_Json::encode($response);
 			exit();
+		}
+		else {
+			header('Location: '.$registry->configuration->website->params->url. '/user/'.'register');
 		}
 		break;
 }
