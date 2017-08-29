@@ -84,27 +84,39 @@ switch ($registry->requestAction) {
 
 	//this case will take you to the product page & it will show comments based on product
 	case 'show':
+		// product id
+		$id=$registry->request['id'];
 		// this is the variable responsable with the page number
 		$page = (isset($registry->request['page']) && $registry->request['page']>0) ? $registry->request['page'] : 1;
 		// this will get the information for a product
-		$certainProduct = $productModel->getProductById($registry->request['id']);
+		$certainProduct = $productModel->getProductById($id);
 		// get's all comments based on the given id
-		$allCommentsForProduct = $productModel->getCommentByProduct($registry->request['id'],$page);
+		$allCommentsForProduct = $productModel->getCommentByProduct($id,$page);
 		// makes the total number of likes to all the comments separately
 		$totalLikes=$productModel->sumLikesForComment();
+		// makes the average rating of a product
+		$averageRating=$productModel->averageRating($id);
 		// this is for adding comments/reviews using form
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$userData = (array) $_SESSION['frontend']['user'];
-			$data['rating'] = (isset($_POST['rating'])) ? $_POST['rating']:'';
-			$data['title'] = (isset($_POST['title'])) ? $_POST['title']:'';
-			$data['comment'] = (isset($_POST['comment'])) ? $_POST['comment']:'';
-			$data['userId'] = (isset($userData['id'])) ? $userData['id']:'';
-			$data['isActive'] = 1;
-			$data['productId'] = (isset($registry->request['id'])) ? $registry->request['id']:'';
-			$productModel->addCommentToCertainProduct($data);
+			// this is the logged user will be used for the form
+			$loggedUserId = (array)$_SESSION['frontend']['user'];
+			if ($loggedUserId['username'] != '') {
+				$userData = (array) $_SESSION['frontend']['user'];
+				$data['rating'] = (isset($_POST['rating'])) ? $_POST['rating']:'';
+				$data['title'] = (isset($_POST['title'])) ? $_POST['title']:'';
+				$data['comment'] = (isset($_POST['comment'])) ? $_POST['comment']:'';
+				$data['userId'] = (isset($userData['id'])) ? $userData['id']:'';
+				$data['isActive'] = 1;
+				$data['productId'] = (isset($registry->request['id'])) ? $registry->request['id']:'';
+				$productModel->addCommentToCertainProduct($data);
+			// this else will redirect the user if he's not logged in
+			} elseif (!isset($loggedUserId['username'])) {
+				header('Location: '.$registry->configuration->website->params->url. '/user/register');
 			}
+		}
+
 		// shows comments on a product
-		$productView->showCertainProduct('home_product',$certainProduct);
+		$productView->showCertainProduct('home_product',$certainProduct, $averageRating);
 		// this will show all the comments and total likes for a specific product
 		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page, $totalLikes);
 		break;
@@ -157,8 +169,6 @@ switch ($registry->requestAction) {
 						'voteValue' => ''
 				 	],
 		];
-		
-
 		// an if that checks for the action an value
 		if ($action == 'upVote' && $userId != "" && $_POST['info'] == '1') {
 			$value=0;
@@ -180,7 +190,7 @@ switch ($registry->requestAction) {
 			$update = $productModel->voteACertainComment($value, $id, $userId);
 			echo Zend_Json::encode($response);
 			exit();
-		}
+		} 
 		echo Zend_Json::encode($response);
 		exit();
 		break;

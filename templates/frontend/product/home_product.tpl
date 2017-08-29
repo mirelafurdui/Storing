@@ -1,9 +1,20 @@
+<link rel="stylesheet" href="{SITE_URL}/externals/bootstrap/css/bootstrap.min.css" type="text/css">
 
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous">
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+
+<link rel="stylesheet" href ="{SITE_URL}/templates/css/frontend/style.css" type="text/css" >
+
+<!-- link with images for stars --> 
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
 <!-- Script that changes the color of the number based on the if functions -->
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -19,6 +30,7 @@
 </script>
 <!-- Script that gives the like and dislike options -->
 <script type="text/javascript">
+var average = (Math.round( {AVERAGERATING} * 100 )/100 ).toString() ;
 
 var deleteRequestUrl = '{SITE_URL}/product/delete_user_comment';
 var voteRequestUrl = '{SITE_URL}/product/voting';
@@ -42,7 +54,6 @@ function voteRequest(action, commentId,info) {
 						console.debug(response); // enter console to see result 
 						var voteSuccess = recievedData.success;
 						var commentId = $(this).attr('commentId');
-						var session = $_SESSION['value'];
 						var voteValue = recievedData.data.voteValue;
 						$("#voteValue").text(voteValue);
 					});
@@ -77,7 +88,6 @@ function deleteComment(action,commentId,info) {
 		alert ('Unspecified action error!');
 	}
 }
-
 $(document).ready(function() {
     	$('.upvoteButton').click(function(event)
     	{
@@ -85,6 +95,7 @@ $(document).ready(function() {
       		var commentId = $(this).attr('commentId');
       		// uncomment this and it will give you an alert that shows the class and id of the comment
       		// alert(commentClass+commentId);
+      		alert(average);
     		event.preventDefault();
     		// voteRequest('upVote', commentId, 1);
     		location.reload();
@@ -111,9 +122,9 @@ $(document).ready(function() {
 });
 </script>
 <h2>
-	<a href="{SITE_URL}/product/list"> Products </a>/
-	<a href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
-	<a href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/list"> Products </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
 	{PRODUCT_NAME}
 </h2>
 <hr>
@@ -122,8 +133,26 @@ $(document).ready(function() {
 		<thead>
 			<div>
 				<td>
-					<div style="border: solid; 1px;">
-						<p style="font-size: 30px; color: red;">THIS IS WHERE THE RATING WILL BE</p>
+					<div>
+						<p> REMOVED WHEN RATING WORKS PROPERLY : (RATING AVG) {AVERAGERATING}</p>
+						<div class="stars">
+							<input class="star star-rating" id="star-5s" type="radio" name="rating" value="5" disabled=""/>
+				    		<label class="star star-rating" for="star-5s" value="5" style="transform: none !important;"></label>
+
+				    		<input class="star star-rating" id="star-4s" type="radio" name="rating" value="4" disabled=""/>
+				    		<label class="star star-rating" for="star-4s" value="4" style="transform: none !important;"></label>
+
+				    		<input class="star star-rating" id="star-3s" type="radio" name="rating" value="3" disabled=""  />
+				    		<label class="star star-rating" for="star-3s" value="3" style="transform: none !important;"></label>
+
+				    		<input class="star star-rating" id="star-2s" type="radio" name="rating" value="2" disabled=""/>
+				    		<label class="star star-rating" for="star-2s" value="2" style="transform: none !important;"></label>
+
+				    		<input class="star star-rating" id="star-1s" type="radio" name="rating" value="1" disabled=""/>
+				    		<label class="star star-rating" for="star-1s" value="1" style="transform: none !important;"></label>
+						</div>
+						<!-- <p style="font-size: 30px; color: black;">RATING :{AVERAGERATING}</p> -->
+						<br>
 					</div>
 					<h2 style="display: inline;">{PRODUCT_NAME}</h2> &nbsp; <h2 style=" color: red">{PRODUCT_PRICE} Lei</h2>
 					<img src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" height="300" width="300" >
@@ -160,21 +189,26 @@ $(document).ready(function() {
 	<br>
 	<div>
 		<form method="POST"; style="display: inline;">
-			Rating:
-				<select name="rating" style="width: 50%; display: block; margin-left: auto; margin-right: auto;">
-				  <option value="5">♥ ♥ ♥ ♥ ♥</option>
-				  <option value="4">♥ ♥ ♥ ♥</option>
-				  <option value="3">♥ ♥ ♥</option>
-				  <option value="2">꒰ ꒡⌓꒡꒱</option>
-				  <option value="1">୧༼ಠ益ಠ༽୨</option>
-				</select>
-			Title:
-				<input name="title"; style="width: 50%; display: block; margin-left: auto; margin-right: auto;" min="1"; max="5"; type="text" value="Add text">
-			Comment:
-				<input name="comment"; style="width: 50%; display: block; margin-left: auto; margin-right: auto;"
-			type="text" value="Add Review">
+			<div class="stars" style="margin-left: 36%">
+			    <input class="star star-5" id="star-5" type="radio" name="rating" value="5.0" />
+			    <label class="star star-5" for="star-5" value="5"></label>
+			    <input class="star star-4" id="star-4" type="radio" name="rating" value="4.0"/>
+			    <label class="star star-4" for="star-4" value="4"></label>
+			    <input class="star star-3" id="star-3" type="radio" name="rating" value="3.0"/>
+			    <label class="star star-3" for="star-3" value="3"></label>
+			    <input class="star star-2" id="star-2" type="radio" name="rating" value="2.0"/>
+			    <label class="star star-2" for="star-2" value="2"></label>
+			    <input class="star star-1" id="star-1" type="radio" name="rating" value="1.0"/>
+			    <label class="star star-1" for="star-1" value="1"></label>
+			</div>
 			<br>
-			<input style=" display: block; margin-left: auto; margin-right: auto;" type="submit" value="Add Review">
+			Title:
+				<input name="title"; style="width: 50%; display: block; margin-left: auto; margin-right: auto; text-align: center;" min="1"; max="5"; type="text" placeholder="Add a Title">
+			Comment:
+				<input name="comment"; style="width: 50%; display: block; margin-left: auto; margin-right: auto; text-align: center;"
+			type="text" placeholder="Add your Review">
+			<br>
+			<input style=" display: block; margin-left: auto; margin-right: auto; " type="submit" value="Add Review">
 		</form>
 	</div>
 	<hr>
@@ -215,3 +249,14 @@ $(document).ready(function() {
 	</div>
 	<hr>
 </div>
+
+<script type="text/javascript">
+var average = (Math.round( {AVERAGERATING} * 100 )/100 ).toString() ;
+var intAverage = parseInt(average);
+var diff = average - intAverage;
+if (diff >= 0.5) {
+	intAverage++;
+}
+
+	$('input[type="radio"][name="rating"][value='+intAverage+']').attr('checked','checked');
+</script>
