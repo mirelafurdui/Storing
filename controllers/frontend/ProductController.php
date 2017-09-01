@@ -182,7 +182,6 @@ switch ($registry->requestAction) {
 		}
 		// an if that checks for the action an value
 		if ($action == 'downVote' && $userId != "" && $_POST['info'] == '-1') {
-			$value=0;
 			$response['action'] = $action;
 			$response['data']['voteValue'] = --$value;
 			$response['success'] = true;
