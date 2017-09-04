@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href ="{SITE_URL}/templates/css/frontend/style.css" type="text/css" >
 
+
 <!-- link with images for stars --> 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
@@ -130,110 +131,77 @@ $(document).ready(function() {
 </script>
 
 <h2>
-	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/list"> Products </a>/
-	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
-	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
+	<a href="{SITE_URL}/product/list"> Products </a>/
+	<a href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
+	<a href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
 	{PRODUCT_NAME}
 </h2>
 
+
+ <div class="container">
+        	<div class="row">
+               <div class="col-xs-4 item-photo">
+                    <img src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" height="300" width="300" >
+                </div>
+                <div class="col-xs-5" style="border:0px solid gray">
+                    <!-- Product name -->
+                    <h1>{PRODUCT_NAME}</h1>    
+                    <h5 style="color:#337ab7">Product by <a href="#">{PRODUCT_BRANDNAME}</a> · <small style="color:#337ab7"></small></h5>
+        
+                    <!-- Price -->
+                    <h6 class="title-price"><small>PRICE</small></h6>
+                    <h3 style="margin-top:0px;">{PRODUCT_PRICE} Lei</h3>
+        
+                    <div class="section">
+                        <h6 class="title-attr" style="margin-top:15px;" ><small></small></h6>                    
+                       
+                    </div>
+                    <div class="section" style="padding-bottom:5px;">
+                        <h6 class="title-attr"><small></small></h6>                    
+                        <div>
+                           
+                        </div>
+                    </div>   
+                    <div class="section" style="padding-bottom:20px;">
+                    <!-- Quantity -->
+	                    <h6 class="title-attr"><small>Product Stock {PRODUCT_STOC}</small></h6>                    
+                        <div>
+                           
+                        </div>
+	                    </div>                
+	        
+                    <form method="post">
+	                    <!-- Button to buy -->
+	                    <div class="section" style="padding-bottom:20px;">
+	                        <button class="btn btn-success" value="AddtoCart"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> <a href="{SITE_URL}/cart/cart/id/{PRODUCT_ID}">Add to Cart</a></button>
+	                        <h6><a href="#"><span class="glyphicon glyphicon-heart-empty" style="cursor:pointer;"></span> Add to my favorite list</a></h6>
+	                    </div>                                        
+                    </form>
+                </div>                              
+        
+
+                <div class="col-xs-9">
+                    <ul class="menu-items">
+                        <li class="active">Description</li>
+                    </ul>
+                    <div style="width:100%;border-top:1px solid silver">
+                        <p style="padding:15px;">
+                            <small>
+                       {PRODUCT_DESCRIPTION}
+        
+                            </small>
+                        </p>
+                        <small>
+                            <ul>
+                                <li>Super AMOLED capacitive touchscreen display with 16M colors</li>
+                                
+                            </ul>  
+                        </small>
+                    </div>
+                </div>		
+            </div>
+        </div> 
 <hr>
-<div>
-	<table>
-		<thead>
-			<div>
-				<td>
-					<div>
-						<div>
-							<div>
-							<h2>{PRODUCT_NAME}</h2>
-								<div style="width: 236px; display: inline-block;">
-									<div id="averageStars" style="border: 1px solid #7caeff; background-color: #ccc;  padding-left: 5px;">
-										<svg width="20" height="20">
-										    <defs>
-										    	<linearGradient id="rating1">
-										            <stop offset="0" id='ratingStop1' stop-color="#FD4"/>
-										            <stop offset="0"  stop-color="white"/>
-										        </linearGradient>
-										    </defs>
-										    <polygon points="10,1 4,20 19,8 1,8 16,20"
-										  fill="url(#rating1)"/>
-										</svg>
-										<svg id="clickMe" width="20" height="20">
-										    <defs>
-										    	<linearGradient id='rating2'>
-										            <stop offset="0" id='ratingStop2' stop-color="#FD4"/>
-										            <stop offset="0"  stop-color="white"/>
-										        </linearGradient>
-										    </defs>
-										    <polygon points="10,1 4,20 19,8 1,8 16,20"
-										  fill="url(#rating2)" />
-										</svg>
-										<svg width="20" height="20">
-										    <defs>
-										    	<linearGradient id='rating3'>
-										            <stop offset="0" id='ratingStop3' stop-color="#FD4"/>
-										            <stop offset="0"  stop-color="white"/>
-										        </linearGradient>
-										    </defs>
-										    <polygon points="10,1 4,20 19,8 1,8 16,20"
-										  fill="url(#rating3)" />
-										</svg>
-										<svg width="20" height="20">
-										    <defs>
-										    	<linearGradient id='rating4'>
-										            <stop offset="0" id='ratingStop4' stop-color="#FD4"/>
-										            <stop offset="0"  stop-color="white"/>
-										        </linearGradient>
-										    </defs>
-										    <polygon points="10,1 4,20 19,8 1,8 16,20"
-										  fill="url(#rating4)" />
-										</svg>
-										<svg width="30" height="20">
-										    <defs>
-										    	<linearGradient id='rating5'>
-										            <stop offset="0" id='ratingStop5' stop-color="#FD4"/>
-										            <stop offset="0"  stop-color="white"/>
-										        </linearGradient>
-										    </defs>
-										    <polygon points="10,1 4,20 19,8 1,8 16,20"
-										  fill="url(#rating5)"/> 
-										</svg>
-											<span style="display:inline; margin-left: 20px;" id="averageValue">No rating</span>
-									</div>
-									<span id="stoc" style="font-size: 20px; color: white; display: inline-block; float: right;">{PRODUCT_STOC}</span>
-									<h2 style=" color: red; text-align: center; padding-top: 5px; background-color: #e3e3e3;">{PRODUCT_PRICE} Lei </h2>
-								</div>
-							</div>
-						</div>
-					</div>
-					<img src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" height="300" width="300" >
-				</td>
-			</div>
-		</thead>
-		<tr>
-			<td>
-				<h2>Description</h2>
-				<p style="padding: 20px">{PRODUCT_DESCRIPTION}</p>
-			</td>
-		</tr>
-		<tr>
-			<div>
-				<td>
-					<div>
-					<form method="POST" style="display: inline;">
-						<h2 style="display: inline; font-size: 15px;">Product </h2>
-						<input style="display: inline;" type="number" value="1" min="1" max="{STOC}">
-						<input style="display: inline;" type="submit" value="Add to Cart">
-					</form>
-					  <span id="stoc" style="font-size: 20px; float: right; color: white;">
-					 	{PRODUCT_STOC}
-					  </span>
-					</div>
-				</td>
-			</div>
-		</tr>
-	</table>
-</div>
 
 <hr>
 

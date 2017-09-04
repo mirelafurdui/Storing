@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<dots>
+		<variable option="global">
+		</variable>
+		<variable option="admin">
+			<pageTitle>
+				<action>
+					
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="frontend">
+			<pageTitle>
+				<action>
+					<showCart>Shopping Cart</showCart>
+				</action>
+			</pageTitle>
+		</variable>
+		<variable option="mobile">
+
+		</variable>			
+	</dots>
+</config>

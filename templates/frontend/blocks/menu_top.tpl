@@ -23,6 +23,9 @@
 		<a href="{SITE_URL}/user/account">Account {USERNAME}</a>
 	</li>
 	<li>
+		<a href="{SITE_URL}/cart/showCart">Cart</a>
+	</li>
+	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>
 	</li>
 	<!-- END top_menu_logged -->

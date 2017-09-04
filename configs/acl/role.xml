@@ -16,6 +16,7 @@
 				</guest> 				
 				<user>
 					<User>account</User><!-- allow 'user' to access 'User' controller and also 'account' action-->
+					<Cart>all</Cart>
 				</user> 
 			</allow>
 			<deny>
