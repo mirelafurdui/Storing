@@ -141,4 +141,17 @@ class User extends Dot_Model_User
 			$session->message['type'] = 'error';
 		}
 	}
+	public function createCart($data) 
+	{
+		$this->db->insert('cart', $data);
+	}
+	public function cartExist($id) 
+	{
+		$select=$this->db->select()
+						 ->from('cart')
+						 ->where('userId= ?',$id)
+						 ->where('isProcessed= ?',0);
+		$result=$this->db->fetchAll($select);
+		return $result;
+	}
 }

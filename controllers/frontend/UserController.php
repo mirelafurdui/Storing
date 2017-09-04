@@ -145,6 +145,12 @@ switch ($registry->requestAction)
 				$session->message['type'] = 'error';
 			}
 		}
+		//create a cart for user
+		$cart['userId'] = $registry->session->user->id;
+		$cartExist = $userModel->cartExist($cart['userId']);
+		if (empty($cartExist)) {
+			$userModel->createCart($cart);	
+		}
 		$data = $userModel->getUserInfo($registry->session->user->id);
 		$userView->details('update',$data);
 	break;
@@ -336,6 +342,4 @@ switch ($registry->requestAction)
 		} else {
 			return $errors;
 		}
-	}
-
-	
+	}	

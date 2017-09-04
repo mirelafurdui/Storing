@@ -4,6 +4,7 @@
 	<!-- 1. for whitelist approach & a secure autoload of all controllers-->
 	<controllers>
 		<frontend>Product</frontend>
+		<frontend>Cart</frontend>
 		<!-- <frontend>Page</frontend> -->
 		<frontend>User</frontend>
 		<admin>Admin</admin>
@@ -26,6 +27,8 @@
 			<!-- default action for controllers ... -->
 			<frontend>
 				<Product>home</Product>
+				<Cart>showCart</Cart>
+				<Cart>cart</Cart>
 				<!-- <Page>home</Page> -->
 				<User>login</User>
 			</frontend>

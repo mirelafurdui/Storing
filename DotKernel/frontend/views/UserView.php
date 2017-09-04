@@ -101,4 +101,10 @@ class User_View extends View
 		//empty because we don't want to show the password
 		$this->tpl->setVar('PASSWORD', '');
 	}
+		// shows the about page for the moment
+	public function showPage($templateFile = '')
+	{
+		if ($templateFile != '') $this->templateFile = $templateFile;//in some cases we need to overwrite this variable
+		$this->tpl->setFile('tpl_main', 'user/' . $this->templateFile . '.tpl');
+	}
 }

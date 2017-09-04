@@ -52,6 +52,10 @@ $(document).ready(function(){
         location.reload();
     });
     
+    $(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();$('#products .item').removeClass('grid-group-item');$('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+});
     
 //   if (typeof jQuery != 'undefined') {  
 //     // jQuery is loaded => print the version
@@ -60,12 +64,6 @@ $(document).ready(function(){
 });
 </script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-});
-</script>
 <!-- <hr> -->
 <div class="container">
  <div class="dropdown">
