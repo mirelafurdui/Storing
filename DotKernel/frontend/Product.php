@@ -89,6 +89,7 @@ class Product extends Dot_Model
 						 ->join('user', 'user.id = comment.userId', ['userId'=>'username','image'=>'image']);
 
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=5);
+
 		return $dotPaginator->getData();
 	}
 	// this function will add comments to a certain product
@@ -143,6 +144,20 @@ class Product extends Dot_Model
 		// foreach for a better representation of the result
 		foreach ($sum as $key => $value) {
 			$finalData[$value['commentId']] = $value['totalLike'];
+		}
+		return $finalData;
+	}
+	// this shows the average of the rating
+	public function averageRating($id)
+	{
+		$avg=$this->db->select()
+					  ->from('comment', new Zend_Db_Expr('AVG(rating) as averageRating'))
+					  ->where('productId= ?',$id);
+		$average=$this->db->fetchAll($avg);
+		$finalData = [];
+		// foreach for a better representation of the result
+		foreach ($average as $key => $value) {
+			$finalData = $value['averageRating'];
 		}
 		return $finalData;
 	}

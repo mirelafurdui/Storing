@@ -15,8 +15,8 @@
     </div>
 </div>
 <h2>
-	<a href="{SITE_URL}/product/list"> Products </a>/ 
-	<a href="{SITE_URL}/product/show_brand"> Brand </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/list"> Products </a>/ 
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/show_brand"> Brand </a>/
 	{BRANDNAME}
 </h2>
 <hr>

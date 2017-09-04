@@ -1,22 +1,40 @@
+<link rel="stylesheet" href="{SITE_URL}/externals/bootstrap/css/bootstrap.min.css" type="text/css">
 
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous">
-</script>
-<!-- Script that changes the color of the number based on the if functions -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+
+<link rel="stylesheet" href ="{SITE_URL}/templates/css/frontend/style.css" type="text/css" >
+
+<!-- link with images for stars --> 
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+<!-- Script that changes the color and adds a text if the conditions have been met -->
 <script type="text/javascript">
 	$(document).ready(function() {
   var stoc = $("#stoc").text();
   if (stoc <= 10) {
-    $('#stoc').css('color', 'red');
+    $('#stoc').css('background-color', 'red');
+    $('#stoc').css('padding', '5px');
+    $('#stoc').text("LIMITED");
   } else if (stoc > 10 && stoc <= 100) {
-    $('#stoc').css('color', 'orange');
+    $('#stoc').css('background-color', 'orange');
+    $('#stoc').css('padding', '5px');
+    $('#stoc').text("IN STOCK");
   } else if (stoc => 300) {
-    $('#stoc').css('color', 'green');
+    $('#stoc').css('background-color', 'green');
+    $('#stoc').css('padding', '5px');
+    $('#stoc').text("IN STOCK");
   }
 });
 </script>
+
 <!-- Script that gives the like and dislike options -->
 <script type="text/javascript">
 
@@ -42,7 +60,6 @@ function voteRequest(action, commentId,info) {
 						console.debug(response); // enter console to see result 
 						var voteSuccess = recievedData.success;
 						var commentId = $(this).attr('commentId');
-						var session = $_SESSION['value'];
 						var voteValue = recievedData.data.voteValue;
 						$("#voteValue").text(voteValue);
 					});
@@ -77,7 +94,6 @@ function deleteComment(action,commentId,info) {
 		alert ('Unspecified action error!');
 	}
 }
-
 $(document).ready(function() {
     	$('.upvoteButton').click(function(event)
     	{
@@ -105,27 +121,91 @@ $(document).ready(function() {
       		var commentId = $(this).attr('commentId');
       		// uncomment this and it will give you an alert that shows the class and id of the comment
       		// alert(commentClass+commentId);
-    		event.preventDefault();
+    		// event.preventDefault();
     		location.reload();
+			
     	});
+  
 });
 </script>
+
 <h2>
-	<a href="{SITE_URL}/product/list"> Products </a>/
-	<a href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
-	<a href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/list"> Products </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
 	{PRODUCT_NAME}
 </h2>
+
 <hr>
 <div>
 	<table>
 		<thead>
 			<div>
 				<td>
-					<div style="border: solid; 1px;">
-						<p style="font-size: 30px; color: red;">THIS IS WHERE THE RATING WILL BE</p>
+					<div>
+						<div>
+							<div>
+							<h2>{PRODUCT_NAME}</h2>
+								<div style="width: 236px; display: inline-block;">
+									<div id="averageStars" style="border: 1px solid #7caeff; background-color: #ccc;  padding-left: 5px;">
+										<svg width="20" height="20">
+										    <defs>
+										    	<linearGradient id="rating1">
+										            <stop offset="0" id='ratingStop1' stop-color="#FD4"/>
+										            <stop offset="0"  stop-color="white"/>
+										        </linearGradient>
+										    </defs>
+										    <polygon points="10,1 4,20 19,8 1,8 16,20"
+										  fill="url(#rating1)"/>
+										</svg>
+										<svg id="clickMe" width="20" height="20">
+										    <defs>
+										    	<linearGradient id='rating2'>
+										            <stop offset="0" id='ratingStop2' stop-color="#FD4"/>
+										            <stop offset="0"  stop-color="white"/>
+										        </linearGradient>
+										    </defs>
+										    <polygon points="10,1 4,20 19,8 1,8 16,20"
+										  fill="url(#rating2)" />
+										</svg>
+										<svg width="20" height="20">
+										    <defs>
+										    	<linearGradient id='rating3'>
+										            <stop offset="0" id='ratingStop3' stop-color="#FD4"/>
+										            <stop offset="0"  stop-color="white"/>
+										        </linearGradient>
+										    </defs>
+										    <polygon points="10,1 4,20 19,8 1,8 16,20"
+										  fill="url(#rating3)" />
+										</svg>
+										<svg width="20" height="20">
+										    <defs>
+										    	<linearGradient id='rating4'>
+										            <stop offset="0" id='ratingStop4' stop-color="#FD4"/>
+										            <stop offset="0"  stop-color="white"/>
+										        </linearGradient>
+										    </defs>
+										    <polygon points="10,1 4,20 19,8 1,8 16,20"
+										  fill="url(#rating4)" />
+										</svg>
+										<svg width="30" height="20">
+										    <defs>
+										    	<linearGradient id='rating5'>
+										            <stop offset="0" id='ratingStop5' stop-color="#FD4"/>
+										            <stop offset="0"  stop-color="white"/>
+										        </linearGradient>
+										    </defs>
+										    <polygon points="10,1 4,20 19,8 1,8 16,20"
+										  fill="url(#rating5)"/> 
+										</svg>
+											<span style="display:inline; margin-left: 20px;" id="averageValue">No rating</span>
+									</div>
+									<span id="stoc" style="font-size: 20px; color: white; display: inline-block; float: right;">{PRODUCT_STOC}</span>
+									<h2 style=" color: red; text-align: center; padding-top: 5px; background-color: #e3e3e3;">{PRODUCT_PRICE} Lei </h2>
+								</div>
+							</div>
+						</div>
 					</div>
-					<h2 style="display: inline;">{PRODUCT_NAME}</h2> &nbsp; <h2 style=" color: red">{PRODUCT_PRICE} Lei</h2>
 					<img src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" height="300" width="300" >
 				</td>
 			</div>
@@ -139,79 +219,184 @@ $(document).ready(function() {
 		<tr>
 			<div>
 				<td>
-					<div><h2 style="font-size: 15px; display: inline;">Units:</h2>
-					  <span id="stoc" style="font-size: 15px; display: inline;">
-					 	{PRODUCT_STOC}
-					  </span>
+					<div>
 					<form method="POST" style="display: inline;">
 						<h2 style="display: inline; font-size: 15px;">Product </h2>
 						<input style="display: inline;" type="number" value="1" min="1" max="{STOC}">
 						<input style="display: inline;" type="submit" value="Add to Cart">
 					</form>
+					  <span id="stoc" style="font-size: 20px; float: right; color: white;">
+					 	{PRODUCT_STOC}
+					  </span>
 					</div>
 				</td>
 			</div>
 		</tr>
 	</table>
 </div>
+
 <hr>
+
 <div>
 	<h2>Review</h2>
-	<br>
 	<div>
-		<form method="POST"; style="display: inline;">
-			Rating:
-				<select name="rating" style="width: 50%; display: block; margin-left: auto; margin-right: auto;">
-				  <option value="5">♥ ♥ ♥ ♥ ♥</option>
-				  <option value="4">♥ ♥ ♥ ♥</option>
-				  <option value="3">♥ ♥ ♥</option>
-				  <option value="2">꒰ ꒡⌓꒡꒱</option>
-				  <option value="1">୧༼ಠ益ಠ༽୨</option>
-				</select>
-			Title:
-				<input name="title"; style="width: 50%; display: block; margin-left: auto; margin-right: auto;" min="1"; max="5"; type="text" value="Add text">
-			Comment:
-				<input name="comment"; style="width: 50%; display: block; margin-left: auto; margin-right: auto;"
-			type="text" value="Add Review">
-			<br>
-			<input style=" display: block; margin-left: auto; margin-right: auto;" type="submit" value="Add Review">
-		</form>
-	</div>
-	<hr>
-	<div>
-	{PAGINATION}
-	<!-- BEGIN user_comment -->
-	<div style="margin: 10px; margin-bottom: 50px;">
-		<h2 style="display: inline;">
-			<img src="{SITE_URL}/{COMMENT_IMAGE}" style="width: 30px; height: 25px;">
-			{COMMENT_USERID} 
-		</h2>
-			<p style="display: inline; font-size: 20px;">{COMMENT_TITLE}</p>
-			<p style="display: inline; font-size: 20px;">Rated {COMMENT_RATING}</p>
-				<div style="margin: 5px;">
-					<p style="text-align: justify-all;">
-						{COMMENT_COMMENT}
-					</p>
-				</div>
-				<div>
-					<form>
-						<button class="upvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('upVote',{COMMENT_ID},1)">Like</button>
-						<button class="downvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('downVote',{COMMENT_ID},-1)">Unlike</button>
-						<p>{LIKES}</p>
-					</form>
-				</div>
-				<p style="text-align: justify;">
-					{COMMENT_DATE}
-				</p>
-				<form>
-					<div style="display: inline; margin-left: auto; margin-right: auto;">
-						<input type="button" commentId="{COMMENT_ID}" value="Edit"  onclick="edit_row('')">
-						<input type="button" commentId="{COMMENT_ID}" value="Save"  onclick="save_row('')">
-						<button class="deleteButton" commentId="{COMMENT_ID}" onclick="deleteComment('delete',{COMMENT_ID})">Delete</button>
+		<div id="add-comment">
+            <form method="post" class="form-horizontal"> 
+                <div class="form-group">
+                    <div class="stars" style="margin-left: 36.9%">
+                    	<div>
+						    <input class="star star-5" id="star-5" type="radio" name="rating" value="5.0" />
+						    <label class="star star-5" for="star-5" value="5"></label>
+						    <input class="star star-4" id="star-4" type="radio" name="rating" value="4.0"/>
+						    <label class="star star-4" for="star-4" value="4"></label>
+						    <input class="star star-3" id="star-3" type="radio" name="rating" value="3.0"/>
+						    <label class="star star-3" for="star-3" value="3"></label>
+						    <input class="star star-2" id="star-2" type="radio" name="rating" value="2.0"/>
+						    <label class="star star-2" for="star-2" value="2"></label>
+						    <input class="star star-1" id="star-1" type="radio" name="rating" value="1.0"/>
+						    <label class="star star-1" for="star-1" value="1"></label>
+                    	</div>
 					</div>
-				</form>
-	</div>
-	<!-- END user_comment -->
+	                <div class="form-group">
+	                    <div style="width: 80%; margin-left: 10%;">
+	                      <textarea class="form-control" name="title" placeholder="Add a Title" minlength="1" maxlength="90" rows="1" style="resize:none;" required></textarea>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <div style="width: 80%; margin-left: 10%;">
+	                      <textarea class="form-control" name="comment" placeholder="Write your Review" rows="5" style="resize:none;" required></textarea>
+	                    </div>
+	                </div>
+	                <div style="margin-left: 30.5%">
+	                    <div class="col-sm-offset-2 col-sm-10">                    
+	                        <button class="btn btn-success btn-circle text-uppercase" type="submit"><span class="glyphicon glyphicon-send"></span>Add Review</button>
+	                    </div>
+	                </div>
+                </div>            
+            </form>
+        </div>
 	</div>
 	<hr>
 </div>
+
+{PAGINATION}
+
+<div class="row">
+	</div>
+        <div class="comment-tabs">
+            <div class="tab-content">
+            <!-- BEGIN user_comment -->
+                <div class="tab-pane active" id="comments-logout">                
+                    <ul class="media-list">
+                    	<li class="media">
+                        <div class="media-body">
+	                    		<a class="pull-left">
+	                        		<img class="media-object img-circle" src="{SITE_URL}/{COMMENT_IMAGE}" alt="profile" style="width: 80px !important; height: 80px !important; margin-top: 20px !important; margin-left: 86px !important; margin-right: 70px; margin-bottom: 5px !important;">
+	                        	</a>
+                        	<div class="well well-lg">
+                        		<div class="form-group">
+                        			<div class="stars" commentId="{COMMENT_ID}" commentValue="{COMMENT_RATING}">
+									    <input id="5_{COMMENT_ID}" class="star star-5" commentId="{COMMENT_ID}" type="radio" name="singleRating_{COMMENT_ID}" value="5" disabled="" {CHECK_5} />
+									    <label class="star star-5" for="5_{COMMENT_ID}" style="transform: none !important;"></label>
+									    <input id="4_{COMMENT_ID}" class="star star-4" commentId="{COMMENT_ID}" type="radio" name="singleRating_{COMMENT_ID}" value="4" disabled="" {CHECK_4} />
+									    <label class="star star-4" for="4_{COMMENT_ID}" style="transform: none !important;"></label>
+									    <input id="3_{COMMENT_ID}" class="star star-3" commentId="{COMMENT_ID}" type="radio" name="singleRating_{COMMENT_ID}" value="3" disabled="" {CHECK_3} />
+									    <label class="star star-3" for="3_{COMMENT_ID}" style="transform: none !important;"></label>
+									    <input id="2_{COMMENT_ID}" class="star star-2" commentId="{COMMENT_ID}" type="radio" name="singleRating_{COMMENT_ID}" value="2" disabled="" {CHECK_2}/>
+									    <label class="star star-2" for="2_{COMMENT_ID}" style="transform: none !important;"></label>
+									    <input id="1_{COMMENT_ID}" class="star star-1" commentId="{COMMENT_ID}" type="radio" name="singleRating_{COMMENT_ID}" value="1" disabled="" {CHECK_1}/>
+									    <label class="star star-1" for="1_{COMMENT_ID}" style="transform: none !important;"></label>
+									</div>
+	                        	</div>
+                                <ul class="media-date text-uppercase reviews list-inline">
+                                	<li>{COMMENT_DATE}</li>
+                                </ul>
+                                	<p class="mediaUser" style="width: 200px">{COMMENT_USERID} <p class="mediaTitle">{COMMENT_TITLE} </p></p>
+                              		<textarea class="mediaComment" disabled="" wrap=""> {COMMENT_COMMENT} </textarea><br>
+									<form>
+										<table>
+											<thead>
+											<th><button class="upvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('upVote',{COMMENT_ID},1)"><span class="glyphicon glyphicon-chevron-up"></span>Like</button></th>
+											<th><button class="downvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('downVote',{COMMENT_ID},-1)">
+										<span class="glyphicon glyphicon-chevron-down"></span>Unlike</button></th>
+											<th><button id="totalLikes" style="text-align: center;" disabled="">{LIKES}</button></th>
+											<th><button class="deleteButton" commentId="{COMMENT_ID}" onclick="deleteComment('delete',{COMMENT_ID})">Delete</button></th>
+											</thead>
+										</table>
+									</form>
+                        	</div>              
+                        </div>
+                        </li>
+                    </ul> 
+                <!-- END user_comment -->
+           		</div>
+        	</div>
+        </div>
+<script type="text/javascript">
+// average 4.22 - this rounds the average for better use
+var average = (Math.round( {AVERAGERATING} * 100 )/100 ).toString() ;
+// average from 4.22 to 4 - this is a full star
+var intAverage = parseInt(average);
+// difference with 0.12000 - this is the percentage from 0 to 100%
+var diff = average - intAverage;
+if (diff >= 0.5) {
+	intAverage++;
+}
+// average rating
+$('input[type="radio"][name="rating"][value='+intAverage+']').attr('checked','checked');
+// Average rating for stars that works properly but it's just a lot of code
+// Can't figure out how to make it dynamic and smaller
+$( document ).ready(function() {
+	if(intAverage == '5')
+	{
+		$('#ratingStop1').attr("offset","1");
+		$('#ratingStop2').attr("offset","1");
+		$('#ratingStop3').attr("offset","1");
+		$('#ratingStop4').attr("offset","1");
+		$('#ratingStop5').attr("offset","1");
+	}
+	if(intAverage == '4')
+	{
+		$('#ratingStop1').attr("offset","1");
+		$('#ratingStop2').attr("offset","1");
+		$('#ratingStop3').attr("offset","1");
+		$('#ratingStop4').attr("offset","1");
+		$('#ratingStop5').attr("offset",diff);
+	}
+	if(intAverage == '3')
+	{
+		$('#ratingStop1').attr("offset","1");
+		$('#ratingStop2').attr("offset","1");
+		$('#ratingStop3').attr("offset","1");
+		$('#ratingStop4').attr("offset",diff);
+		$('#ratingStop5').attr("offset","0");
+	}
+	if(intAverage == '2')
+	{
+		$('#ratingStop1').attr("offset","1");
+		$('#ratingStop2').attr("offset","1");
+		$('#ratingStop3').attr("offset",diff);
+		$('#ratingStop4').attr("offset","0");
+		$('#ratingStop5').attr("offset","0");
+	}
+	if(intAverage == '1')
+	{
+		$('#ratingStop1').attr("offset","1");
+		$('#ratingStop2').attr("offset",diff);
+		$('#ratingStop3').attr("offset","0");
+		$('#ratingStop4').attr("offset","0");
+		$('#ratingStop5').attr("offset","0");
+	}
+	if(intAverage <= '1')
+	{
+		$('#ratingStop1').attr("offset",diff);
+		$('#ratingStop2').attr("offset","0");
+		$('#ratingStop3').attr("offset","0");
+		$('#ratingStop4').attr("offset","0");
+		$('#ratingStop5').attr("offset","0");
+	}
+	// This shows the average in the span with the id "averageValue" 
+	// It's meant to increase visibility
+	$('#averageValue').text(average).css('color','black').css('margin-left','16%').css('padding-right','5%').css('font-size','15px' );
+});
+</script>

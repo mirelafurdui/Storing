@@ -93,7 +93,7 @@ class Product_View extends View
 	}
 
 	// this function sets the tpl and shows the table based for one id
-	public function showCertainProduct($template='', $productData)
+	public function showCertainProduct($template='', $productData, $rating)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -106,7 +106,8 @@ class Product_View extends View
 			// this will set all the productKeys given to be upper case for it to work with the tpl file
 			$this->tpl->setVar(strtoupper("PRODUCT_".$productKey), $productValue);
 		}
-
+		//this foreach will represent the average
+			$this->tpl->setVar("AVERAGERATING", $rating);
 	}
 
 	// this function sets the tpl and shows the table based on the brand id and adds paginator
@@ -166,7 +167,7 @@ class Product_View extends View
 		$this->tpl->setFile('tpl_main', 'product/' . $this->templateFile . '.tpl');
 	}
 
-	public function showCommentsByProduct($template='', $productData, $page, $likes)
+	public function showCommentsByProduct($template='', $commentList, $page, $likes)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -174,27 +175,42 @@ class Product_View extends View
 		}
 		// sets the tpl file
 		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+		
 		// sets block that will later be repeated
 		$this->tpl->setBlock('tpl_main', 'user_comment', 'user_comment_block');
+		
 		// sets the pagination that will be shown later on in the tpl file
-		$this->tpl->paginator($productData['pages']);
+		$this->tpl->paginator($commentList['pages']);
+		
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
-
+		
 		// this foreach travels the established table by his keys and values
-		foreach ($productData['data'] as $product) {
-			foreach ($product as $key => $value) {
+		foreach ($commentList['data'] as $comment) {
+			foreach ($comment as $key => $value) {
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
 				$this->tpl->setVar(strtoupper("COMMENT_".$key), $value);
+				
+				// this is the set point for each radio input
+				$this->tpl->setVar('CHECK_1', '');
+				$this->tpl->setVar('CHECK_2', '');
+				$this->tpl->setVar('CHECK_3', '');
+				$this->tpl->setVar('CHECK_4', '');
+				$this->tpl->setVar('CHECK_5', '');
+				
+				// this is the set value to make the start be checked
+				$this->tpl->setVar('CHECK_'.$comment['rating'], 'checked');
+
 			}
+			// exit();
 				// this foreach will represent the total number of likes
 			foreach ($likes as $key => $value) {
-				if($key == $product['id'])
-				{
+				if($key == $comment['id']) {
 					$this->tpl->setVar('LIKES', $value);
+
 				}
 			}
-		$this->tpl->parse('user_comment_block','user_comment',true);
+			$this->tpl->parse('user_comment_block','user_comment',true);
 		}
 	}
 }

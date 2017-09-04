@@ -15,8 +15,8 @@
     </div>
 </div>
 <h2>
-	<a href="{SITE_URL}/product/list"> Products </a>/
-	<a href="{SITE_URL}/product/show_category"> Category </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/list"> Products </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/show_category"> Category </a>/
 	{CATEGORYNAME}
 </h2>
 <hr>

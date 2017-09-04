@@ -22,10 +22,10 @@
 	<div id="wrapper">
 		<header>
 			<div id="header-content" class="clearfix">
-			<a href="{SITE_URL}/"><img style="display: inline-block; margin-top: 20px" src="{SITE_URL}/images/favicon.png" width="80" height="70"></a>
+				<a href="{SITE_URL}/"><img style="display: inline-block; margin-top: 15px !important" src="{SITE_URL}/images/favicon.png" width="80" height="70"></a>
 				<div id="logo">
-					<h1>
-						<a style="display: inline-block;" href="{SITE_URL}/">{SITE_NAME}</a>
+					<h1 style="display: inline-block; margin-top: 0px !important; line-height: 1.1;">
+						<a href="{SITE_URL}/">{SITE_NAME}</a>
 					</h1>
 				</div>
 				{MENU_TOP}
