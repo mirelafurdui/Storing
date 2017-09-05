@@ -161,4 +161,15 @@ class Product extends Dot_Model
 		}
 		return $finalData;
 	}
+	public function searchProduct($page = 1, $productName, $number)
+	{
+		$select=$this->db->select()
+						 ->from('product')
+						 ->where('name LIKE ?', "%{$productName}%");
+						 $result=$this->db->fetchAll($select); 
+		
+		$dotPaginator = new Dot_Paginator($select,$page,$number);
+		return $dotPaginator->getData();
+						 // return  $result;
+	}
 }

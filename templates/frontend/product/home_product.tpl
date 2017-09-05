@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 
@@ -173,7 +174,7 @@ $(document).ready(function() {
                     <form method="post">
 	                    <!-- Button to buy -->
 	                    <div class="section" style="padding-bottom:20px;">
-	                        <button class="btn btn-success" value="AddtoCart"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> <a href="{SITE_URL}/cart/cart/id/{PRODUCT_ID}">Add to Cart</a></button>
+	                        <button class="btn btn-success" value="AddtoCart"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> <a style="text-decoration: none; color: white;" href="{SITE_URL}/cart/cart/id/{PRODUCT_ID}">Add to Cart</a></button>
 	                        <h6><a href="#"><span class="glyphicon glyphicon-heart-empty" style="cursor:pointer;"></span> Add to my favorite list</a></h6>
 	                    </div>                                        
                     </form>
