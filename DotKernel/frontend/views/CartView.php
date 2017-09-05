@@ -83,5 +83,19 @@ class Cart_View extends View
 				$this->tpl->parse('cart_list_block','cart_list',true);
 			}
 	}
-
+public function showUserDetails($template='', $productData)
+	{
+		// tests if the template is not empty
+		if ($template != '') {
+			$this->template = $template;
+		}
+		// sets the tpl file
+		$this->tpl->setFile('tpl_main', 'cart/'.$this->template.'.tpl');
+		
+			foreach ($productData as $key => $value)
+		 	{
+				$this->tpl->setVar('USER_'.strtoupper($key),$value);
+			}	
+			
+	}
 }

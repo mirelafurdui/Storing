@@ -43,9 +43,9 @@
                 <td>{NAME}{ID}</td>
                 <td>
                      <div class="input-group">
-                       <span style="cursor: pointer; cursor: hand; background-color: green; color: white;" class="input-group-addon" id="plus_one"><a href="{SITE_URL}/cart/addq/id/{PRODUCTID}"> +</a></span>
+                       <span style="cursor: pointer; cursor: hand; background-color: green; color: white;" class="input-group-addon" id="plus_one"><a style="text-decoration: none; color: white;" href="{SITE_URL}/cart/addq/id/{PRODUCTID}"> +</a></span>
                                 <input type="text" style="text-align: center;" class="form-control" name="qty" value="{QUANTITY}" aria-describedby="sizing-addon2" id="plusminus" required="" >
-                       <span style="cursor: pointer; cursor: hand; background-color:red; color: white;" class="input-group-addon" id="minus_one"> <a href="{SITE_URL}/cart/delq/id/{PRODUCTID}">-</a></span>
+                       <span style="cursor: pointer; cursor: hand; background-color:red; color: white;" class="input-group-addon" id="minus_one"> <a style="text-decoration: none; color: white;" href="{SITE_URL}/cart/delq/id/{PRODUCTID}">-</a></span>
                     </div>
                  </td>
                 <td style="text-align: center;"><a href="{SITE_URL}/cart/delete/id/{PRODUCTID}"><button type="button" class="btn btn-danger" >Delete</button></a></td>
@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <td><a href="{SITE_URL}/product" class="btn btn-primary">Continue Shopping</a></td>
-                <td colspan="4"><a href="{SITE_URL}/cart/checkout" class="pull-right btn btn-success">Checkout</a></td>
+                <td colspan="4"><a style="text-decoration: none; color: white;" href="{SITE_URL}/cart/checkout" class="pull-right btn btn-success">Checkout</a></td>
             </tr>
         </tbody>
     </table>          

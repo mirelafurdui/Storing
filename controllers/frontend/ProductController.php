@@ -56,7 +56,11 @@ switch ($registry->requestAction) {
 		}
 		echo json_encode($response);
 	} 
-		$list = $productModel->getProductList($page,$_SESSION['pageValue']);
+	if (isset($_POST['srch'])) {
+			$list = $productModel->searchProduct($page, $_POST['srch'], $_SESSION['pageValue']);
+		}else {
+			$list = $productModel->getProductList($page,$_SESSION['pageValue']);
+		}
 		$product = $productView->showProductList('home', $list, $page);
 		break;
 		

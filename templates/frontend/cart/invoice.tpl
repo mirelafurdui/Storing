@@ -36,29 +36,23 @@
             <div class="row">
                 <div class="col-xs-6">
                     <address>
-                    <strong>Billed To:</strong><br>
-                        John Smith<br>
-                        1234 Main<br>
-                        Apt. 4B<br>
-                        Springfield, ST 54321
+                    <strong>Sent To:</strong><br>
+                       USERNAME: {USER_USERNAME}<br>
+                      FirstName: {USER_FIRSTNAME}<br>
+                       LastName: {USER_LASTNAME}<br>
+                       City:{USER_CITY}<br>
+                       Address:{USER_ADDRESS}
                     </address>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <address>
-                    <strong>Shipped To:</strong><br>
-                        Jane Smith<br>
-                        1234 Main<br>
-                        Apt. 4B<br>
-                        Springfield, ST 54321
-                    </address>
+                   
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
                     <address>
-                        <strong>Payment Method:</strong><br>
-                        Visa ending **** 4242<br>
-                        jsmith@email.com
+                        <strong>EMAIL</strong><br>
+                        {USER_EMAIL}
                     </address>
                 </div>
                 <div class="col-xs-6 text-right">

@@ -25,7 +25,7 @@
 		<a href="{SITE_URL}/user/account">My Account</a>
 	</li>
 	<li>
-		<a href="{SITE_URL}/cart/showCart">Cart</a>
+		<span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><a href="{SITE_URL}/cart/showCart">Cart</a>
 	</li>
 	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>
