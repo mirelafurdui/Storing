@@ -1,3 +1,5 @@
+<link rel="stylesheet" href ="{SITE_URL}/templates/css/frontend/style.css" type="text/css" >
+
 {PAGINATION}
 <h2>
 	<a href="{SITE_URL}/product/list"> Products </a>/

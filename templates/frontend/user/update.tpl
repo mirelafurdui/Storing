@@ -30,7 +30,7 @@ $(".btn-pref .btn").click(function () {
         </div>
         <div class="btn-group" role="group">
             <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                <div class="hidden-xs">Favorites</div>
+                <div class="hidden-xs">Wishlist</div>
             </button>
         </div>
     </div>
@@ -83,7 +83,28 @@ $(".btn-pref .btn").click(function () {
                 </form>
             </div>
             <div class="tab-pane fade in" id="tab2">
-                <h3>THIS IS WHERE THE FAVORITE LIST WILL BE</h3>
+                <div>
+                    <table class="table table-striped custab">
+                        <thead>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>DESCRIPTION</th>
+                            <th>IMAGE</th>
+                            <th>PRICE</th>
+                            <th>ACTION</th>
+                        </thead>
+                <!-- BEGIN wishlist_list -->
+                        <tbody>
+                            <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}">{WISHLIST_PRODUCTID}</a></td>
+                            <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}">{WISHLIST_NAME}</a></td>
+                            <td>{WISHLIST_DESCRIPTION}</td>
+                            <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}"><img src="{SITE_URL}/images/uploads/{WISHLIST_IMAGE}" width="80" height="80"></a></td>
+                            <td>{WISHLIST_PRICE} Lei</td>
+                            <td><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+                        </tbody>
+                <!-- END wishlist_list -->
+                    </table>
+                </div>
             </div>
         </div>
     </div>

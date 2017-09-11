@@ -14,17 +14,18 @@
 	<link rel="stylesheet" href="{SITE_URL}/externals/fonts/stylesheet.css" type="text/css" >	
 	<script src="{SITE_URL}/externals/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="{TEMPLATES_URL}/js/frontend/main.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!--[if lt IE 9]>
 	<script src="{TEMPLATES_URL}/js/frontend/html5shim.js"></script>
 	<![endif]-->
 </head>
 <body>
 	<div id="wrapper">
-		<header>
+		<header  style="background-image: url({SITE_URL}/images/frontend/menu.jpg);">
 			<div id="header-content" class="clearfix">
-				<a href="{SITE_URL}/"><img style="display: inline-block; margin-top: 15px !important" src="{SITE_URL}/images/favicon.png" width="80" height="70"></a>
+				<a href="{SITE_URL}/"><img class="logoMenu" src="{SITE_URL}/images/favicon.png"></a>
 				<div id="logo">
-					<h1 style="display: inline-block; margin-top: 0px !important; line-height: 1.1;">
+					<h1 class="logoTitle">
 						<a href="{SITE_URL}/">{SITE_NAME}</a>
 					</h1>
 				</div>

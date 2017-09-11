@@ -107,4 +107,25 @@ class User_View extends View
 		if ($templateFile != '') $this->templateFile = $templateFile;//in some cases we need to overwrite this variable
 		$this->tpl->setFile('tpl_main', 'user/' . $this->templateFile . '.tpl');
 	}
+	// this function makes sets the tpl file and block while it shows the table using foreach
+	public function showWishList($template='', $wishList)
+	{
+		// tests if the template is not empty
+		if ($template != '') {
+			$this->template = $template;
+		}
+		// sets the tpl file
+		// $this->tpl->setFile('tpl_main', 'user/'.$this->template.'.tpl');
+		// sets block that will later be repeated
+		$this->tpl->setBlock('tpl_main', 'wishlist_list', 'wishlist_list_block');
+		foreach ($wishList as $key => $value) {
+			foreach ($value as $productK => $productValue) {
+				// this will set all the productKeys given to be upper case for it to work with the tpl file
+				$this->tpl->setVar("WISHLIST_".strtoupper($productK),$productValue);
+			}
+		// this parse is related to the block and if it's true it will show all the keys and values for each block repeat
+		// block name "wishlist_list"
+		$this->tpl->parse('wishlist_list_block','wishlist_list',true);
+		}
+	}
 }

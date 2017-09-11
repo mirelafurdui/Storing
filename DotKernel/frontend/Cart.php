@@ -48,6 +48,11 @@ class Cart extends Dot_Model
 		$dataProduct["stoc"] = $data['stoc'];
 
 		$this->db->insert('cartproduct', $dataProduct);
+
+		$select=$this->db->select()
+						 ->from('cartproduct', new Zend_Db_Expr('COUNT(id) as totalProducts'))
+						 ->where('cartId= ?', $cartId);
+		$result=$this->db->fetchAll($select);
 		
 	}
 
@@ -108,18 +113,29 @@ class Cart extends Dot_Model
 			
 		}
 	}
-	public function decreasesNumberProduct($q,$productId)
+	public function decreasesNumberProduct($quantity,$productId)
 	{
 		$select=$this->db->select()
 						 ->from('product')
 						 ->where('id=?',$productId);
-		$result=$this->db->fetchRow($select); 
-		$result['stoc'] = $result['stoc']-$q;
+		$result=$this->db->fetchRow($select);
+		$result['stoc'] = $result['stoc']-$quantity;
 		$this->db->update("product", $result, "id= ". $productId);
 	}
 
 	public function deleteCart($productId, $idCart)
 	{
 		$this->db->delete('cartproduct', array("productId = " . $productId, 'cartId = '. $idCart));
+	}
+
+	// this function will get the sum for one cart
+	public function sumProductsFromCart($cartId) 
+	{	
+		$select=$this->db->select()
+						 ->from('cartproduct', new Zend_Db_Expr('COUNT(id) as totalProducts'))
+						 ->where('cartId= ?', $cartId);
+		$result=$this->db->fetchAll($select);
+
+		return ($result[0]['totalProducts']) ?? 0;
 	}
 }

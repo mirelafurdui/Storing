@@ -86,16 +86,27 @@ class Product extends Dot_Model
 						 ->from('comment')
 						 ->where('comment.productId= ?',$id)
 						 ->where('comment.isActive= ?',1)
-						 ->join('user', 'user.id = comment.userId', ['userId'=>'username','image'=>'image']);
+						 ->join('user', 'user.id = comment.userId', ['username'=>'username','image'=>'image']);
 
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=5);
 
 		return $dotPaginator->getData();
 	}
 	// this function will add comments to a certain product
-	public function addCommentToCertainProduct($data)
+	public function addCommentToCertainProduct($data, $loggedUser, $productId)
 	{
-		$this->db->insert('comment', $data);
+		$select=$this->db->select()
+						 ->from('comment' , new Zend_Db_Expr('COUNT(userId) as maxPostPerUser'))
+						 ->where('userId= ?', $loggedUser)
+						 ->where('productId= ?', $productId)
+						 ->where('comment.isActive= ?',1);
+		$result=$this->db->fetchAll($select);
+		$maxPostPerUser=$result['0']['maxPostPerUser'];
+		// this checks if the sum of the review from a user is 0. If it's zero it can add a review if it's 1 it can't
+		if (intval($maxPostPerUser == 0)) {
+			$this->db->insert('comment', $data);
+		}
+		return $maxPostPerUser;
 	}
 	// this function will edit a certain comment
 	public function editCommentToCertainProduct($data,$id)
@@ -166,10 +177,20 @@ class Product extends Dot_Model
 		$select=$this->db->select()
 						 ->from('product')
 						 ->where('name LIKE ?', "%{$productName}%");
-						 $result=$this->db->fetchAll($select); 
+		
+		$result=$this->db->fetchAll($select); 
 		
 		$dotPaginator = new Dot_Paginator($select,$page,$number);
 		return $dotPaginator->getData();
-						 // return  $result;
+	}
+	// this function will get the sum for one cart
+	public function sumProductsFromCart($cartId) 
+	{	
+		$select=$this->db->select()
+						 ->from('cartproduct', new Zend_Db_Expr('COUNT(id) as totalProducts'))
+						 ->where('cartId= ?', $cartId);
+		$result=$this->db->fetchAll($select);
+
+		return ($result[0]['totalProducts']) ?? 0;
 	}
 }

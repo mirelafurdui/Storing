@@ -77,10 +77,12 @@ switch ($registry->requestAction)
 		exit;
 	break;
 	case 'account':
-		// display My Account page, if user is logged in 
+		// display My Account page, if user is logged in
 		//Dot_Auth::checkIdentity();
 		$data = array();
 		$error = array();
+
+		
 		if($_SERVER['REQUEST_METHOD'] === "POST")
 		{
 			// changes were made to checkUserToken
@@ -98,6 +100,7 @@ switch ($registry->requestAction)
 				header('Location: '.$registry->configuration->website->params->url. '/' . $registry->requestController. '/login');
 				exit;
 			}
+
 			// POST values that will be validated
 			$values = array('details' => 
 							array(
@@ -132,8 +135,11 @@ switch ($registry->requestAction)
 					// var_dump($_FILES["newImage"]);exit;
 					move_uploaded_file($_FILES["newImage"]["tmp_name"], $target_file);
 
+                // updates city and address
+                $data['city'] = strip_tags($_POST['city']);
+                $data['address'] = strip_tags($_POST['address']);
 
-				$userModel->updateUser($data);
+                $userModel->updateUser($data);
 				header('Location: '.$registry->configuration->website->params->url . '/user/account/');
 				$session->message['txt'] = $option->infoMessage->update;
 				$session->message['type'] = 'info';
@@ -151,8 +157,23 @@ switch ($registry->requestAction)
 		if (empty($cartExist)) {
 			$userModel->createCart($cart);	
 		}
+
 		$data = $userModel->getUserInfo($registry->session->user->id);
+		
+		// sum for cart
+		$data['cartSum'] = $userModel->sumProductsFromCart($cart['userId']);
 		$userView->details('update',$data);
+
+		// wishlist
+
+		// logged user
+		$userId = $session->user->id;
+
+		// getting wishList for logged user
+		$wishList = $userModel->getWishlist($userId);
+
+		// showing wishList
+		$userView->showWishList('update', $wishList);
 	break;
 	case 'register':
 		// display signup form and allow user to register
@@ -316,6 +337,22 @@ switch ($registry->requestAction)
 		header('location: '.$registry->configuration->website->params->url);
 		exit;
 	break;
+
+	case 'wishlist':
+		// user Id
+        var_dump($_POST); exit();
+
+		$userId = $session->user->id;
+
+		$wishlist = $userModel->getWishlist($userId);
+
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            $data['productId'] = (isset($_POST['productId'])) ? $_POST['productId']:'';
+            $userModel->addProductToWishlist($data, $userId);
+        }
+
+		break;
 }
 	function validateImage($type,$data)
 	{

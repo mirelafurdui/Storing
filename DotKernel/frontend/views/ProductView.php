@@ -12,7 +12,7 @@ class Product_View extends View
 	}
 
 	// this function makes the pagination,sets the tpl file and block while it shows the table using foreach
-	public function showProductList($template='', $productData, $page)
+	public function showProductList($template='', $productData, $page, $cartSum)
 	{
 		// tests if the template is not empty
 		if ($template != '') {
@@ -26,6 +26,8 @@ class Product_View extends View
 		$this->tpl->paginator($productData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 			// this foreach travels the established table by his keys and values
 			foreach ($productData['data'] as $key => $value) {
 				foreach ($value as $productK => $productValue) {
@@ -39,7 +41,7 @@ class Product_View extends View
 	}
 	
 	// this function makes the pagination,sets the tpl file and block while it shows the table using foreach
-	public function showCategoryList($template='', $categoryData, $page)
+	public function showCategoryList($template='', $categoryData, $page, $cartSum)
 	{
 		// tests if the template is not empty
 		if ($template != '') {
@@ -53,6 +55,8 @@ class Product_View extends View
 		$this->tpl->paginator($categoryData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 			// this foreach travels the established table by his keys and values
 			foreach ($categoryData['data'] as $key => $value) {
 				foreach ($value as $productK => $productValue) {
@@ -66,7 +70,7 @@ class Product_View extends View
 	}
 
 	// this function makes the pagination,sets the tpl file and block while it shows the table using foreach
-	public function showBrandList($template='', $brandData, $page)
+	public function showBrandList($template='', $brandData, $page, $cartSum)
 	{
 		// tests if the template is not empty
 		if ($template != '') {
@@ -80,11 +84,13 @@ class Product_View extends View
 		$this->tpl->paginator($brandData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 			// this foreach travels the established table by his keys and values
 			foreach ($brandData['data'] as $key => $value) {
 				foreach ($value as $productK => $productValue) {
 					// this will set all the productKeys given to be upper case for it to work with the tpl file
-					$this->tpl->setVar(strtoupper($productK), $productValue);
+					$this->tpl->setVar(strtoupper($productK), substr($productValue,0,150));
 				}
 				// this parse is related to the block and if it's true it will show all the keys and values for each block repeat
 				// block name "brand_list"
@@ -93,7 +99,7 @@ class Product_View extends View
 	}
 
 	// this function sets the tpl and shows the table based for one id
-	public function showCertainProduct($template='', $productData, $rating)
+	public function showCertainProduct($template='', $productData, $rating, $cartSum)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -101,6 +107,8 @@ class Product_View extends View
 		}
 		// sets the tpl file
 		$this->tpl->setFile('tpl_main', 'product/'.$this->template.'.tpl');
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 		// this foreach travels the established table by his keys and values
 		foreach ($productData as $productKey => $productValue) {
 			// this will set all the productKeys given to be upper case for it to work with the tpl file
@@ -111,7 +119,7 @@ class Product_View extends View
 	}
 
 	// this function sets the tpl and shows the table based on the brand id and adds paginator
-	public function showCertainBrand($template='', $productData, $page)
+	public function showCertainBrand($template='', $productData, $page, $cartSum)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -125,18 +133,20 @@ class Product_View extends View
 		$this->tpl->paginator($productData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 		// this foreach travels the established table by his keys and values
 		foreach ($productData['data'] as $product) {
 			foreach ($product as $key => $value) {
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
-				$this->tpl->setVar(strtoupper($key), $value);
+				$this->tpl->setVar(strtoupper($key), substr($value,0,150));
 			}
 		$this->tpl->parse('product_brand_list_block','product_brand_list',true);
 		}
 	}
 
 	// this function sets the tpl and shows the table based on the category id and adds paginator
-	public function showCertainCategory($template='', $productData, $page)
+	public function showCertainCategory($template='', $productData, $page, $cartSum)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -150,24 +160,28 @@ class Product_View extends View
 		$this->tpl->paginator($productData['pages']);
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 		// this foreach travels the established table by his keys and values
 		foreach ($productData['data'] as $product) {
 			foreach ($product as $key => $value) {
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
-				$this->tpl->setVar(strtoupper($key), $value);
+				$this->tpl->setVar(strtoupper($key), substr($value,0,150));
 			}
 		$this->tpl->parse('product_category_list_block','product_category_list',true);
 		}
 	}
 
 	// shows the about page for the moment
-	public function showPage($templateFile = '')
+	public function showPage($templateFile = '',$cartSum)
 	{
 		if ($templateFile != '') $this->templateFile = $templateFile;//in some cases we need to overwrite this variable
 		$this->tpl->setFile('tpl_main', 'product/' . $this->templateFile . '.tpl');
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 	}
 
-	public function showCommentsByProduct($template='', $commentList, $page, $likes)
+	public function showCommentsByProduct($template='', $commentList, $page, $likes, $cartSum)
 	{	
 		// tests if the template is not empty
 		if ($template != '') {
@@ -184,6 +198,8 @@ class Product_View extends View
 		
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 		
 		// this foreach travels the established table by his keys and values
 		foreach ($commentList['data'] as $comment) {

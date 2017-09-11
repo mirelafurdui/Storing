@@ -35,10 +35,28 @@
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<show>Product</show>
+					<!-- <show>Product</show> -->
 					<about>About Us</about>
 				</action>
 			</pageTitle>
+			<infoMessage>
+				<allowed></allowed>
+				<addReview>You have added your review (Go ahead, make my day! - Harry Callahan)</addReview>
+				<editReview>You have edited your review</editReview>
+				<deleteReview>You have deleted your review</deleteReview>
+				<addLike>You have liked a review</addLike>
+				<addDislike>You have disliked a review (Much learn you still have - Yoda)</addDislike>
+			</infoMessage>
+			<errorMessage>
+				<allowed></allowed>
+				<reviewError>You are not logged in to make a review!</reviewError>
+				<reviewLimitError>You can't add more than 1 review per product! (I'm sorry Dave. I'm afraid I can't do that. - HAL 9000)</reviewLimitError>
+				<voteError>You are not logged in to vote!</voteError>
+				<orderError>You are not logged in to order!</orderError>
+				<deleteError>You can't delete a Review that's not yours!</deleteError>
+				<deleteLogError>Can't delete as long as you are not logged in!</deleteLogError>
+				<emptyReviewError>You can't send an empty review!</emptyReviewError>
+			</errorMessage>
 		</variable>
 		<variable option="mobile">
 

@@ -4,52 +4,75 @@
 <!-- <script type="text/javascript" src="{TEMPLATES_URL}/js/frontend/user.js"></script> -->
 <div class="message_error" style="display:none" id="msgError"></div>
 <br/>
-<form id="userRegister" action="" method="post" enctype="multipart/form-data">
-	<ul class="form">
-		<li class="clearfix">
-			<label for="username">Username:</label>
-			<input id="username" type="text"  value="{USERNAME}" name="username">
-		</li>
-		<li class="clearfix">
-			<label for="password">Password:</label>
-			<input type="password" name="password" value="{PASSWORD}" id="password" />
-		</li>
-		<li class="clearfix">
-			<label for="password2">Re-type Password:</label>
-			<input type="password" name="password2" value="{PASSWORD}" id="password2" />
-		</li>
-		<li class="clearfix">
-			<label for="email">Email:</label>
-			<input id="email" type="text" name="email" value="{EMAIL}" />
-		</li>
-		<li class="clearfix">
-			<label for="firstName">First Name:</label>
-			<input type="text" name="firstName" value="{FIRSTNAME}" id="firstName" />
-		</li>
-		<li class="clearfix">
-			<label for="lastName">Last Name:</label>
-			<input type="text" name="lastName" value="{LASTNAME}" id="lastName" />
-		</li>
-		<li class="clearfix">
-			<label for="city">City:</label>
-			<input type="text" name="city" value="{CITY}" id="city" />
-		</li>
-		<li class="clearfix">
-			<label for="address">Address:</label>
-			<input type="text" name="address" value="{ADDRESS}" id="address" />
-		</li>
-		<li class="clearfix">
-			<label for="image">Profile picture:</label>
-			<input type="file" name="image" id="image" />
-			<input type="hidden" name="url" value="<?php echo htmlentities($_SERVER['REQUEST_URI'])>"/>
-		</li>
-		<!-- <li class="clearfix">
-			<label>Secure Image:</label>
-			<div id="secure_image">{SECUREIMAGE}</div>
-		</li> -->
-		<li class="clearfix">
-			<label class="empty">&nbsp;</label>
-			<input type="submit" class="button" value="Register">
-		</li>
-	</ul>
-</form>
+<div style="width: 60%; text-align: center; margin: auto;">
+	<form id="userRegister" action="" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="input-group">
+				<input id="username" class="form-control" type="text"  value="{USERNAME}" name="username" placeholder="Add Username">
+				<label for="username" class="input-group-addon glyphicon glyphicon-user"></label>
+			</div>
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="password" class="form-control" name="password" value="{PASSWORD}" id="password" placeholder="Add Password"/>
+				<label for="password" class="input-group-addon glyphicon glyphicon-lock"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="password" class="form-control" name="password2" value="{PASSWORD}" id="password2" placeholder="Add Password Again"/>
+				<label for="password2" class="input-group-addon glyphicon glyphicon-lock"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input id="email" class="form-control" type="text" name="email" value="{EMAIL}" placeholder="Add Email"/>
+				<label for="email" class="input-group-addon glyphicon glyphicon-envelope"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" name="firstName" value="{FIRSTNAME}" id="firstName" placeholder="Add First Name"/>
+				<label for="firstName" class="input-group-addon glyphicon glyphicon-list"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" name="lastName" value="{LASTNAME}" id="lastName" placeholder="Add Last Name"/>
+				<label for="lastName" class="input-group-addon glyphicon glyphicon-list"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" name="city" value="{CITY}" id="city" placeholder="Add City"/>
+				<label for="city" class="input-group-addon glyphicon glyphicon-bookmark"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" name="address" value="{ADDRESS}" id="address"  placeholder="Add Address"/>
+				<label for="address" class="input-group-addon glyphicon glyphicon-home"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<div class="form-group">
+			<div class="input-group">
+				<input type="file" name="image" id="image" class="form-control"/>
+				<input type="hidden" name="url" value="<?php echo htmlentities($_SERVER['REQUEST_URI'])>"/>
+				<label for="address" class="input-group-addon glyphicon glyphicon-picture"></label>
+			</div> <!-- /.input-group -->
+		</div> <!-- /.form-group -->
+
+		<label class="empty">&nbsp;</label>
+		<a href="{SITE_URL}/user/forgot-password" style="font-size:smaller">Password Recovery</a>
+		<label class="empty">&nbsp;</label>
+		<input type="submit" onclick="" class="form-control btn btn-primary" value="Register">
+	</form>
+</div>

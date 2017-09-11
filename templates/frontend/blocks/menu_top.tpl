@@ -1,8 +1,8 @@
-<div id="top_menu_button" class="menu_button" onclick="ShowTopMenu()">
+<!-- <div id="top_menu_button" class="menu_button" onclick="ShowTopMenu()">
 	<span></span>
 	<span></span>
 	<span></span>
-</div>
+</div> -->
 <ul id="top_menu" class="menu_top">
 	<li class="{SEL_PRODUCT_HOME}">
 		<a href="{SITE_URL}/product/home">Store</a>
@@ -22,8 +22,8 @@
 	<li class="{SEL_USER_ACCOUNT}">
 		<a href="{SITE_URL}/user/account">Account {USERNAME}</a>
 	</li>
-	<li>
-		<span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><a href="{SITE_URL}/cart/showCart">Cart</a>
+	<li class="{SEL_CART_SHOWCART}">
+		<a href="{SITE_URL}/cart/showCart"><span style="margin-right:10px;" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Cart <span class="cartNumerator">{CARTSUM}</span></a>
 	</li>
 	<li>
 		<a href="{SITE_URL}/user/logout">Log Out</a>
