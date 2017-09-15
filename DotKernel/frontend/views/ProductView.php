@@ -181,6 +181,7 @@ class Product_View extends View
 		$this->tpl->setVar('CARTSUM', $cartSum);
 	}
 
+    // shows the all the comments for a certain product
 	public function showCommentsByProduct($template='', $commentList, $page, $likes, $cartSum)
 	{	
 		// tests if the template is not empty
@@ -192,6 +193,9 @@ class Product_View extends View
 		
 		// sets block that will later be repeated
 		$this->tpl->setBlock('tpl_main', 'user_comment', 'user_comment_block');
+
+		// sets block etc
+		$this->tpl->setBlock('user_comment', 'user_action_logged', 'user_action_logged_block');
 		
 		// sets the pagination that will be shown later on in the tpl file
 		$this->tpl->paginator($commentList['pages']);
@@ -203,6 +207,7 @@ class Product_View extends View
 		
 		// this foreach travels the established table by his keys and values
 		foreach ($commentList['data'] as $comment) {
+            $this->tpl->parse('user_action_logged_block','');
 			foreach ($comment as $key => $value) {
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
 				$this->tpl->setVar(strtoupper("COMMENT_".$key), $value);
@@ -218,15 +223,41 @@ class Product_View extends View
 				$this->tpl->setVar('CHECK_'.$comment['rating'], 'checked');
 
 			}
-			// exit();
 				// this foreach will represent the total number of likes
-			foreach ($likes as $key => $value) {
+            $totalLikes=0;
+			foreach ($likes as $key => $totalLikes) {
 				if($key == $comment['id']) {
-					$this->tpl->setVar('LIKES', $value);
+					$this->tpl->setVar('LIKES', $totalLikes);
 
 				}
 			}
+			    // this if will check if the session user is set
+			if (isset($this->session->user->id))
+            {
+                // if the session user is set then it will check if the user has a review
+                if ($this->session->user->id == $comment['userId'])
+                {
+                    $this->tpl->setVar("COMMENT_ID", $comment['id']);
+                    $this->tpl->setVar("COMMENT_USERID", $comment['userId']);
+                    $this->tpl->parse('user_action_logged_block','user_action_logged',true);
+                }
+            }
+
 			$this->tpl->parse('user_comment_block','user_comment',true);
 		}
 	}
+
+	// shows the wishlist
+    public function showWishList($template='', $wishList)
+    {
+        // tests if the template is not empty
+        if ($template != '') {
+            $this->template = $template;
+        }
+        // sets the tpl file
+        // $this->tpl->setFile('tpl_main', 'user/'.$this->template.'.tpl');
+        // this will set all the productKeys given to be upper case for it to work with the tpl file
+
+        $this->tpl->setVar("WISHLIST", $wishList);
+    }
 }

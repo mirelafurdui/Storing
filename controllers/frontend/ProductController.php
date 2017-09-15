@@ -1,6 +1,7 @@
 <?php
 $productModel= new Product();
 $productView= new Product_View($tpl);
+$userModel = new User(Dot_Request::getUserAgent(), Dot_Request::getHttpReffer());
 $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 
 
@@ -148,7 +149,6 @@ switch ($registry->requestAction) {
 
 				if ($loggedUserId['username'] != '' && $maxValuePerPost == 0) {
 					$productModel->addCommentToCertainProduct($data,$loggedUserId['id'],$data['productId']);
-                    var_dump($maxValuePerPost);
 					$registry->session->message['txt'] = $registry->option->infoMessage->addReview;
 					$registry->session->message['type'] = 'info';
 				// this else will tell the user that he can't have 2 reviews on the same product
@@ -163,7 +163,16 @@ switch ($registry->requestAction) {
 				$registry->session->message['type'] = 'error';
 			}
 		}
+        // logged user
+        $user=$registry->session->user->id ?? null;
 
+            if (isset($user) && !empty($user)) {
+                $wishList = $productModel->getTheWishlist($id, $user);
+            } else {
+                $wishList = $productModel->getTheWishlist($id, $user=0);
+            }
+
+        $productView->showWishList('show', $wishList);
 		// shows comments on a product
 		$productView->showCertainProduct('home_product',$certainProduct, $averageRating, $totalCart);
 
@@ -321,7 +330,87 @@ switch ($registry->requestAction) {
 		}
 		break;
 
+    case 'add_to_wishlist':
+        $loggedUserId = (array)$_SESSION['frontend']['user'];
+        // user id from session
+        $loggedUser = $loggedUserId['id'];
+        // product id from tpl
+        $productId = $_POST['productId'];
+        // validation
+        $valid = $_POST['validation'];
+        // delete action
+        $action = $_POST['action'] ?? 'error';
+
+        $response = [
+            'success' => false,
+            'message' => 'invalid action provided',
+            'action' => 'error'
+        ];
+        if (isset($loggedUser) && !empty($loggedUser)) {
+            if ($action == 'addToWish'  && $valid == 1 && $maxProductsInWishlist == 0) {
+                $response['action'] = $action;
+                $response['success'] = true;
+                $response['message'] = "Added Successfull";
+                $maxProductsInWishlist=$productModel->addProductToWishlist($productId, $loggedUser, $valid);
+                // this if test if the product was already added to the wishlist
+                if ($maxProductsInWishlist >= 1) {
+                    // validation error (you can't add a product to your wishlist more than once)
+                    echo Zend_Json::encode($response);
+                    $registry->session->message['txt'] = $registry->option->errorMessage->AddToWishlistError;
+                    $registry->session->message['type'] = 'error';
+                    exit();
+                }
+                echo Zend_Json::encode($response);
+                // validation info (you have added a product to the wishlist)
+                $registry->session->message['txt'] = $registry->option->infoMessage->AddToWishlist;
+                $registry->session->message['type'] = 'info';
+                exit();
+            } if ($maxProductsInWishlist >= 1) {
+                // validation error (you can't add a product to your wishlist more than once)
+                echo Zend_Json::encode($response);
+                $registry->session->message['txt'] = $registry->option->errorMessage->AddToWishlistError;
+                $registry->session->message['type'] = 'error';
+                exit();
+            }
+        } else {
+            // validation error (you can't add products in the wishlist while you are not logged)
+            echo Zend_Json::encode($response);
+            $registry->session->message['txt'] = $registry->option->errorMessage->AddToWishlistLogError;
+            $registry->session->message['type'] = 'error';
+//            header('Location: '.$registry->configuration->website->params->url. '/user/'.'register');
+            exit();
+        }
+        break;
+
     case "edit_user_comment":
-        echo ("alabama");
-		break;
+        var_dump($_POST);
+        $loggedUserId = (array)$_SESSION['frontend']['user'];
+        // user id from session
+        $loggedUser = $loggedUserId['id'];
+        // product id from tpl
+        $productId = $_POST['productId'];
+        // edit action
+        $action = $_POST['action'] ?? 'error';
+
+        $response = [
+            'success' => false,
+            'message' => 'invalid action provided',
+            'action' => 'error'
+        ];
+        if (isset($loggedUser) && !empty($loggedUser)) {
+            if ($action == 'addToWish' && $valid == 1 && $maxProductsInWishlist == 0) {
+                $response['action'] = $action;
+                $response['success'] = true;
+                $response['message'] = "Edited Successfull";
+                $productModel->editCommentToCertainProduct($data, $commentId, $userId);
+            } else {
+                // validation error (you can't add products in the wishlist while you are not logged)
+                echo Zend_Json::encode($response);
+                $registry->session->message['txt'] = $registry->option->errorMessage->editError;
+                $registry->session->message['type'] = 'error';
+//            header('Location: '.$registry->configuration->website->params->url. '/user/'.'register');
+                exit();
+            }
+        }
+        break;
 }

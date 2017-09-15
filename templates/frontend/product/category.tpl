@@ -7,23 +7,25 @@
 </h2>
 <hr>
 <!-- BEGIN category_list -->
-<div style="display: inline; padding-bottom: 10px";>
-	<table style="display: inline-block; padding: 20px;">
+<div class="tableBCOuter">
+	<div>
+	<table class="tableBC">
 		<thead>
 			<td>
 				<a href="{SITE_URL}/product/category/id/{ID}" >
-				<img style=" display: block; margin: 0 auto;" 
-				src="{SITE_URL}/images/category/{IMAGE}" height="150" width="150" >
+				<img style=" display: block; margin: 0 auto; border-radius: 20px;"
+				src="{SITE_URL}/images/category/{IMAGE}" height="150" width="150">
 				</a>
 			</td>
 		</thead>
-		<tr>
-			<td>
-				<a href="{SITE_URL}/product/category/id/{ID}" ><p style="text-align: center;  margin: 4px;">{NAME}</p></a>
-				<!-- <p style="text-align: center; margin: 4px; color: red;">{PRICE} Lei</p> -->
-			</td>
-		</tr>
+			<tr>
+				<td>
+					<a href="{SITE_URL}/product/category/id/{ID}" style="color: black"><p style="text-align: center;  margin: 4px;">{NAME}</p></a>
+					<!-- <p style="text-align: center; margin: 4px; color: red;">{PRICE} Lei</p> -->
+				</td>
+			</tr>
 	</table>
+	</div>
 </div>
 <!-- END category_list -->
 <hr>

@@ -165,14 +165,6 @@ class User extends Dot_Model_User
 		return ($result[0]['totalProducts']) ?? 0;
 	}
 
-	// this function will add products to the wishlist
-	public function addProductToWishlist($data, $userId) 
-	{	
-		$dataProduct["userId"] = $userId;
-		$dataProduct["productId"] = $data['id'];
-
-		$this->db->insert('wishlist', $dataProduct);
-	}
 	
 	// this function will get the wishlist for the logged user
 	public function getWishlist($userId) 

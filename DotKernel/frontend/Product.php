@@ -109,9 +109,11 @@ class Product extends Dot_Model
 		return $maxPostPerUser;
 	}
 	// this function will edit a certain comment
-	public function editCommentToCertainProduct($data,$id)
+	public function editCommentToCertainProduct($data,$commentId, $userId)
 	{
-		$this->db->update('comment', $data, "id= " . $id);
+        $where[]="commentId = $commentId";
+        $where[]="userId = $userId";
+		$this->db->update('comment', $data, $where);
 	}
 	// this function will delete a certain comment
 	public function deleteCommentToCertainProduct($commentId,$userId)
@@ -193,4 +195,43 @@ class Product extends Dot_Model
 
 		return ($result[0]['totalProducts']) ?? 0;
 	}
+
+    // this function will add products to the wishlist
+    public function addProductToWishlist($productId, $userId, $valid)
+    {
+        // this is the given data to be inserted into the wishlist
+        $dataProduct["productId"] = $productId;
+        $dataProduct["userId"] = $userId;
+        $dataProduct["ifWishlist"] = $valid;
+
+        // this will search for the product in the wishlist and it will count it
+        $select=$this->db->select()
+            ->from('wishlist', new Zend_Db_Expr('COUNT(productId) as maxProductOnWishlist'))
+            ->where('productId= ?', $productId)
+            ->where('userId= ?', $userId);
+        $result=$this->db->fetchAll($select);
+
+        // this will add the product to the wishlist if it doesn't exist
+        if ($result['0']['maxProductOnWishlist'] == 0) {
+            $this->db->insert('wishlist', $dataProduct);
+        }
+
+        return $result['0']['maxProductOnWishlist'];
+    }
+
+    // this function will select product and id
+
+    public function getTheWishlist($productId, $userId)
+    {
+        // this will show the wishlist for a certain product for a certain user
+        $select=$this->db->select()
+                         ->from('wishlist')
+                         ->where('productId= ?', $productId)
+                         ->where('userId= ?', $userId);
+        $result=$this->db->fetchRow($select);
+
+        // this will show that if your product is in the wishlist it will return 1 but if it does not it will return 0
+        $details = $result['ifWishlist'] ?? $result['0'];
+        return $details;
+    }
 }

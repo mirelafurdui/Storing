@@ -79,6 +79,7 @@ If you didn't make this request, you can ignore this email.</message>
 			</errorMessage>
 			<infoMessage>
 				<add>Your account was created !</add>
+				<deleteProductFromWishlist>You have removed a product from the wishlist!</deleteProductFromWishlist>
 				<update>Your account was updated !</update>
 			</infoMessage>
 			<warningMessage>

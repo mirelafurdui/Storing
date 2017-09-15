@@ -9,6 +9,51 @@ $(".btn-pref .btn").click(function () {
 });
 });
 </script>
+
+<script type="text/javascript">
+
+    var deleteRequestUrl = '{SITE_URL}/user/delete_product_from_wishlist';
+
+    function deleteProductFromWishlist(action,productId,userId) {
+        var requestSettings = {
+            "data" : {
+                "action": action ,
+                "id": productId,
+                "userId": userId
+            },
+            "method" : "POST"
+        };
+
+        if (action == 'delete') {
+            $.ajax(deleteRequestUrl, requestSettings)
+                .done(
+                    function(response)
+                    {
+                        var recievedData = $.parseJSON(response);
+                        console.debug(response); // enter console to see result
+                        var deleteSuccess = recievedData.success;
+                        var productId = $(this).attr('productId');
+                    });
+            } else {
+                alert ('Unspecified action error!');
+            }
+        }
+
+        var USER_TOKEN;
+        $(document).ready(function() {
+            sleep(50);
+            USER_TOKEN = "{USER_TOKEN}";
+            $('.deleteButton').click(function(event)
+            {
+                var productClass = $(this).attr('class');
+                var productId = $(this).attr('productId');
+                var userId = $(this).attr('userId');
+//                event.preventDefault();
+//                location.reload();
+            });
+        });
+</script>
+
 <div class="col-lg-6 col-sm-6" style="width: 100%">
     <div class="card hovercard">
         <div class="card-background">
@@ -84,23 +129,19 @@ $(".btn-pref .btn").click(function () {
             </div>
             <div class="tab-pane fade in" id="tab2">
                 <div>
-                    <table class="table table-striped custab">
+                    <table class="table table-striped custab" style="text-align: center">
                         <thead>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>DESCRIPTION</th>
-                            <th>IMAGE</th>
-                            <th>PRICE</th>
-                            <th>ACTION</th>
+                            <th style="text-align: center">NAME</th>
+                            <th style="text-align: center">IMAGE</th>
+                            <th style="text-align: center">PRICE</th>
+                            <th style="text-align: center">ACTION</th>
                         </thead>
                 <!-- BEGIN wishlist_list -->
                         <tbody>
-                            <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}">{WISHLIST_PRODUCTID}</a></td>
                             <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}">{WISHLIST_NAME}</a></td>
-                            <td>{WISHLIST_DESCRIPTION}</td>
                             <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}"><img src="{SITE_URL}/images/uploads/{WISHLIST_IMAGE}" width="80" height="80"></a></td>
                             <td>{WISHLIST_PRICE} Lei</td>
-                            <td><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+                            <td><a href="{SITE_URL}/user/account"><button class="btn btn-danger btn-xs" productId="{WISHLIST_PRODUCTID}" onclick="deleteProductFromWishlist('delete',{WISHLIST_PRODUCTID},{ID})"><span class="glyphicon glyphicon-remove"></span> Remove</button></a></td>
                         </tbody>
                 <!-- END wishlist_list -->
                     </table>

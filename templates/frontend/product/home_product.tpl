@@ -37,15 +37,47 @@
 });
 </script>
 
+<!-- Script that shows the edit or save button based on the actions of the user -->
+<script>
+	$(document).ready(function() {
+        $('.saveButton').hide();
+        $('#editInput').hide();
+        $('.editButton').click(function () {
+            event.preventDefault();
+            $('.saveButton').show();
+            $('#editInput').show();
+            $('.editButton').hide();
+        });
+        $('.saveButton').click(function () {
+            event.preventDefault();
+            $('.saveButton').hide();
+            $('#editInput').hide();
+            $('.editButton').show();
+        });
+    });
+</script>
+
+<!-- Script that changes the heart status from empty to full based on whether the sent result is null/0 or 1 -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        var wishResult = {WISHLIST};
+        if (wishResult == 0) {
+            $('#heart').attr('class','fa fa-heart-o');
+        } else if (wishResult == 1) {
+            $('#heart').attr('class','fa fa-heart');
+        }
+    });
+</script>
+
 <!-- Script that gives the like and dislike options -->
 <script type="text/javascript">
 
 var deleteRequestUrl = '{SITE_URL}/product/delete_user_comment';
-var deleteRequestUrl = '{SITE_URL}/product/edit_user_comment';
-var addWishListRequestUrl = '{SITE_URL}/user/';
+var editRequestUrl = '{SITE_URL}/product/edit_user_comment';
+var addWishListRequestUrl = '{SITE_URL}/product/add_to_wishlist';
 var voteRequestUrl = '{SITE_URL}/product/voting';
 
-function voteRequest(action, commentId,info) {
+function voteRequest(action, commentId, info) {
 	var requestSettings = {
 		"data" : { 
 			"action": action ,
@@ -72,62 +104,50 @@ function voteRequest(action, commentId,info) {
 		alert ('Unspecified action error!');
 	}
 }
-function deleteComment(action,commentId,userId) {
-	var requestSettings = {
-		"data" : { 
-			"action": action ,
-			"id": commentId,
-			"userId": userId
-		},
-		"method" : "POST"
-	};
+function deleteComment(action, commentId, userId) {
+    var requestSettings = {
+        "data": {
+            "action": action,
+            "id": commentId,
+            "userId": userId
+        },
+        "method": "POST"
+    };
 
-	if (action == 'delete') {
-		$.ajax(deleteRequestUrl, requestSettings)
-			.done(
-				function(response)
-					{
-						var recievedData = $.parseJSON(response);
-						console.debug(response); // enter console to see result
-						var deleteSuccess = recievedData.success; 
-						var commentId = $(this).attr('commentId');
-					});
-	if (action == 'edit') {
-		$.ajax(editRequestUrl, requestSettings)
-			.done(
-				function(response)
-				{
-					var recievedData = $.parseJSON(response);
-					console.debug(response); // enter console to see result
-					var editSuccess = recievedData.success;
-					var commentId = $(this).attr('commentId');
-				});
-
-	} else {
-		alert ('Unspecified action error!');
-	}
+    if (action == 'delete') {
+        $.ajax(deleteRequestUrl, requestSettings)
+            .done(
+                function (response) {
+                    var recievedData = $.parseJSON(response);
+                    console.debug(response); // enter console to see result
+                    var deleteSuccess = recievedData.success;
+                    var commentId = $(this).attr('commentId');
+                });
+    }
 }
-
-function addToWishlist(productId) {
+function addToWishlist(action, productId, userId) {
 	var requestSettings = {
 		"data" : {
+            "action": action,
 			"productId": productId,
+            "userId": userId,
 			"validation": 1
 		},
 		"method" : "POST"
 	};
-	$.ajax(addWishListRequestUrl, requestSettings)
-	.done(
-		function(response) {
-			var recievedData = $.parseJSON(response);
-			console.debug(resonse);
-		}
-	);
+    if (action == 'addToWish') {
+        $.ajax(addWishListRequestUrl, requestSettings)
+            .done(
+                function (response) {
+                    var recievedData = $.parseJSON(response);
+                    console.debug(response);
+                });
+    } else {
+        alert ('Unspecified action error!');
+    }
 }
-var USER_TOKEN;
+
 $(document).ready(function() {
-	sleep(50);
-	USER_TOKEN = "{USER_TOKEN}";
     	$('.upvoteButton').click(function(event)
     	{
     		var commentClass = $(this).attr('class');
@@ -153,17 +173,25 @@ $(document).ready(function() {
     		var commentClass = $(this).attr('class');
       		var commentId = $(this).attr('commentId');
       		var userId = $(this).attr('userId');
+
       		// uncomment this and it will give you an alert that shows the class and id of the comment
       		// alert(commentClass+commentId);
     		event.preventDefault();
     		location.reload();
-			
+
     	});
     	$('#wishlist').click(function(event)
     	{
-    		event.preventDefault();
-    		addToWishlist($(this).attr('productId'));
+    		var addToWish = $(this).attr('productId');
+            event.preventDefault();
+            location.reload();
     	});
+
+		$('#editButton').click(function(event)
+		{
+			event.preventDefault();
+//			location.reload();
+		});
 });
 </script>
 
@@ -173,7 +201,6 @@ $(document).ready(function() {
 	<a href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
 	{PRODUCT_NAME}
 </h2>
-
 <!-- This is where the product is shown START --> 
  <div class="container">
 	<div class="row">
@@ -268,11 +295,8 @@ $(document).ready(function() {
                 	</div> 
                 </div>                                        
             </form>
-			<form method="post" name="addToWishlist" action="{SITE_URL}/user/">
-				<button class="btn-wish" id="wishlist" productId="{PRODUCT_ID}"><i class="fa fa-heart-o"></i></button>
-				<input type="hidden" value="{PRODUCT_ID}">
-			</form>
-        </div>                              
+			<button class="btn-wish" id="wishlist" productId="{PRODUCT_ID}" onclick="addToWishlist('addToWish',{PRODUCT_ID})"><span id="heart" class="fa fa-heart-o"></span></button>
+        </div>
         <div class="col-xs-9">
             <ul class="menu-items">
                 <li class="active">Description</li>
@@ -294,36 +318,37 @@ $(document).ready(function() {
 	<h2>Review</h2>
 		<div id="add-comment">
             <form method="post" class="form-horizontal" name="review" action="{SITE_URL}/product/show/id/{PRODUCT_ID}">
-            <div class="form-group">
-                <div class="stars" style="margin-left: 36.9%">
-                	<div>
-					    <input class="star star-5" id="star-5" type="radio" name="rating" value="5.0" />
-					    <label class="star star-5" for="star-5" value="5"></label>
-					    <input class="star star-4" id="star-4" type="radio" name="rating" value="4.0"/>
-					    <label class="star star-4" for="star-4" value="4"></label>
-					    <input class="star star-3" id="star-3" type="radio" name="rating" value="3.0"/>
-					    <label class="star star-3" for="star-3" value="3"></label>
-					    <input class="star star-2" id="star-2" type="radio" name="rating" value="2.0"/>
-					    <label class="star star-2" for="star-2" value="2"></label>
-					    <input class="star star-1" id="star-1" type="radio" name="rating" value="1.0"/>
-					    <label class="star star-1" for="star-1" value="1"></label>
-                	</div>
+				<div class="form-group">
+					<div class="stars" style="margin-left: 36.9%">
+						<div>
+							<input class="star star-5" id="star-5" type="radio" name="rating" value="5.0" />
+							<label class="star star-5" for="star-5" value="5"></label>
+							<input class="star star-4" id="star-4" type="radio" name="rating" value="4.0"/>
+							<label class="star star-4" for="star-4" value="4"></label>
+							<input class="star star-3" id="star-3" type="radio" name="rating" value="3.0"/>
+							<label class="star star-3" for="star-3" value="3"></label>
+							<input class="star star-2" id="star-2" type="radio" name="rating" value="2.0"/>
+							<label class="star star-2" for="star-2" value="2"></label>
+							<input class="star star-1" id="star-1" type="radio" name="rating" value="1.0"/>
+							<label class="star star-1" for="star-1" value="1"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div style="width: 80%; margin-left: 10%;">
+						  <textarea class="form-control" name="title" placeholder="Add a Title" minlength="1" maxlength="90" rows="1" style="resize:none;" required></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div style="width: 80%; margin-left: 10%;">
+						  <textarea class="form-control" name="comment" placeholder="Write your Review" rows="5" style="resize:none;" required></textarea>
+						</div>
+					</div>
+					<div style="width: 300px; margin-left: 33%">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button class="btn btn-success btn-circle text-uppercase" type="submit"><span class="glyphicon glyphicon-send"></span>Add Review</button>
+						</div>
+					</div>
 				</div>
-                <div class="form-group">
-                    <div style="width: 80%; margin-left: 10%;">
-                      <textarea class="form-control" name="title" placeholder="Add a Title" minlength="1" maxlength="90" rows="1" style="resize:none;" required></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div style="width: 80%; margin-left: 10%;">
-                      <textarea class="form-control" name="comment" placeholder="Write your Review" rows="5" style="resize:none;" required></textarea>
-                    </div>
-                </div>
-                <div style="width: 300px; margin-left: 33%">
-                    <div class="col-sm-offset-2 col-sm-10">                    
-                        <button class="btn btn-success btn-circle text-uppercase" type="submit"><span class="glyphicon glyphicon-send"></span>Add Review</button>
-                    </div>
-                </div>
             </form>
         </div>
 	<hr>
@@ -357,27 +382,50 @@ $(document).ready(function() {
                         <ul class="media-date text-uppercase reviews list-inline">
                         	<li>{COMMENT_DATE}</li>
                         </ul>
-                        	<p class="mediaUser" style="width: 200px">{COMMENT_USERNAME} <p class="mediaTitle">{COMMENT_TITLE} </p></p>
-                      		<textarea class="mediaComment" disabled="" wrap=""> {COMMENT_COMMENT} </textarea><br>
-							<form>
-								<table>
-									<thead>
-									<th><button class="upvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('upVote',{COMMENT_ID},1)"><span class="glyphicon glyphicon-chevron-up"></span>Like</button></th>
-									<th><button class="downvoteButton" commentId="{COMMENT_ID}" onclick="voteRequest('downVote',{COMMENT_ID},-1)">
-								<span class="glyphicon glyphicon-chevron-down"></span>Unlike</button></th>
-									<th><button id="totalLikes" style="text-align: center;" disabled="">{LIKES}</button></th>
-									<th><button class="deleteButton" commentId="{COMMENT_ID}" onclick="deleteComment('delete',{COMMENT_ID},{COMMENT_USERID})">Delete</button></th>
-									<th><button class="editButton" commentId="{COMMENT_ID}" onclick="deleteComment('edit',{COMMENT_ID},{COMMENT_USERID})">Edit</button></th>
-									</thead>
-								</table>
-							</form>
+						<p class="mediaUser" style="width: 200px">{COMMENT_USERNAME} <p class="mediaTitle">{COMMENT_TITLE} </p></p>
+						<textarea class="mediaComment" disabled=""> {COMMENT_COMMENT} </textarea><br>
+						<form>
+							<table>
+								<thead>
+								<th><button class="upvoteButton" style="padding: 5px" commentId="{COMMENT_ID}" onclick="voteRequest('upVote',{COMMENT_ID},1)">
+										<span class="glyphicon glyphicon-chevron-up"></span>Like</button></th>
+								<th><button class="downvoteButton" style="padding: 5px" commentId="{COMMENT_ID}" onclick="voteRequest('downVote',{COMMENT_ID},-1)">
+										<span class="glyphicon glyphicon-chevron-down"></span>Unlike</button></th>
+								<th><button id="totalLikes" style="text-align: center; padding: 5px;" disabled="">
+										<span class="glyphicon glyphicon-stats"> {LIKES}</button></th>
+
+								<!-- BEGIN user_action_logged -->
+
+								<th><button class="deleteButton" style="padding: 5px" commentId="{COMMENT_ID}" userId="{COMMENT_USERID}" onclick="deleteComment('delete',{COMMENT_ID},{COMMENT_USERID})">
+										<span class="glyphicon glyphicon-trash"> Delete</button></th>
+								<th><button class="editButton" style="padding: 5px" commentId="{COMMENT_ID}" userId="{COMMENT_USERID}">
+										<span class="glyphicon glyphicon-pencil"> Edit</button></th>
+								<th><button class="saveButton" style="padding: 5px" commentId="{COMMENT_ID}" userId="{COMMENT_USERID}">
+										<span class="glyphicon glyphicon-floppy-disk"> Save</button></th>
+								<tr>
+									<table>
+										<form action="{SITE_URL}/product/show/id/1" method="post">
+											<div style="margin-top: 20px;" id="editInput">
+												<input type="text" value="{COMMENT_TITLE}" class="mediaComment" id="title" minlength="1" maxlength="90">
+												<input type="text" value="{COMMENT_COMMENT}" class="mediaComment" id="comment" minlength="1">
+												<input type="hidden" value="{COMMENT_USERID}">
+												<input type="hidden" value="{COMMENT_ID}">
+												<button  id="editButton" type="submit" class="btn btn-success btn-circle text-uppercase" style="width: 300px; margin-left: 290px"><span class="glyphicon glyphicon-pencil"></span>Edit</button>
+											</div>
+										</form>
+									</table>
+								</tr>
+
+								<!-- END user_action_logged -->
+								</thead>
+							</table>
+						</form>
                 	</div>              
                 </div>
                 </li>
             </ul> 
         <!-- END user_comment -->
-   		</div>
-	</div>
+		</div>
 </div>
 <script type="text/javascript">
 // average 4.22 - this rounds the average for better use
