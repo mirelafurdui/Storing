@@ -77,10 +77,12 @@ switch ($registry->requestAction)
 		exit;
 	break;
 	case 'account':
-		// display My Account page, if user is logged in 
+		// display My Account page, if user is logged in
 		//Dot_Auth::checkIdentity();
 		$data = array();
 		$error = array();
+
+		
 		if($_SERVER['REQUEST_METHOD'] === "POST")
 		{
 			// changes were made to checkUserToken
@@ -98,11 +100,14 @@ switch ($registry->requestAction)
 				header('Location: '.$registry->configuration->website->params->url. '/' . $registry->requestController. '/login');
 				exit;
 			}
+
 			// POST values that will be validated
 			$values = array('details' => 
 							array(
 								'firstName'=>(isset($_POST['firstName']) ? $_POST['firstName'] : ''),
 								'lastName'=>(isset($_POST['lastName']) ? $_POST['lastName'] : '')),
+								'city'=>(isset($_POST['city']) ? $_POST['city'] : ''),
+                                'address'=>(isset($_POST['address']) ? $_POST['address'] : ''),
 								'email' => array('email' => (isset($_POST['email']) ? $_POST['email'] : '')
 							)
 					);
@@ -132,8 +137,11 @@ switch ($registry->requestAction)
 					// var_dump($_FILES["newImage"]);exit;
 					move_uploaded_file($_FILES["newImage"]["tmp_name"], $target_file);
 
+                // updates city and address
+                $data['city'] = strip_tags($_POST['city']);
+                $data['address'] = strip_tags($_POST['address']);
 
-				$userModel->updateUser($data);
+                $userModel->updateUser($data);
 				header('Location: '.$registry->configuration->website->params->url . '/user/account/');
 				$session->message['txt'] = $option->infoMessage->update;
 				$session->message['type'] = 'info';
@@ -151,8 +159,23 @@ switch ($registry->requestAction)
 		if (empty($cartExist)) {
 			$userModel->createCart($cart);	
 		}
+
 		$data = $userModel->getUserInfo($registry->session->user->id);
+		
+		// sum for cart
+		$data['cartSum'] = $userModel->sumProductsFromCart($cart['userId']);
 		$userView->details('update',$data);
+
+		// wishlist
+
+		// logged user
+		$userId = $session->user->id;
+
+		// getting wishList for logged user
+		$wishList = $userModel->getWishlist($userId);
+
+		// showing wishList
+		$userView->showWishList('update', $wishList);
 	break;
 	case 'register':
 		// display signup form and allow user to register
@@ -175,6 +198,8 @@ switch ($registry->requestAction)
 			$values = array('details' => 
 								array('firstName'=>(isset($_POST['firstName']) ? $_POST['firstName'] : ''),
 									  'lastName'=>(isset($_POST['lastName'])? $_POST['lastName'] : ''),
+                                      'city'=>(isset($_POST['city']) ? $_POST['city'] : ''),
+                                      'address'=>(isset($_POST['address']) ? $_POST['address'] : ''),
 									 ),
 							'username' => array('username'=>(isset($_POST['username']) ? $_POST['username'] : '')),
 							'email' => array('email' => (isset($_POST['email']) ? $_POST['email'] : '')),
@@ -191,17 +216,16 @@ switch ($registry->requestAction)
 					$target_dir = 'images/uploads/user/';
 					$filename = $_POST['email'] . '.jpg';
 					$target_file = $target_dir . $filename;
-					// var_dump($target_file);exit;
 					move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 				// no error - then add user
 				$data = $dotValidateUser->getData();
-				// $data['lastName'] = strip_tags($_POST['lastName']);
 				$data['lastName'] = strip_tags(htmlentities($_POST['lastName']));
 				$data['firstName'] = strip_tags($_POST['firstName']);
 				$data['username'] = strip_tags($_POST['username']);
-				$data['city'] = $_POST['city'];
-				$data['address'] = $_POST['address'];
+				$data['city'] = strip_tags($_POST['city']);
+				$data['address'] = strip_tags($_POST['address']);
 				$data['image'] = $target_file;
+
 				$userModel->addUser($data);
 				$session->message['txt'] = $option->infoMessage->add;
 				$session->message['type'] = 'info';
@@ -316,6 +340,48 @@ switch ($registry->requestAction)
 		header('location: '.$registry->configuration->website->params->url);
 		exit;
 	break;
+
+    // this case is meant to delete products from the wishlist
+    case 'delete_product_from_wishlist':
+        $loggedUserId = (array)$_SESSION['frontend']['user'];
+        // user id from session
+        $loggedUser = $loggedUserId['id'];
+        // product id from tpl REMAKE
+        $productId = $_POST['id'];
+        // product userId from tpl
+        $userId = $_POST['userId'];
+        // delete action
+        $action = $_POST['action'] ?? 'error';
+
+        $response = [
+            'success' => false,
+            'message' => 'invalid action provided',
+            'action' => 'error',
+            'data' => [
+                'voteValue' => ''
+            ],
+        ];
+        if (isset($loggedUser) && !empty($loggedUser)) {
+            if ($action == 'delete' && $loggedUser == $userId) {
+                $response['action'] = $action;
+                $response['success'] = true;
+                $response['message'] = "Delete Successfull";
+                $userModel->deleteProductFromWishlist($productId, $userId);
+                echo Zend_Json::encode($response);
+                // validation info (you have deleted your product)
+                $registry->session->message['txt'] = $registry->option->infoMessage->deleteProductFromWishlist;
+                $registry->session->message['type'] = 'info';
+                exit();
+            } else {
+                $registry->session->message['txt'] = $registry->option->infoMessage->login;
+                $registry->session->message['type'] = 'error';
+                exit();
+            }
+        }
+        echo Zend_Json::encode($response);
+//        exit();
+
+        break;
 }
 	function validateImage($type,$data)
 	{

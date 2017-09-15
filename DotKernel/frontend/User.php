@@ -154,4 +154,32 @@ class User extends Dot_Model_User
 		$result=$this->db->fetchAll($select);
 		return $result;
 	}
+	// this function will get the sum for one cart
+	public function sumProductsFromCart($cartId) 
+	{	
+		$select=$this->db->select()
+						 ->from('cartproduct', new Zend_Db_Expr('COUNT(id) as totalProducts'))
+						 ->where('cartId= ?', $cartId);
+		$result=$this->db->fetchAll($select);
+
+		return ($result[0]['totalProducts']) ?? 0;
+	}
+
+	
+	// this function will get the wishlist for the logged user
+	public function getWishlist($userId) 
+	{	
+		$select=$this->db->select()
+		 				 ->from('wishlist')
+		 				 ->where('wishlist.userId= ?',$userId)
+		 				 ->join('product', 'wishlist.productId = product.id', ["NAME" => 'name', "PRICE" => 'price', "IMAGE" => 'image', "DESCRIPTION"=>'description']);
+		$result=$this->db->fetchAll($select);
+		return $result;
+	}
+
+	// this function will remove a product from the wishlist
+	public function deleteProductFromWishlist($productId, $userId)
+	{
+			$this->db->delete('wishlist', array("productId = " . $productId, 'userId = '. $userId));
+	}
 }

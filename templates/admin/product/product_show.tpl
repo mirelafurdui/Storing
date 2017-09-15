@@ -34,7 +34,7 @@
 				<th style="text-align: center;">Photo</th>
 			</tr>
 		</thead>
-			<td><img style=" display: block; margin: 0 auto;" src="{SITE_URL}/images/uploads/{IMAGE}" height="200" width="300" ></td>
+			<td><img style=" display: block; margin: 0 auto;" src="{SITE_URL}/images/uploads/{IMAGE}" height="300" width="300" ></td>
 	</table>
 </div>
 <hr>

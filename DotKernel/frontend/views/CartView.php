@@ -41,7 +41,7 @@ class Cart_View extends View
 	}
 
 	// this function makes sets the tpl file and block while it shows the table using foreach
-	public function showCartProductList($template='', $productData)
+	public function showCartProductList($template='', $productData, $cartSum)
 	{
 		// tests if the template is not empty
 		if ($template != '') {
@@ -51,7 +51,8 @@ class Cart_View extends View
 		$this->tpl->setFile('tpl_main', 'cart/'.$this->template.'.tpl');
 		// sets block that will later be repeated
 		$this->tpl->setBlock('tpl_main', 'cart_list', 'cart_list_block');
-			// this foreach travels the established table by his keys and values
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 		$totalPrice = 0;
 		$total = 0;
 			foreach ($productData as $key => $value) {
@@ -83,7 +84,7 @@ class Cart_View extends View
 				$this->tpl->parse('cart_list_block','cart_list',true);
 			}
 	}
-public function showUserDetails($template='', $productData)
+	public function showUserDetails($template='', $productData, $cartSum)
 	{
 		// tests if the template is not empty
 		if ($template != '') {
@@ -91,6 +92,8 @@ public function showUserDetails($template='', $productData)
 		}
 		// sets the tpl file
 		$this->tpl->setFile('tpl_main', 'cart/'.$this->template.'.tpl');
+		// sets the number of products from the cart
+		$this->tpl->setVar('CARTSUM', $cartSum);
 		
 			foreach ($productData as $key => $value)
 		 	{

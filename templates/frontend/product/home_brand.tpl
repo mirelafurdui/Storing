@@ -12,6 +12,17 @@
     <div class="btn-group">
         <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list"></span>List</a> 
         <a href="#" id="grid" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th"></span>Grid</a>
+        <div class="dropdown" style="display: inline-block; margin-left: 400px;">
+            <button id="btn" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Items Per Page</button>
+            <ul class="dropdown-menu">
+              <li><a id="9" href="#">9</a></li>
+              <li><a id="15" href="#">15</a></li>
+              <li><a id="21" href="#">21</a></li>
+              <li><a id="24" href="#">24</a></li>
+            </ul>
+                <a class="btn btn-primary" href="{SITE_URL}/product/show_brand" style="color: white">Brands Page</a>
+                <a class="btn btn-primary" href="{SITE_URL}/product/show_category" style="color: white">Category Page</a>
+        </div>
     </div>
 </div>
 <h2>
@@ -36,7 +47,7 @@
 	                        {PRICE} Lei</p>
 	                </div>
 	                <div class="col-xs-12 col-md-6">
-	                    <a class="btn btn-success" href="#">Add to cart</a>
+	                    <a class="btn btn-success" href="{SITE_URL}/product/show/id/{ID}" style="color: white;">View</a>
 	                </div>
 	            </div>
 	        </div>

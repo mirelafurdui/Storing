@@ -40,7 +40,7 @@
                             <form method="post">
 <!-- BEGIN cart_list -->
             <tr>
-                <td>{NAME}{ID}</td>
+                <td class="tdFix">{NAME}{ID}</td>
                 <td>
                      <div class="input-group">
                        <span style="cursor: pointer; cursor: hand; background-color: green; color: white;" class="input-group-addon" id="plus_one"><a style="text-decoration: none; color: white;" href="{SITE_URL}/cart/addq/id/{PRODUCTID}"> +</a></span>
@@ -49,8 +49,8 @@
                     </div>
                  </td>
                 <td style="text-align: center;"><a href="{SITE_URL}/cart/delete/id/{PRODUCTID}"><button type="button" class="btn btn-danger" >Delete</button></a></td>
-                <td>{PRICE}</td>
-                <td>{PRICE_F}</td>
+                <td class="tdFix">{PRICE}</td>
+                <td class="tdFix">{PRICE_F}</td>
             </tr>
 <!-- END cart_list -->
                             </form>
@@ -68,7 +68,7 @@
                 <th>{TOTAL_PRICE_TVA} lei</th>
             </tr>
             <tr>
-                <td><a href="{SITE_URL}/product" class="btn btn-primary">Continue Shopping</a></td>
+                <td><a href="{SITE_URL}/product" class="btn btn-primary" style="color: white">Continue Shopping</a></td>
                 <td colspan="4"><a style="text-decoration: none; color: white;" href="{SITE_URL}/cart/checkout" class="pull-right btn btn-success">Checkout</a></td>
             </tr>
         </tbody>
