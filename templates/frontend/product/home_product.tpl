@@ -205,7 +205,14 @@ $(document).ready(function() {
  <div class="container">
 	<div class="row">
         <div class="col-xs-4 item-photo" style="float: left">
-            <img src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" height="300" width="300">
+			<img id="myImg" src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" alt="{PRODUCT_NAME}" width="300" height="300">
+
+			<!-- The Modal -->
+			<div id="myModal" class="modal">
+				<span class="close">&times;</span>
+				<img class="modal-content" id="img01">
+				<div id="caption"></div>
+			</div>
         </div>
         <div class="col-xs-5" style="border:0px solid gray; border-left: solid 2px gray; margin-top: 30px">
             <!-- This is where the rating is displayed START -->
@@ -494,4 +501,27 @@ $( document ).ready(function() {
 	// It's meant to increase visibility
 	$('#averageValue').text(average).css('color','black').css('margin-left','16%').css('padding-right','5%').css('font-size','15px' );
 });
+</script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 </script>
