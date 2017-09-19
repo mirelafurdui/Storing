@@ -10,6 +10,7 @@ $(".btn-pref .btn").click(function () {
 });
 </script>
 
+
 <script type="text/javascript">
 
     var deleteRequestUrl = '{SITE_URL}/user/delete_product_from_wishlist';
@@ -134,14 +135,26 @@ $(".btn-pref .btn").click(function () {
                             <th style="text-align: center">NAME</th>
                             <th style="text-align: center">IMAGE</th>
                             <th style="text-align: center">PRICE</th>
-                            <th style="text-align: center">ACTION</th>
+                            <th style="text-align: center">ACTIONS</th>
                         </thead>
                 <!-- BEGIN wishlist_list -->
                         <tbody>
-                            <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}">{WISHLIST_NAME}</a></td>
-                            <td><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}"><img src="{SITE_URL}/images/uploads/{WISHLIST_IMAGE}" width="80" height="80"></a></td>
-                            <td>{WISHLIST_PRICE} Lei</td>
-                            <td><a href="{SITE_URL}/user/account"><button class="btn btn-danger btn-xs" productId="{WISHLIST_PRODUCTID}" onclick="deleteProductFromWishlist('delete',{WISHLIST_PRODUCTID},{ID})"><span class="glyphicon glyphicon-remove"></span> Remove</button></a></td>
+                            <td style="vertical-align: middle"><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}">{WISHLIST_NAME}</a></td>
+                            <td style="vertical-align: middle"><a style="text-decoration: none; color: black;" href="{SITE_URL}/product/show/id/{WISHLIST_PRODUCTID}"><img src="{SITE_URL}/images/uploads/{WISHLIST_IMAGE}" width="80" height="80"></a></td>
+                            <td style="vertical-align: middle">{WISHLIST_PRICE} Lei</td>
+                            <td style="vertical-align: middle">
+                                <a href="{SITE_URL}/user/account"><button class="btn btn-danger btn-xs" productId="{WISHLIST_PRODUCTID}" onclick="deleteProductFromWishlist('delete',{WISHLIST_PRODUCTID},{ID})"><span class="glyphicon glyphicon-remove"></span> Remove</button></a>
+                                <!-- BEGIN wishlist_stoc -->
+                                    <form method="post" action="{SITE_URL}/cart/cart/id/{WISHLIST_PRODUCTID}" style="display: inline-block">
+                                        <a id="addProduct"><button class="btn btn-success btn-xs" id="addProduct"; style="width: 100px !important;" productId="{WISHLIST_PRODUCTID}"><span class="glyphicon glyphicon-plus"></span> Add to Cart</button></a>
+                                    </form>
+                                <!-- END wishlist_stoc -->
+
+                                <!-- BEGIN wishlist_stoc_0 -->
+                                    <button class="btn btn-block btn-xs";  style="width: 200px !important; display: inline-block;";><span class="glyphicon glyphicon-exclamation-sign"></span> This Product Is out of Stoc!</button>
+                                <!-- END wishlist_stoc_0 -->
+                            </td>
+
                         </tbody>
                 <!-- END wishlist_list -->
                     </table>

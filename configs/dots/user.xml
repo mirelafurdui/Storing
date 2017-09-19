@@ -58,8 +58,8 @@ If you didn't make this request, you can ignore this email.</message>
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<!-- <account>My Account</account> -->
-					<!-- <login>User Login</login> -->
+					<account>My Account</account>
+					<login>User Login</login>
 					<register>User Register</register>
 					<forgot-password>Forgot your password?</forgot-password>
 					<reset-password>Reset your password</reset-password>

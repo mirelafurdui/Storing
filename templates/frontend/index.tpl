@@ -5,7 +5,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=9">
 	<title>{PAGE_TITLE}</title>
 	<link rel="icon" href="{SITE_URL}/images/favicon.png">
-	<!-- <link rel="apple-touch-icon" href="{SITE_URL}/images/apple-touch-icon.png"> -->
 	<meta name="keywords" content="{PAGE_KEYWORDS}" >
 	<meta name="description" content="{PAGE_DESCRIPTION}" >
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,10 +22,10 @@
 	<div id="wrapper">
 		<header  style="background-image: url({SITE_URL}/images/frontend/menu.jpg);">
 			<div id="header-content" class="clearfix">
-				<a href="{SITE_URL}/"><img class="logoMenu" src="{SITE_URL}/images/favicon.png"></a>
+				<a href="{SITE_URL}/product/home"><img class="logoMenu" src="{SITE_URL}/images/favicon.png"></a>
 				<div id="logo">
 					<h1 class="logoTitle">
-						<a href="{SITE_URL}/">{SITE_NAME}</a>
+						<a href="{SITE_URL}/product/home">{SITE_NAME}</a>
 					</h1>
 				</div>
 				{MENU_TOP}

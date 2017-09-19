@@ -8,7 +8,7 @@
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<home>Home Page</home>
+					<home>Home</home>
 					<about>About Us</about>
 					<who-we-are>Who We Are</who-we-are>
 					<coding-standard>Coding Standard</coding-standard>

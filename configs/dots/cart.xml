@@ -13,7 +13,8 @@
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<showCart>Shopping Cart</showCart>
+					<show-cart>Cart</show-cart>
+					<checkout>Checkout</checkout>
 				</action>
 			</pageTitle>
 		</variable>

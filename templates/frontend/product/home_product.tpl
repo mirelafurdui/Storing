@@ -196,7 +196,7 @@ $(document).ready(function() {
 </script>
 
 <h2 style="text-align: center">
-	<a href="{SITE_URL}/product/list"> Products </a>/
+	<a href="{SITE_URL}/product/home"> Products </a>/
 	<a href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
 	<a href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
 	{PRODUCT_NAME}

@@ -15,28 +15,34 @@
 			</pageTitle>
 			<infoMessage>
 				<allowed></allowed>
-				<delete>Delete product</delete>
-				<deleteError>You don't confirm deletion!</deleteError>
-				<addProduct>Your product was add to DB!</addProduct>
-				<addBrand>Your Brand was add to DB!</addBrand>
-				<addCategory>Your Category was add to DB!</addCategory>
-				<edit>Product edited</edit>
+				<delete>Delete product.</delete>
+				<deleteError>You didn't confirm the deletion!</deleteError>
+				<addProduct>Your product was added to DB!</addProduct>
+				<addBrand>Your Brand was added to DB!</addBrand>
+				<addCategory>Your Category was added to DB!</addCategory>
+				<edit>Product edited.</edit>
 			</infoMessage>
 			<errorMessage>
 				<allowed></allowed>
-				<delete>Delete product</delete>
-				<deleteError>You don't confirm deletion!</deleteError>
-				<addProductError>You don't add product to DB! You don't have a image!</addProductError>
+				<delete>Delete product.</delete>
+				<deleteError>You don't confirm the deletion!</deleteError>
+				<addProductError>You don't add a product to DB! You don't have an image!</addProductError>
 				<addCategoryError>Your Category exist!</addCategoryError>
-				<addCategoryError1>Your Category input is empty!!</addCategoryError1>
-				<edit>Product edited</edit>
+				<addCategoryError1>Your Category input is empty!</addCategoryError1>
+				<edit>Product edited.</edit>
 			</errorMessage>
 		</variable>
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<!-- <show>Product</show> -->
+					<home>Home</home>
+					<list>Home</list>
+					<show>Product</show>
 					<about>About Us</about>
+					<brand>Brands</brand>
+					<category>Category</category>
+					<show_brand>Brands List</show_brand>
+					<show_category>Category List</show_category>
 				</action>
 			</pageTitle>
 			<infoMessage>

@@ -5,7 +5,6 @@ $userModel = new User(Dot_Request::getUserAgent(), Dot_Request::getHttpReffer())
 $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 
 
-// variables needed by upvote and downvote in order to work
 
 switch ($registry->requestAction) {
 	default:
