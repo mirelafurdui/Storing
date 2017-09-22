@@ -194,43 +194,66 @@ class Product_View extends View
 		// sets block that will later be repeated
 		$this->tpl->setBlock('tpl_main', 'user_comment', 'user_comment_block');
 
-		// sets block etc
+		// sets block with the user buttons
 		$this->tpl->setBlock('user_comment', 'user_action_logged', 'user_action_logged_block');
+
+        // sets block for message when no review has been made
+        $this->tpl->setBlock('user_comment', 'user_first_review', 'user_first_review_block');
 		
 		// sets the pagination that will be shown later on in the tpl file
 		$this->tpl->paginator($commentList['pages']);
 		
 		// sets the page variable to be shown later on in the tpl file
 		$this->tpl->setVar('PAGE',$page);
+
 		// sets the number of products from the cart
 		$this->tpl->setVar('CARTSUM', $cartSum);
-		
+
+        $test = (array)($commentList['data']);
+        $empty = [];
+
+        if ($test == $empty) {
+
+            // this will show up if there's no review set
+            $this->tpl->parse('user_first_review_block','user_first_review', true);
+
+        } else {
+
+            // this will parse the block with nothing
+            $this->tpl->parse('user_first_review_block','');
+
+        }
+
 		// this foreach travels the established table by his keys and values
 		foreach ($commentList['data'] as $comment) {
+
+            // this will parse the block that links with the actions and will show nothing
             $this->tpl->parse('user_action_logged_block','');
+
 			foreach ($comment as $key => $value) {
+
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
 				$this->tpl->setVar(strtoupper("COMMENT_".$key), $value);
-				
+
 				// this is the set point for each radio input
 				$this->tpl->setVar('CHECK_1', '');
 				$this->tpl->setVar('CHECK_2', '');
 				$this->tpl->setVar('CHECK_3', '');
 				$this->tpl->setVar('CHECK_4', '');
 				$this->tpl->setVar('CHECK_5', '');
-				
+
 				// this is the set value to make the start be checked
 				$this->tpl->setVar('CHECK_'.$comment['rating'], 'checked');
 
 			}
 				// this foreach will represent the total number of likes
-            $totalLikes=0;
 			foreach ($likes as $key => $totalLikes) {
 				if($key == $comment['id']) {
 					$this->tpl->setVar('LIKES', $totalLikes);
 
 				}
 			}
+
 			    // this if will check if the session user is set
 			if (isset($this->session->user->id))
             {

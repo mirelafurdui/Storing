@@ -76,13 +76,14 @@ footer { background-color:#EEF2F5; width:100%; }
 #logo a { color:#41403B !important; text-decoration:none; }
 
 /****** Top Menu *********/
-ul.menu_top { float:right !important; margin-top:45px !important; background-color: white; 
-              padding: 10px; border-radius: 20px; width: 60%; text-align: center;}
+ul.menu_top { float:right !important; margin-top:45px !important; background-color: white;
+              padding: 10px; border-radius: 20px;  text-align: center; padding: 15px;}
 ul.menu_top li { padding: 0px 20px 0px 20px; float: left; list-style: none;
                  background-repeat: no-repeat;}
 ul.menu_top li:first-child { background-image:none; padding-left:none;}
 ul.menu_top li a { color: #464A53; font-size:15px; text-transform: uppercase; text-decoration:none; text-shadow: white 1px 1px 3px;}
-ul.menu_top li.selected a { color:#000; font-weight:bold; }
+ul.menu_top li.selected a { color:#337ab7; }
+ul.menu_top li.selected i { color:#337ab7; }
 .menu_button { display: none; float: right; margin-top: 30px; padding: 10px;  width: 30px; background-color: #444444; text-align: center; cursor: pointer; }
 .menu_button span { display: block; margin: 0px auto; height: 2px; width: 27px; background-color: #FFFFFF;  border: 2px solid #444444; }
 
@@ -97,7 +98,7 @@ nav#sidebar ul.menu_sidebar li.selected a { font-weight:bold; font-size:14.5px; 
 /****** Content ****/
 div#content { width: 700px; float: right; }
 div#content p { padding: 10px 10px 25px 0px; }
-h1, h2 { color: #404D79; }
+h1, h2 { color: #404D79 !important; text-align: center; }
 h1 { font-size: 24px; margin-bottom: 20px; }
 h2 { font-size: 16px; }
 
@@ -118,12 +119,12 @@ ul.form li input[type="text"], ul.form li input[type="password"] { display: bloc
 ul.form li strong { line-height: 36px; }
 
 /***** Fonts ******/
-body { font-family: "Lucida Sans Unicode", "Lucida Grande", Garuda, sans-serif; }
+body { font-family: "Lucida Sans Unicode", "Lucida Grande", Garuda, sans-serif !important; }
 h1 { font-family: 'CartoGothicStdBook' !important; font-size: 36px !important; }
 h2 { font-family: 'CartoGothicStdBold' !important; font-size: 24px !important; }
 .menu_top li a { font-family: 'CartoGothicStdBook'; font-size: 14px; }
 input, select, textarea { font-family: "Lucida Sans Unicode", "Lucida Grande", Garuda, sans-serif; font-size: 13px; }
-.button { font-family: 'CartoGothicStdBold'; }
+.button { font-family: 'CartoGothicStdBold' !important; }
 
 /**** Message ****/
 .message_info { background-color: #DDFFEE; border: 1px solid #00CC00; vertical-align: middle; text-align: left; font-weight: bold; font-size: 13px; font-size: 13px; padding: 5px 5px 5px 20px; }
@@ -147,7 +148,7 @@ ul.url_pattern li { list-style: disc; padding: 10px 0px; }
 {
     #header-content, #footer-content, #body{ width: 720px; padding-left: 15px; padding-right: 15px; }
     /****** Top Menu *********/
-    ul.menu_top li { padding: 0px 0px 0px 30px; }
+    ul.menu_top li { padding: 0px 0px 0px 30px;}
     /****** Content ******/
     div#content { width: 495px; }
     nav#sidebar { width: 200px; }
@@ -234,6 +235,8 @@ ul.url_pattern li { list-style: disc; padding: 10px 0px; }
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
+    padding-bottom: 10px !important;
+    margin-bottom: 10px !important;
 }
 
 .item.list-group-item
@@ -245,7 +248,7 @@ ul.url_pattern li { list-style: disc; padding: 10px 0px; }
 }
 .item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
 {
-    background-color: #428bca;
+    background-color: #428bca !important;
 }
 
 .item.list-group-item .list-group-image
@@ -578,7 +581,7 @@ div.section > div > input {margin:0;padding-left:5px;font-size:10px;padding-righ
         padding-left:10px !important;
         
     }            
-    .section{width:104%;}
+    .section{width:100%;}
     .menu-items{padding-left:0;}
 }
 
@@ -587,20 +590,28 @@ div.section > div > input {margin:0;padding-left:5px;font-size:10px;padding-righ
 th {
     text-align: center;
 }
+
 /*** START td cart fix ***/
-.tdFix { text-align: center; }
+
+.tdFix { text-align: center; vertical-align: middle;}
+
 /*** END td cart fix ***/
 
 /*** START td cart fix ***/
+
 .buttonFix { color: white }
+
 /*** END td cart fix ***/
 
 /*** START cart product numerator ***/
+
 .cartNumerator { color: white; border-radius: 40px; background-color: red; padding: 3px 5px 3px 5px; font-size: 13px}
+
 /*** END cart product numerator ***/
 
 
 /*** START menu logo+text ***/
+
 .logoMenu {
     display: inline-block; margin-top: 45px !important; background-color: white;
     border-radius:0px 20px 22px 0px !important; height: 59px !important; width: 70px !important;
@@ -610,16 +621,20 @@ th {
     background-color: white; display: inline-block; margin-top: 0px !important; 
     line-height: 1.1; border-radius:22px 0px 0px 22px; padding: 10px; padding-left: 22px;
 }
+
 /*** END menu logo+text ***/
 
 /*** START wishlist ***/
+
 .btn-wish{width: 40px; height: 40px; color: red; background-color: white; padding: 10px; border-radius: 100%; border: 2px solid; text-align: center;}
 .btn-wish:hover {
     background-color: red; color:white;
 }
+
 /*** END wishlist ***/
 
 /*** START Brands+Cat ***/
+
 .tableBC {
     display: inline-block; padding: 20px; border-radius: 30px; border: solid 1px #737373; margin: 10px;
 }
@@ -631,4 +646,102 @@ th {
 .tableBCOuter {
     border-radius: 45px; display: inline-block; margin: 10px; border: 5px; margin-left: 20px;
 }
+
 /*** END Brands+Cat ***/
+
+/*** START Modal Picture ***/
+
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 80px;
+}
+
+/* Caption of Modal Image */
+
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+
+.modal-content, #caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+/*** END Modal Picture ***/

@@ -101,31 +101,74 @@ class User_View extends View
 		//empty because we don't want to show the password
 		$this->tpl->setVar('PASSWORD', '');
 	}
-		// shows the about page for the moment
+
+	// shows the about page for the moment
 	public function showPage($templateFile = '')
 	{
-		if ($templateFile != '') $this->templateFile = $templateFile;//in some cases we need to overwrite this variable
+
+        //in some cases we need to overwrite this variable
+		if ($templateFile != '') $this->templateFile = $templateFile;
 		$this->tpl->setFile('tpl_main', 'user/' . $this->templateFile . '.tpl');
+
 	}
+
 	// this function makes sets the tpl file and block while it shows the table using foreach
 	public function showWishList($template='', $wishList)
 	{
-		// tests if the template is not empty
-		if ($template != '') {
+
+	    // tests if the template is not empty
+        if ($template != '') {
 			$this->template = $template;
 		}
-		// sets the tpl file
-		// $this->tpl->setFile('tpl_main', 'user/'.$this->template.'.tpl');
+
 		// sets block that will later be repeated
 		$this->tpl->setBlock('tpl_main', 'wishlist_list', 'wishlist_list_block');
-		foreach ($wishList as $key => $value) {
+
+		// sets the block that will show only if the stoc is above 0
+        $this->tpl->setBlock('wishlist_list', 'wishlist_stoc', 'wishlist_stoc_block');
+
+        // sets the block that will show only if the stoc is not 0
+        $this->tpl->setBlock('wishlist_list', 'wishlist_stoc_0', 'wishlist_stoc_0_block');
+
+        foreach ($wishList as $key => $value) {
+
+		    // stoc value for each product shown
+		    $stocValue=(int)$value['stoc'];
+
+
+
 			foreach ($value as $productK => $productValue) {
+
+                // stoc value for each product shown
+                $stocValue=(int)$value['stoc'];
+
+                // if the stoc value is 0
+                if ($stocValue == '0') {
+
+                    // this will not show the add button
+                    $this->tpl->parse('wishlist_stoc_block','',false);
+
+                    // this will show the "product out of stoc" button
+                    $this->tpl->parse('wishlist_stoc_0_block','wishlist_stoc_0',false);
+
+                } else {
+
+                    // this will show the add button
+                    $this->tpl->parse('wishlist_stoc_block','wishlist_stoc',false);
+
+                    // this will not show the "product out of stoc" button
+                    $this->tpl->parse('wishlist_stoc_0_block','',false);
+                }
+
 				// this will set all the productKeys given to be upper case for it to work with the tpl file
 				$this->tpl->setVar("WISHLIST_".strtoupper($productK),$productValue);
 			}
-		// this parse is related to the block and if it's true it will show all the keys and values for each block repeat
-		// block name "wishlist_list"
-		$this->tpl->parse('wishlist_list_block','wishlist_list',true);
-		}
+
+		    // this parse is related to the block and if it's true it will show all the keys and values for each block repeat
+		    // block name "wishlist_list"
+		    $this->tpl->parse('wishlist_list_block','wishlist_list',true);
+
+        }
 	}
+
 }

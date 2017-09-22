@@ -196,16 +196,23 @@ $(document).ready(function() {
 </script>
 
 <h2 style="text-align: center">
-	<a href="{SITE_URL}/product/list"> Products </a>/
+	<a href="{SITE_URL}/product/home"> Products </a>/
 	<a href="{SITE_URL}/product/category/id/{PRODUCT_IDCATEGORY}"> {PRODUCT_CATEGORYNAME} </a>/
 	<a href="{SITE_URL}/product/brand/id/{PRODUCT_IDBRAND}"> {PRODUCT_BRANDNAME} </a>/
 	{PRODUCT_NAME}
 </h2>
 <!-- This is where the product is shown START --> 
- <div class="container">
+ <div style="width: 134%" >
 	<div class="row">
         <div class="col-xs-4 item-photo" style="float: left">
-            <img src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" height="300" width="300">
+			<img id="myImg" src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" alt="{PRODUCT_NAME}" width="300" height="300">
+
+			<!-- The Modal -->
+			<div id="myModal" class="modal">
+				<span class="close">&times;</span>
+				<img class="modal-content" id="img01">
+				<div id="caption"></div>
+			</div>
         </div>
         <div class="col-xs-5" style="border:0px solid gray; border-left: solid 2px gray; margin-top: 30px">
             <!-- This is where the rating is displayed START -->
@@ -288,7 +295,7 @@ $(document).ready(function() {
                 <div class="section" style="padding-bottom:20px;">
                 	<div>
                 		<span id="stoc" stockId="{PRODUCT_STOC}" style="font-size: 15px; color: white; text-align: center; padding-top: 8px; width: 100px;">NO STOCK</span>
-	                    <button style="display: inline-block;" class="btn btn-success" id="addProduct">
+	                    <button style="display: inline-block; width: 60%" class="btn btn-success" id="addProduct">
 	                    	<span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" id="addProduct"></span>
 	                 		<a style="text-decoration: none; color: white; display: inline-block;" id="addProduct">Add to cart</a>
 	                    </button>
@@ -406,10 +413,8 @@ $(document).ready(function() {
 									<table>
 										<form action="{SITE_URL}/product/show/id/1" method="post">
 											<div style="margin-top: 20px;" id="editInput">
-												<input type="text" value="{COMMENT_TITLE}" class="mediaComment" id="title" minlength="1" maxlength="90">
+												<input type="text" value="{COMMENT_TITLE}" class="mediaComment" id="title" commentId="{COMMENT_ID}" userId="{COMMENT_USERID}" minlength="1" maxlength="90">
 												<input type="text" value="{COMMENT_COMMENT}" class="mediaComment" id="comment" minlength="1">
-												<input type="hidden" value="{COMMENT_USERID}">
-												<input type="hidden" value="{COMMENT_ID}">
 												<button  id="editButton" type="submit" class="btn btn-success btn-circle text-uppercase" style="width: 300px; margin-left: 290px"><span class="glyphicon glyphicon-pencil"></span>Edit</button>
 											</div>
 										</form>
@@ -417,13 +422,21 @@ $(document).ready(function() {
 								</tr>
 
 								<!-- END user_action_logged -->
+
+								<!-- BEGIN user_first_review -->
+								<div class="comment-tabs" >
+									<div class="tab-pane active" id="comments-logout">
+										<h1>no comments</h1>
+									</div>
+								</div>
+								<!-- END user_first_review -->
 								</thead>
 							</table>
 						</form>
                 	</div>              
                 </div>
                 </li>
-            </ul> 
+            </ul>
         <!-- END user_comment -->
 		</div>
 </div>
@@ -437,6 +450,30 @@ var diff = average - intAverage;
 if (diff >= 0.5) {
 	intAverage++;
 }
+
+// sending comment info for edit
+$("div#editInput > #editButton").click(function () {
+    var titleval = $("div#editInput > #title").val();
+    var userId = $("div#editInput > #title").attr('userId');
+    var commentId = $("div#editInput > #title").attr('commentId');
+    var commentval = $("div#editInput > #comment").val();
+    var toSend = {
+        'editTitle' : titleval,
+        'editComment' : commentval,
+        'commentId' : commentId,
+        'userId' : userId
+    };
+    $.ajax({
+        // url: voteRequestUrl,
+        type: 'POST',
+        data: toSend,
+        success: function (ajaxResponse) {
+            ajaxResponse = JSON.parse(ajaxResponse);
+        }
+    });
+    location.reload();
+});
+
 // average rating
 $('input[type="radio"][name="rating"][value='+intAverage+']').attr('checked','checked');
 // Average rating for stars that works properly but it's just a lot of code
@@ -494,4 +531,27 @@ $( document ).ready(function() {
 	// It's meant to increase visibility
 	$('#averageValue').text(average).css('color','black').css('margin-left','16%').css('padding-right','5%').css('font-size','15px' );
 });
+</script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 </script>

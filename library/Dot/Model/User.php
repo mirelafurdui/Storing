@@ -60,8 +60,7 @@ class Dot_Model_User extends Dot_Model
 	{
 		$id = $data['id'];
 		unset ($data['id']);
-		
-		//Update password only if is set a new password 
+		//Update password only if is set a new password
 		if(array_key_exists('password', $data))
 		{
 			$data['password'] = $this->passwordApi->hashPassword($data['password'], PASSWORD_DEFAULT);

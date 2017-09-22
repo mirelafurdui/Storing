@@ -5,7 +5,6 @@ $userModel = new User(Dot_Request::getUserAgent(), Dot_Request::getHttpReffer())
 $pageTitle = $option->pageTitle->action->{$registry->requestAction};
 
 
-// variables needed by upvote and downvote in order to work
 
 switch ($registry->requestAction) {
 	default:
@@ -114,6 +113,38 @@ switch ($registry->requestAction) {
 		$cart['userId'] = $registry->session->user->id ?? 0;
 		$totalCart = $productModel->sumProductsFromCart($cart['userId']);
 
+        // data regarding the edit function
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            if (isset($_SESSION['frontend']['user']) && !empty($_SESSION['frontend']['user'])) {
+
+                if (isset($_POST['editTitle'])) {
+
+                    // title and comment in array for packed result
+                    $editTitle= $_POST['editTitle'];
+                    $editComment= $_POST['editComment'];
+
+                    // user and comment
+                    $editCommentId= $_POST['commentId'];
+                    $editUserId= $_POST['userId'];
+
+                    $productModel->editCommentToCertainProduct($editTitle, $editComment, $editCommentId, $editUserId);
+
+                    // information
+                    $registry->session->message['txt'] = $registry->option->infoMessage->editReview;
+                    $registry->session->message['type'] = 'info';
+                    echo json_encode([
+                        'theTitle' => $_POST['title'],
+                        'theComment' => $_POST['comment'],
+                        'theCommentId' => $_POST['commentId'],
+                        'theUserId' => $_POST['userId'],
+                    ]);
+                    exit;
+
+                }
+            }
+        }
+
 		// product id
 		$id=$registry->request['id'];
 
@@ -125,6 +156,7 @@ switch ($registry->requestAction) {
 
 		// get's all comments based on the given id
 		$allCommentsForProduct = $productModel->getCommentByProduct($id,$page);
+//		Zend_Debug::dump($allCommentsForProduct);
 
 		// makes the total number of likes to all the comments separately
 		$totalLikes=$productModel->sumLikesForComment();
@@ -148,19 +180,25 @@ switch ($registry->requestAction) {
                 $maxValuePerPost=$productModel->addCommentToCertainProduct($data,$loggedUserId['id'],$data['productId']);
 
 				if ($loggedUserId['username'] != '' && $maxValuePerPost == 0) {
+
 					$productModel->addCommentToCertainProduct($data,$loggedUserId['id'],$data['productId']);
 					$registry->session->message['txt'] = $registry->option->infoMessage->addReview;
 					$registry->session->message['type'] = 'info';
+
 				// this else will tell the user that he can't have 2 reviews on the same product
 				} elseif ($loggedUserId['username'] != '' && $maxValuePerPost == 1) {
+
                     $registry->session->message['txt'] = $registry->option->errorMessage->reviewLimitError;
                     $registry->session->message['type'] = 'error';
+
                 }
             // this else will redirect the user if he's not logged in
 			} elseif (!isset($loggedUserId['username'])) {
+
 				// header('Location: '.$registry->configuration->website->params->url. '/user/register');
 				$registry->session->message['txt'] = $registry->option->errorMessage->reviewError;
 				$registry->session->message['type'] = 'error';
+
 			}
 		}
         // logged user
@@ -178,7 +216,6 @@ switch ($registry->requestAction) {
 
 		// this will show all the comments and total likes for a specific product
 		$allCommentsForProductView = $productView->showCommentsByProduct('home_product', $allCommentsForProduct, $page, $totalLikes, $totalCart);
-
 		break;
 
 	//this case will take you to a certain brand
@@ -229,12 +266,17 @@ switch ($registry->requestAction) {
 	case 'voting':
 		/*$_POST['info'] is the vote value*/
 		$userSession = (array) $_SESSION['frontend']['user'];
+
 		// this is the id of the logged user.
 		$userId = $userSession['id'];
+
 		// this is the action that's given from the script
 		$action = $_POST['action'] ?? 'error';
+
 		// this is the comment id that's given from the script
 		$id = $_POST['id'];
+
+		// this will be the response that will be overwritten
 		$response = [
 					'success' => false,
 					'message' => 'invalid action provided',
@@ -243,13 +285,16 @@ switch ($registry->requestAction) {
 						'voteValue' => ''
 				 	],
 		];
+
 		// an if that checks for the action an value
 		if ($action == 'upVote' && $userId != "" && $_POST['info'] == '1') {
 			$value=0;
+
 			$response['action'] = $action;
 			$response['data']['voteValue'] = ++$value;
 			$response['success'] = true;
 			$response['message'] = "UP Successfull";
+
 			$update = $productModel->voteACertainComment($value, $id, $userId);
 			echo Zend_Json::encode($response);
 
@@ -258,15 +303,21 @@ switch ($registry->requestAction) {
 
 			exit();
 		} else {
+
 			$registry->session->message['txt'] = $registry->option->errorMessage->voteError;
 			$registry->session->message['type'] = 'error';
+
 		}
+
 		// an if that checks for the action an value
 		if ($action == 'downVote' && $userId != "" && $_POST['info'] == '-1') {
+            $value = 1;
+
 			$response['action'] = $action;
 			$response['data']['voteValue'] = --$value;
 			$response['success'] = true;
 			$response['message'] = "DOWN Successfull";
+
 			$update = $productModel->voteACertainComment($value, $id, $userId);
 			echo Zend_Json::encode($response);
 
@@ -275,8 +326,10 @@ switch ($registry->requestAction) {
 			
 			exit();
 		} else {
+
 			$registry->session->message['txt'] = $registry->option->errorMessage->voteError;
 			$registry->session->message['type'] = 'error';
+
 		}
 		echo Zend_Json::encode($response);
 		exit();
@@ -382,35 +435,4 @@ switch ($registry->requestAction) {
         }
         break;
 
-    case "edit_user_comment":
-        var_dump($_POST);
-        $loggedUserId = (array)$_SESSION['frontend']['user'];
-        // user id from session
-        $loggedUser = $loggedUserId['id'];
-        // product id from tpl
-        $productId = $_POST['productId'];
-        // edit action
-        $action = $_POST['action'] ?? 'error';
-
-        $response = [
-            'success' => false,
-            'message' => 'invalid action provided',
-            'action' => 'error'
-        ];
-        if (isset($loggedUser) && !empty($loggedUser)) {
-            if ($action == 'addToWish' && $valid == 1 && $maxProductsInWishlist == 0) {
-                $response['action'] = $action;
-                $response['success'] = true;
-                $response['message'] = "Edited Successfull";
-                $productModel->editCommentToCertainProduct($data, $commentId, $userId);
-            } else {
-                // validation error (you can't add products in the wishlist while you are not logged)
-                echo Zend_Json::encode($response);
-                $registry->session->message['txt'] = $registry->option->errorMessage->editError;
-                $registry->session->message['type'] = 'error';
-//            header('Location: '.$registry->configuration->website->params->url. '/user/'.'register');
-                exit();
-            }
-        }
-        break;
 }

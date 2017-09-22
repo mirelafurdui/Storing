@@ -172,7 +172,7 @@ class User extends Dot_Model_User
 		$select=$this->db->select()
 		 				 ->from('wishlist')
 		 				 ->where('wishlist.userId= ?',$userId)
-		 				 ->join('product', 'wishlist.productId = product.id', ["NAME" => 'name', "PRICE" => 'price', "IMAGE" => 'image', "DESCRIPTION"=>'description']);
+		 				 ->join('product', 'wishlist.productId = product.id', ["NAME" => 'name', "PRICE" => 'price', "IMAGE" => 'image', "DESCRIPTION"=>'description', 'stoc' => 'stoc']);
 		$result=$this->db->fetchAll($select);
 		return $result;
 	}

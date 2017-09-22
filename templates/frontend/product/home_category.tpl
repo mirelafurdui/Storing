@@ -26,7 +26,7 @@
     </div>
 </div>
 <h2>
-	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/list"> Products </a>/
+	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/home"> Products </a>/
 	<a style="text-decoration-line: none !important; " href="{SITE_URL}/product/show_category"> Category </a>/
 	{CATEGORYNAME}
 </h2>

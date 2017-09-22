@@ -13,9 +13,18 @@
 		<variable option="frontend">
 			<pageTitle>
 				<action>
-					<showCart>Shopping Cart</showCart>
+					<show-cart>Cart</show-cart>
+					<checkout>Checkout</checkout>
 				</action>
 			</pageTitle>
+			<errorMessage>
+				<allowed></allowed>
+				<noStoc>You can't add that product to your cart because there's no stoc for it. We are Sorry!</noStoc>
+			</errorMessage>
+			<infoMessage>
+				<allowed></allowed>
+				<addToCart>You've added a product to your Cart.</addToCart>
+			</infoMessage>
 		</variable>
 		<variable option="mobile">
 

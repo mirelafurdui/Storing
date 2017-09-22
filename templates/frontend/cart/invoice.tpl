@@ -26,7 +26,7 @@
 </style>
 
 
-<div class="container">
+<div>
     <div class="row">
         <div class="col-xs-12">
             <div class="invoice-title">
@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
