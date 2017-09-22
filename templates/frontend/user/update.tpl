@@ -85,49 +85,60 @@ $(".btn-pref .btn").click(function () {
         <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1">
                 <form action="{SITE_URL}/user/account/" method="post" enctype="multipart/form-data">
+
                     <input type="hidden" name="userToken" value="{USERTOKEN}" >
-                        <ul class="form">
-                            <li class="clearfix">
-                                <label>Change Image:</label>
-                                 <input type="file" name="newImage" id="newImage">
-                                 <input type="hidden" name="url" value="<?php echo htmlentities($_SERVER['REQUEST_URI'])>"/>
-                            </li>
-                            <li class="clearfix">
-                                <label for="password">Password:</label>
-                                <input type="password" name="password" value="{PASSWORD}" id="password" style="width: 80%" />
-                            </li>
-                            <li class="clearfix">
-                                <label for="password2">Re-type Password:</label>
-                                <input type="password" name="password2" value="{PASSWORD}" id="password2" style="width: 80%" />
-                            </li>
-                            <li class="clearfix">
-                                <label for="email">Email:</label>
-                                <input id="email" type="text" name="email" value="{EMAIL}" style="width: 80%"/>
-                            </li>
-                            <li class="clearfix">
-                                <label for="firstName">First Name:</label>
-                                <input type="text" name="firstName" value="{FIRSTNAME}" id="firstName" style="width: 80%"/>
-                            </li>
-                            <li class="clearfix">
-                                <label for="lastName">Last Name:</label>
-                                <input type="text" name="lastName" value="{LASTNAME}" id="lastName" style="width: 80%"/>
-                            </li>
-                            <li class="clearfix">
-                                <label for="city">City:</label>
-                                <input type="text" name="city" value="{CITY}" id="city" style="width: 80%"/>
-                            </li>
-                            <li class="clearfix">
-                                <label for="address">Address:</label>
-                                <input type="text" name="address" value="{ADDRESS}" id="address" style="width: 80%"/>
-                            </li>
-                            <li class="clearfix">
-                                <label class="empty">&nbsp;</label>
-                                <button type="submit" class="btn btn-block btn-primary btn-default" value="Update">
-                                <i class="glyphicon glyphicon-repeat"></i> Update</button>
-                           </li>
-                        </ul>
+
+                    <ul class="form">
+                        <li class="clearfix">
+                            <label>Change Image:</label>
+                             <input type="file" name="newImage" id="newImage">
+                             <input type="hidden" name="url" value="<?php echo htmlentities($_SERVER['REQUEST_URI'])>"/>
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="password">Password:</label>
+                            <input type="password" name="password" value="{PASSWORD}" id="password" style="width: 80%" />
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="password2">Re-type Password:</label>
+                            <input type="password" name="password2" value="{PASSWORD}" id="password2" style="width: 80%" />
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="email">Email:</label>
+                            <input id="email" type="text" name="email" value="{EMAIL}" style="width: 80%"/>
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" name="firstName" value="{FIRSTNAME}" id="firstName" style="width: 80%"/>
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" name="lastName" value="{LASTNAME}" id="lastName" style="width: 80%"/>
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="city">City:</label>
+                            <input type="text" name="city" value="{CITY}" id="city" style="width: 80%"/>
+                        </li>
+
+                        <li class="clearfix">
+                            <label for="address">Address:</label>
+                            <input type="text" name="address" value="{ADDRESS}" id="address" style="width: 80%"/>
+                        </li>
+
+                        <li class="clearfix">
+                            <label class="empty">&nbsp;</label>
+                            <button type="submit" class="btn btn-block btn-primary btn-default" value="Update">
+                            <i class="glyphicon glyphicon-repeat"></i> Update</button>
+                       </li>
+                    </ul>
                 </form>
             </div>
+
             <div class="tab-pane fade in" id="tab2">
                 <div>
                     <table class="table table-striped custab" style="text-align: center">

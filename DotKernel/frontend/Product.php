@@ -32,6 +32,7 @@ class Product extends Dot_Model
 		$result=$this->db->fetchRow($select);
 		return $result;
 	}
+
 	// function that gets products from a certain brand using joins + shows only if isactive=1
 	public function getProductByBrand($id,$page=1)
 	{
@@ -46,6 +47,7 @@ class Product extends Dot_Model
 		return $dotPaginator->getData();
 
 	}
+
 	// function that gets products from a certain category using joins + shows only if isactive=1
 	public function getProductByCategory($id,$page=1)
 	{
@@ -79,6 +81,7 @@ class Product extends Dot_Model
 		$dotPaginator = new Dot_Paginator($select,$page,$this->settings->resultsPerPage=10);
 		return $dotPaginator->getData();
 	}
+
 	// function that will get every comment that's linked to the certain product
 	public function getCommentByProduct($id,$page=1)
 	{
@@ -92,6 +95,7 @@ class Product extends Dot_Model
 
 		return $dotPaginator->getData();
 	}
+
 	// this function will add comments to a certain product
 	public function addCommentToCertainProduct($data, $loggedUser, $productId)
 	{
@@ -108,19 +112,27 @@ class Product extends Dot_Model
 		}
 		return $maxPostPerUser;
 	}
+
 	// this function will edit a certain comment
-	public function editCommentToCertainProduct($data,$commentId, $userId)
+	public function editCommentToCertainProduct($title, $comment, $commentId, $userId)
 	{
-        $where[]="commentId = $commentId";
-        $where[]="userId = $userId";
+        $data =['title' => $title." (edited)",
+                'comment' => $comment." (edited)"];
+
+	    $where[] = "id = $commentId";
+        $where[] = "userId = $userId";
+
 		$this->db->update('comment', $data, $where);
+
 	}
+
 	// this function will delete a certain comment
 	public function deleteCommentToCertainProduct($commentId,$userId)
 	{
 		$this->db->delete('comment', array("id = " . $commentId, 
 											"userId = " . $userId));
 	}
+
 	// update function for like and dislike if no like or dislike create
 	public function voteACertainComment($data, $id, $userId)
 	{
@@ -145,6 +157,7 @@ class Product extends Dot_Model
 			$update=$this->db->update('likeElements',array('ifLikeUnlike' => $data), $where);
 		}
 	}
+
 	// function that counts the likes
 	public function sumLikesForComment()
 	{
@@ -160,6 +173,7 @@ class Product extends Dot_Model
 		}
 		return $finalData;
 	}
+
 	// this shows the average of the rating
 	public function averageRating($id)
 	{
@@ -174,6 +188,7 @@ class Product extends Dot_Model
 		}
 		return $finalData;
 	}
+
 	public function searchProduct($page = 1, $productName, $number)
 	{
 		$select=$this->db->select()
@@ -185,6 +200,7 @@ class Product extends Dot_Model
 		$dotPaginator = new Dot_Paginator($select,$page,$number);
 		return $dotPaginator->getData();
 	}
+
 	// this function will get the sum for one cart
 	public function sumProductsFromCart($cartId) 
 	{	
@@ -220,7 +236,6 @@ class Product extends Dot_Model
     }
 
     // this function will select product and id
-
     public function getTheWishlist($productId, $userId)
     {
         // this will show the wishlist for a certain product for a certain user

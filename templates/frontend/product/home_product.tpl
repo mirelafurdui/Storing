@@ -202,7 +202,7 @@ $(document).ready(function() {
 	{PRODUCT_NAME}
 </h2>
 <!-- This is where the product is shown START --> 
- <div class="container">
+ <div style="width: 134%" >
 	<div class="row">
         <div class="col-xs-4 item-photo" style="float: left">
 			<img id="myImg" src="{SITE_URL}/images/uploads/{PRODUCT_IMAGE}" alt="{PRODUCT_NAME}" width="300" height="300">
@@ -295,7 +295,7 @@ $(document).ready(function() {
                 <div class="section" style="padding-bottom:20px;">
                 	<div>
                 		<span id="stoc" stockId="{PRODUCT_STOC}" style="font-size: 15px; color: white; text-align: center; padding-top: 8px; width: 100px;">NO STOCK</span>
-	                    <button style="display: inline-block;" class="btn btn-success" id="addProduct">
+	                    <button style="display: inline-block; width: 60%" class="btn btn-success" id="addProduct">
 	                    	<span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" id="addProduct"></span>
 	                 		<a style="text-decoration: none; color: white; display: inline-block;" id="addProduct">Add to cart</a>
 	                    </button>
@@ -413,10 +413,8 @@ $(document).ready(function() {
 									<table>
 										<form action="{SITE_URL}/product/show/id/1" method="post">
 											<div style="margin-top: 20px;" id="editInput">
-												<input type="text" value="{COMMENT_TITLE}" class="mediaComment" id="title" minlength="1" maxlength="90">
+												<input type="text" value="{COMMENT_TITLE}" class="mediaComment" id="title" commentId="{COMMENT_ID}" userId="{COMMENT_USERID}" minlength="1" maxlength="90">
 												<input type="text" value="{COMMENT_COMMENT}" class="mediaComment" id="comment" minlength="1">
-												<input type="hidden" value="{COMMENT_USERID}">
-												<input type="hidden" value="{COMMENT_ID}">
 												<button  id="editButton" type="submit" class="btn btn-success btn-circle text-uppercase" style="width: 300px; margin-left: 290px"><span class="glyphicon glyphicon-pencil"></span>Edit</button>
 											</div>
 										</form>
@@ -424,13 +422,21 @@ $(document).ready(function() {
 								</tr>
 
 								<!-- END user_action_logged -->
+
+								<!-- BEGIN user_first_review -->
+								<div class="comment-tabs" >
+									<div class="tab-pane active" id="comments-logout">
+										<h1>no comments</h1>
+									</div>
+								</div>
+								<!-- END user_first_review -->
 								</thead>
 							</table>
 						</form>
                 	</div>              
                 </div>
                 </li>
-            </ul> 
+            </ul>
         <!-- END user_comment -->
 		</div>
 </div>
@@ -444,6 +450,30 @@ var diff = average - intAverage;
 if (diff >= 0.5) {
 	intAverage++;
 }
+
+// sending comment info for edit
+$("div#editInput > #editButton").click(function () {
+    var titleval = $("div#editInput > #title").val();
+    var userId = $("div#editInput > #title").attr('userId');
+    var commentId = $("div#editInput > #title").attr('commentId');
+    var commentval = $("div#editInput > #comment").val();
+    var toSend = {
+        'editTitle' : titleval,
+        'editComment' : commentval,
+        'commentId' : commentId,
+        'userId' : userId
+    };
+    $.ajax({
+        // url: voteRequestUrl,
+        type: 'POST',
+        data: toSend,
+        success: function (ajaxResponse) {
+            ajaxResponse = JSON.parse(ajaxResponse);
+        }
+    });
+    location.reload();
+});
+
 // average rating
 $('input[type="radio"][name="rating"][value='+intAverage+']').attr('checked','checked');
 // Average rating for stars that works properly but it's just a lot of code

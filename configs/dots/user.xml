@@ -67,6 +67,7 @@ If you didn't make this request, you can ignore this email.</message>
 			</pageTitle>
 			<errorMessage>
 				<login>Wrong Log In Credentials</login>
+				<pictureError>You need to add a picture</pictureError>
 				<captcha>Incorrect. Try again.</captcha>	
 				<passwordTwice>You did not enter the same password twice. Please re-enter your password.</passwordTwice>	
 				<emailSent>We sent a link to create a new password to </emailSent>	

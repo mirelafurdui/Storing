@@ -82,8 +82,19 @@ switch ($registry->requestAction)
 			}
 		}
 
-		// if it doesn't exist, add product to cart
-		$cartModel->addProductToCart($cart,$cartId['id']);	
+		// simple validator for the stoc
+        // this simple validator will add products to cart only if there is enough stoc because it makes a Controller
+        // and a Model validation
+        $stocValidator=$cartModel->addProductToCart($cart,$cartId['id']);
+
+        // checks if there are units in stoc and shows a message accordingly
+        if ($stocValidator == "no stoc") {
+            $registry->session->message['txt'] = $registry->option->errorMessage->noStoc;
+            $registry->session->message['type'] = 'error';
+        } else {
+            $registry->session->message['txt'] = $registry->option->infoMessage->addToCart;
+            $registry->session->message['type'] = 'info';
+        }
 
         // refresh the page
 		header('Location: '.$registry->configuration->website->params->url."/cart/show-cart"); exit;
@@ -95,27 +106,31 @@ switch ($registry->requestAction)
 
 	    $cart['userId'] = $registry->session->user->id ?? 0;
 
+	    // total products at checkout
 		$totalCart = $cartModel->sumProductsFromCart($cart['userId']) ?? 0;
 
+		// userId
 		$userId = $session->user->id;
 
+		// details about the user
 		$userDetails = $cartModel->getUserDetails($userId);
 
 		$idCart = $cartModel->getIdCart($userId);
 
 		$data = $cartModel->getProductToCart($idCart['id']);
 
-
-
 		foreach ($data as $value) {
 			foreach ($value as $key => $value1) {
+
 				if ($key =="quantity") {
 					$q = $value1;
 				}
+
 				if ($key =="productId") {
 					$p = $value1;
 				}
 			}
+
 			if (!empty($q) && !empty($p)) {
 				$cartModel->decreasesNumberProduct($q,$p);
 
@@ -123,7 +138,7 @@ switch ($registry->requestAction)
 			}
 		}
 
-            $cartView->showCartProductList('invoice', $data, $userDetails, $totalCart);
+            $cartView->showCartProductList('invoice', $data, $totalCart);
 
 			$cartView->showUserDetails('invoice',$userDetails, $totalCart);
 

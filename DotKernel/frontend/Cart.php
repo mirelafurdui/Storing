@@ -38,8 +38,10 @@ class Cart extends Dot_Model
 
 	}
 
+    // this function will add a product to the cart using $data and $cartId
 	public function addProductToCart($data, $cartId) 
-	{	
+	{
+	    // this is an array that gets information from both $data and $cartId
 		$dataProduct["cartId"] = $cartId;
 		$dataProduct["productId"] = $data['id'];
 		$dataProduct["name"] = $data['name'];
@@ -47,7 +49,12 @@ class Cart extends Dot_Model
 		$dataProduct["quantity"] = 1;
 		$dataProduct["stoc"] = $data['stoc'];
 
-		$this->db->insert('cartproduct', $dataProduct);
+		// this will check if there's stoc left before adding to the cart
+		if ($data['stoc'] == 0 || $data['stoc'] < 0) {
+		    return "no stoc";
+        } else {
+            $this->db->insert('cartproduct', $dataProduct);
+        }
 
 		$select=$this->db->select()
 						 ->from('cartproduct', new Zend_Db_Expr('COUNT(id) as totalProducts'))

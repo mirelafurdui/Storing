@@ -73,12 +73,14 @@ class Dot_Validate_User extends Dot_Validate
 		//validate the input data - username, password and email will be also filtered
 		$validatorChain = new Zend_Validate();
 		$dotFilter = new Dot_Filter();
+
 		//validate details parameters
 		if(array_key_exists('details', $values))
 		{
 			$validatorChain->addValidator(new Zend_Validate_StringLength(array('min' => $this->option->validate->details->lengthMin)));
 			$this->_callFilter($validatorChain, $values['details']);
 		}
+
 		//validate username
 		if(array_key_exists('username', $values))
 		{
@@ -93,6 +95,49 @@ class Dot_Validate_User extends Dot_Validate
 				$this->_error = array_merge($this->_error, $uniqueError);
 			}
 		}
+
+        //validate city
+        if(array_key_exists('city', $values))
+        {
+            $validatorChain = new Zend_Validate();
+            $validatorChain->addValidator(new Zend_Validate_Alnum())
+                ->addValidator(new Zend_Validate_StringLength($this->option->validate->details->lengthMin,
+                    $this->option->validate->details->lengthMax));
+            $this->_callFilter($validatorChain, $values['city']);
+        }
+
+        // validate photo
+        if(array_key_exists('image', $values)) {
+            // custom call filter
+            foreach ($values['image'] as $key => $image) {
+
+                $imageValidator = new Dot_Validate_Image();
+                $imageValidator->isValid($image);
+
+                $imageData[$key] = $imageValidator->getData();
+                $imageError[$key] = $imageValidator->getError();
+
+
+                if (empty($imageError[$key])) {
+                    unset($imageError[$key]);
+                }
+            }
+
+            $this->_data = array_merge($this->_data, $imageData);
+            $this->_error = array_merge($this->_error, $imageError);
+        }
+
+
+        //validate address
+        if(array_key_exists('address', $values))
+        {
+            $validatorChain = new Zend_Validate();
+            $validatorChain->addValidator(new Zend_Validate_Alnum())
+                ->addValidator(new Zend_Validate_StringLength($this->option->validate->details->lengthMin,
+                    $this->option->validate->details->lengthMax));
+            $this->_callFilter($validatorChain, $values['address']);
+        }
+
 		//validate email
 		if(array_key_exists('email', $values))
 		{
@@ -104,6 +149,7 @@ class Dot_Validate_User extends Dot_Validate
 				$this->_error = array_merge($this->_error, $uniqueError);
 			}
 		}
+
 		//validate enum
 		if(array_key_exists('enum', $values))
 		{
@@ -111,6 +157,7 @@ class Dot_Validate_User extends Dot_Validate
 			unset($values['enum'][0]);
 			$this->_callFilter($validatorEnum, $values['enum']);
 		}
+
 		//validate phone
 		if(array_key_exists('phone', $values))
 		{
@@ -127,6 +174,7 @@ class Dot_Validate_User extends Dot_Validate
 				$this->_error = array_merge($this->_error, array('phone' => $dotValidatorPhone->getError()));
 			}
 		}
+
 		//validate password
 		if(array_key_exists('password', $values) && isset($values['password']['password']))
 		{
@@ -262,4 +310,36 @@ class Dot_Validate_User extends Dot_Validate
 		$this->_data = array_merge($this->_data, $dotFilter->getData());
 		$this->_error = array_merge($this->_error, $dotFilter->getError());
 	}
+
+   /* public function validateImage($type,$data)
+    {
+        $errors=[];
+        if ($type=="size")
+        {
+            $minSize= 0;
+            $allowedSize= 2097152;
+            if ($data > $allowedSize)
+            {
+                $errors[]= "Your Image size $data is too big!";
+            }
+            if ($data == $minSize)
+            {
+                $errors[]= "You must place an image";
+            }
+        }
+        if ($type=="type")
+        {
+            $imageTypes=['image/jpeg' => "image/jpeg"];
+            if (!array_key_exists($data, $imageTypes))
+            {
+                $errors[]= "Your image $type is not allowed!";
+            }
+        }
+        if (count($errors) === 0)
+        {
+            return true;
+        } else {
+            return $errors;
+        }
+    }*/
 }
